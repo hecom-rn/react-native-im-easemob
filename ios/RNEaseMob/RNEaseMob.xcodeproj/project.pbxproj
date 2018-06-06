@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F23E46920C7C7BA005C7A6F /* RNEaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */; };
 		1F23E46A20C7C7BA005C7A6F /* RNEaseMob.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */; };
+		1F23E48320C7D179005C7A6F /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F23E48220C7D179005C7A6F /* Hyphenate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,7 @@
 		1F23E46420C7C7BA005C7A6F /* libRNEaseMob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNEaseMob.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEaseMob.h; sourceTree = "<group>"; };
 		1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEaseMob.m; sourceTree = "<group>"; };
+		1F23E48220C7D179005C7A6F /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F23E48320C7D179005C7A6F /* Hyphenate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,10 +63,27 @@
 		1F23E46620C7C7BA005C7A6F /* RNEaseMob */ = {
 			isa = PBXGroup;
 			children = (
+				1F23E48020C7D179005C7A6F /* ThirdParty */,
 				1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */,
 				1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */,
 			);
 			path = RNEaseMob;
+			sourceTree = "<group>";
+		};
+		1F23E48020C7D179005C7A6F /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				1F23E48120C7D179005C7A6F /* HyphenateFullSDK-3.4.1 */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		1F23E48120C7D179005C7A6F /* HyphenateFullSDK-3.4.1 */ = {
+			isa = PBXGroup;
+			children = (
+				1F23E48220C7D179005C7A6F /* Hyphenate.framework */,
+			);
+			path = "HyphenateFullSDK-3.4.1";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,7 +200,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -232,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -243,6 +263,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1/Hyphenate.framework/Headers";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -254,6 +279,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1/Hyphenate.framework/Headers";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

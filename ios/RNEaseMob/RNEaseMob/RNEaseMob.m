@@ -7,6 +7,7 @@
 //
 
 #import "RNEaseMob.h"
+#import "Hyphenate.h"
 
 @implementation RNEaseMob
 
