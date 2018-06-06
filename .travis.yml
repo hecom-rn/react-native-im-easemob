@@ -1,0 +1,16 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - 8.9.1
+      sudo: false
+      script:
+        - npm run lint
+    - language: objective-c
+      os: osx
+      osx_image: xcode9.4
+      before_script:
+        - cd example/ios
+      script:
+        - xcodebuild -project EaseMob-Example.xcodeproj -scheme EaseMob-Example
+          -destination 'platform=iOS Simulator,name=iPhone X,OS=10.4' build test
