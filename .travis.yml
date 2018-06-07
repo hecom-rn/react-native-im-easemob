@@ -8,9 +8,10 @@ matrix:
         - npm run lint
     - language: objective-c
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode9.3
       before_script:
+        - yarn
         - cd example/ios
       script:
         - xcodebuild -project EaseMob-Example.xcodeproj -scheme EaseMob-Example
-          -destination 'platform=iOS Simulator,name=iPhone X,OS=10.4' build test
+          -destination 'platform=iOS Simulator,name=iPhone X,OS=11.3' build
