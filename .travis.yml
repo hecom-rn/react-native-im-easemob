@@ -10,6 +10,8 @@ matrix:
       os: osx
       osx_image: xcode9.3
       before_script:
+        - brew install node
+        - npm install -g yarn react-native-cli
         - yarn
         - cd example/ios
       script:
