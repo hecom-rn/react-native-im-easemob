@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F23E46920C7C7BA005C7A6F /* RNEaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */; };
-		1F23E46A20C7C7BA005C7A6F /* RNEaseMob.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */; };
 		1F23E48320C7D179005C7A6F /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F23E48220C7D179005C7A6F /* Hyphenate.framework */; };
+		1FA42BB120C8E01E0081F31B /* RNEMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42BB020C8E01E0081F31B /* RNEMMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -19,7 +18,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				1F23E46A20C7C7BA005C7A6F /* RNEaseMob.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27,9 +25,10 @@
 
 /* Begin PBXFileReference section */
 		1F23E46420C7C7BA005C7A6F /* libRNEaseMob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNEaseMob.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEaseMob.h; sourceTree = "<group>"; };
-		1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEaseMob.m; sourceTree = "<group>"; };
 		1F23E48220C7D179005C7A6F /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
+		1FA42BAF20C8E01E0081F31B /* RNEMMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEMMessage.h; sourceTree = "<group>"; };
+		1FA42BB020C8E01E0081F31B /* RNEMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEMMessage.m; sourceTree = "<group>"; };
+		1FA42BC320C8E0FF0081F31B /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				1F23E48020C7D179005C7A6F /* ThirdParty */,
-				1F23E46720C7C7BA005C7A6F /* RNEaseMob.h */,
-				1F23E46820C7C7BA005C7A6F /* RNEaseMob.m */,
 			);
 			path = RNEaseMob;
 			sourceTree = "<group>";
@@ -73,6 +70,8 @@
 		1F23E48020C7D179005C7A6F /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				1FA42BC220C8E0E90081F31B /* util */,
+				1FA42BAE20C8DBC20081F31B /* easemob */,
 				1F23E48120C7D179005C7A6F /* HyphenateFullSDK-3.4.1 */,
 			);
 			path = ThirdParty;
@@ -84,6 +83,23 @@
 				1F23E48220C7D179005C7A6F /* Hyphenate.framework */,
 			);
 			path = "HyphenateFullSDK-3.4.1";
+			sourceTree = "<group>";
+		};
+		1FA42BAE20C8DBC20081F31B /* easemob */ = {
+			isa = PBXGroup;
+			children = (
+				1FA42BAF20C8E01E0081F31B /* RNEMMessage.h */,
+				1FA42BB020C8E01E0081F31B /* RNEMMessage.m */,
+			);
+			path = easemob;
+			sourceTree = "<group>";
+		};
+		1FA42BC220C8E0E90081F31B /* util */ = {
+			isa = PBXGroup;
+			children = (
+				1FA42BC320C8E0FF0081F31B /* Singleton.h */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F23E46920C7C7BA005C7A6F /* RNEaseMob.m in Sources */,
+				1FA42BB120C8E01E0081F31B /* RNEMMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
