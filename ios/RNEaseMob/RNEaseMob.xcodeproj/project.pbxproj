@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1F23E48320C7D179005C7A6F /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F23E48220C7D179005C7A6F /* Hyphenate.framework */; };
-		1FA42BB120C8E01E0081F31B /* RNEMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42BB020C8E01E0081F31B /* RNEMMessage.m */; };
+		1FA42BF320CF67D50081F31B /* RNEaseMobModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42BF220CF67D50081F31B /* RNEaseMobModule.m */; };
+		1FA42C1020D0B1B90081F31B /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C0E20D0B1B90081F31B /* NSString+Util.m */; };
+		1FA42C1520D0B1E80081F31B /* ChatManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C1420D0B1E80081F31B /* ChatManagerModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +28,22 @@
 /* Begin PBXFileReference section */
 		1F23E46420C7C7BA005C7A6F /* libRNEaseMob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNEaseMob.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F23E48220C7D179005C7A6F /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
-		1FA42BAF20C8E01E0081F31B /* RNEMMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEMMessage.h; sourceTree = "<group>"; };
-		1FA42BB020C8E01E0081F31B /* RNEMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEMMessage.m; sourceTree = "<group>"; };
-		1FA42BC320C8E0FF0081F31B /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		1FA42BF120CF67D50081F31B /* RNEaseMobModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEaseMobModule.h; sourceTree = "<group>"; };
+		1FA42BF220CF67D50081F31B /* RNEaseMobModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEaseMobModule.m; sourceTree = "<group>"; };
+		1FA42C0A20D0B0A30081F31B /* RNEaseMob-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNEaseMob-PrefixHeader.pch"; sourceTree = "<group>"; };
+		1FA42C0D20D0B1B90081F31B /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		1FA42C0E20D0B1B90081F31B /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
+		1FA42C0F20D0B1B90081F31B /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
+		1FA42C1320D0B1E80081F31B /* ChatManagerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatManagerModule.h; sourceTree = "<group>"; };
+		1FA42C1420D0B1E80081F31B /* ChatManagerModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatManagerModule.m; sourceTree = "<group>"; };
+		1FA42C2920D0B3F90081F31B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		1FA42C2B20D0B4030081F31B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1FA42C2D20D0B40A0081F31B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		1FA42C2F20D0B4110081F31B /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		1FA42C3120D0B4150081F31B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1FA42C3320D0B41C0081F31B /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		1FA42C3520D0B4230081F31B /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		1FA42C3720D0B4290081F31B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +63,7 @@
 			children = (
 				1F23E46620C7C7BA005C7A6F /* RNEaseMob */,
 				1F23E46520C7C7BA005C7A6F /* Products */,
+				1FA42C2820D0B3F90081F31B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,7 +78,12 @@
 		1F23E46620C7C7BA005C7A6F /* RNEaseMob */ = {
 			isa = PBXGroup;
 			children = (
+				1FA42C1120D0B1BC0081F31B /* easemob */,
+				1FA42C0C20D0B1B90081F31B /* util */,
 				1F23E48020C7D179005C7A6F /* ThirdParty */,
+				1FA42BF120CF67D50081F31B /* RNEaseMobModule.h */,
+				1FA42BF220CF67D50081F31B /* RNEaseMobModule.m */,
+				1FA42C0A20D0B0A30081F31B /* RNEaseMob-PrefixHeader.pch */,
 			);
 			path = RNEaseMob;
 			sourceTree = "<group>";
@@ -70,8 +91,6 @@
 		1F23E48020C7D179005C7A6F /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				1FA42BC220C8E0E90081F31B /* util */,
-				1FA42BAE20C8DBC20081F31B /* easemob */,
 				1F23E48120C7D179005C7A6F /* HyphenateFullSDK-3.4.1 */,
 			);
 			path = ThirdParty;
@@ -85,21 +104,38 @@
 			path = "HyphenateFullSDK-3.4.1";
 			sourceTree = "<group>";
 		};
-		1FA42BAE20C8DBC20081F31B /* easemob */ = {
+		1FA42C0C20D0B1B90081F31B /* util */ = {
 			isa = PBXGroup;
 			children = (
-				1FA42BAF20C8E01E0081F31B /* RNEMMessage.h */,
-				1FA42BB020C8E01E0081F31B /* RNEMMessage.m */,
+				1FA42C0D20D0B1B90081F31B /* Singleton.h */,
+				1FA42C0F20D0B1B90081F31B /* NSString+Util.h */,
+				1FA42C0E20D0B1B90081F31B /* NSString+Util.m */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		1FA42C1120D0B1BC0081F31B /* easemob */ = {
+			isa = PBXGroup;
+			children = (
+				1FA42C1320D0B1E80081F31B /* ChatManagerModule.h */,
+				1FA42C1420D0B1E80081F31B /* ChatManagerModule.m */,
 			);
 			path = easemob;
 			sourceTree = "<group>";
 		};
-		1FA42BC220C8E0E90081F31B /* util */ = {
+		1FA42C2820D0B3F90081F31B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1FA42BC320C8E0FF0081F31B /* Singleton.h */,
+				1FA42C3720D0B4290081F31B /* libxml2.tbd */,
+				1FA42C3520D0B4230081F31B /* libresolv.tbd */,
+				1FA42C3320D0B41C0081F31B /* libiconv.tbd */,
+				1FA42C3120D0B4150081F31B /* libz.tbd */,
+				1FA42C2F20D0B4110081F31B /* libstdc++.6.0.9.tbd */,
+				1FA42C2D20D0B40A0081F31B /* libsqlite3.tbd */,
+				1FA42C2B20D0B4030081F31B /* CFNetwork.framework */,
+				1FA42C2920D0B3F90081F31B /* MobileCoreServices.framework */,
 			);
-			path = util;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,7 +194,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA42BB120C8E01E0081F31B /* RNEMMessage.m in Sources */,
+				1FA42BF320CF67D50081F31B /* RNEaseMobModule.m in Sources */,
+				1FA42C1020D0B1B90081F31B /* NSString+Util.m in Sources */,
+				1FA42C1520D0B1E80081F31B /* ChatManagerModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +321,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RNEaseMob/RNEaseMob-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1/Hyphenate.framework/Headers";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -299,6 +339,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RNEaseMob/RNEaseMob-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1/Hyphenate.framework/Headers";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
