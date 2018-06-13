@@ -6,24 +6,23 @@ import android.content.pm.PackageManager;
 import android.os.Process;
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 import static com.hecom.easemob.EventName.CMD_MESSAGE_RECEIVED;
-import static com.hecom.easemob.EventName.CONNECTION_CONNECTED;
-import static com.hecom.easemob.EventName.CONNECTION_DISCONNECTED;
+import static com.hecom.easemob.EventName.TYPE_CHAT_MANAGER;
 
 /**
  * Created by kevin.bai on 2018/6/13.
@@ -34,7 +33,7 @@ public class EasemobHelper {
     private boolean sdkInited = false;
     private Context mContext;
     private ReactContext mReactContext;
-    private Map<String, List<Object>> cache;
+    private List<WritableMap> cache;
 
     private static class Inner {
         private static EasemobHelper INSTANCE = new EasemobHelper();
@@ -45,7 +44,7 @@ public class EasemobHelper {
     }
 
     private EasemobHelper() {
-        cache = new HashMap<>();
+        cache = new ArrayList<>();
     }
 
     public void init(Context context, EMOptions options) {
@@ -56,11 +55,7 @@ public class EasemobHelper {
         if (processAppName == null || !processAppName.equalsIgnoreCase(context.getPackageName())) {
             Log.e(TAG, "enter the service process!");
         }
-        if (options == null) {
-            EMClient.getInstance().init(context, initOptions());
-        } else {
-            EMClient.getInstance().init(context, options);
-        }
+        EMClient.getInstance().init(context, initOptions(options));
 
         registerListener();
 
@@ -75,26 +70,12 @@ public class EasemobHelper {
     }
 
     private void sendCachedEvent() {
-        for (String eventName : cache.keySet()) {
-            List<Object> array = cache.get(eventName);
-            for (Object param : array) {
-                sendEvent(eventName, param);
-            }
+        for (WritableMap param : cache) {
+            sendEvent(param);
         }
     }
 
     private void registerListener() {
-        EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
-            @Override
-            public void onConnected() {
-                sendEvent(CONNECTION_CONNECTED);
-            }
-
-            @Override
-            public void onDisconnected(int i) {
-                sendEvent(CONNECTION_DISCONNECTED, i);
-            }
-        });
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> list) {
@@ -103,7 +84,7 @@ public class EasemobHelper {
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> list) {
-                sendEvent(CMD_MESSAGE_RECEIVED, MessageConverter.toMessageArray(list));
+                sendEvent(TYPE_CHAT_MANAGER, CMD_MESSAGE_RECEIVED, MessageConverter.toMessageArray(list));
             }
 
             @Override
@@ -128,36 +109,48 @@ public class EasemobHelper {
         });
     }
 
-    private void sendEvent(String eventName, Object params) {
-        if (mReactContext != null) {
-            mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    private void sendEvent(String type, String subType, Object data) {
+        WritableMap map = Arguments.createMap();
+        map.putString("type", type);
+        map.putString("subType", subType);
+        if (data instanceof WritableMap) {
+            map.putMap("data", (WritableMap) data);
+        } else if (data instanceof WritableArray) {
+            map.putArray("data", (WritableArray) data);
+        } else if (data instanceof String) {
+            map.putString("data", (String) data);
+        } else if (data instanceof Integer) {
+            map.putInt("data", (Integer) data);
+        } else if (data instanceof Double) {
+            map.putDouble("data", (Double) data);
+        } else if (data instanceof Boolean) {
+            map.putBoolean("data", (Boolean) data);
         } else {
-            Log.d(TAG, "ReactContext is null, cached message");
-            addCacheMessage(eventName, params);
+            map.putNull("data");
+        }
+        if (mReactContext != null) {
+            sendEvent(map);
+        } else {
+            cache.add(map);
         }
     }
 
-    private void addCacheMessage(String eventName, Object params) {
-        List<Object> array = cache.get(eventName);
-        if (array == null) {
-            array = new ArrayList<>();
-            cache.put(eventName, array);
+    private void sendEvent(WritableMap params) {
+        if (mReactContext != null) {
+            mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNEaseMob", params);
         }
-        array.add(params);
     }
 
-    private void sendEvent(String eventName) {
-        sendEvent(eventName, null);
-    }
-
-    private EMOptions initOptions() {
-        EMOptions options = new EMOptions();
-        // set if accept the invitation automatically
-        options.setAcceptInvitationAlways(false);
-        // set if you need read ack
-        options.setRequireAck(true);
-        // set if you need delivery ack
-        options.setRequireDeliveryAck(false);
+    private EMOptions initOptions(EMOptions options) {
+        if (options == null) {
+            options = new EMOptions();
+            // set if accept the invitation automatically
+            options.setAcceptInvitationAlways(false);
+            // set if you need read ack
+            options.setRequireAck(true);
+            // set if you need delivery ack
+            options.setRequireDeliveryAck(false);
+        }
         return options;
     }
 

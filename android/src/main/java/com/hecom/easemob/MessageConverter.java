@@ -83,6 +83,10 @@ class MessageConverter {
      * 将JS部分传递的参数转换为EMOptions
      */
     static EMOptions toOption(ReadableMap params) {
-        return null;
+        EMOptions options = new EMOptions();
+        if (params.hasKey("appKey")) {
+            options.setAppKey(params.getString("appKey"));
+        }
+        return options;
     }
 }
