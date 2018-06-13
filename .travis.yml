@@ -1,3 +1,10 @@
+branches:
+  only:
+    - master
+
+git:
+  lfs_skip_smudge: true
+
 matrix:
   include:
     - language: node_js
@@ -15,6 +22,9 @@ matrix:
           - example/node_modules
           - $HOME/Library/Developer/Xcode/DerivedData
       before_script:
+        - brew install git-lfs
+        - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+        - git lfs pull
         - npm install -g yarn react-native-cli
         - cd example
         - yarn
@@ -35,6 +45,7 @@ matrix:
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
       before_script:
+        - npm install -g yarn react-native-cli
         - cd example
         - yarn
         - cd android
