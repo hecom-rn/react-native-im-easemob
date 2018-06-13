@@ -27,16 +27,16 @@ matrix:
         components:
           - build-tools-27.0.1
           - android-27
-        cache:
-          yarn: true
-          directories:
-            - example/node_modules
-            - $HOME/.gradle/caches/
-            - $HOME/.gradle/wrapper/
-            - $HOME/.android/build-cache
-        before_script:
-          - cd example
-          - yarn
-          - cd android
-        script:
-          - gradle build
+      cache:
+        yarn: true
+        directories:
+          - example/node_modules
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+      before_script:
+        - cd example
+        - yarn
+        - cd android
+      script:
+        - gradle build
