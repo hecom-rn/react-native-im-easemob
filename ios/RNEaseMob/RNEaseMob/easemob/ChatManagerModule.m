@@ -7,11 +7,6 @@
 //
 
 #import "ChatManagerModule.h"
-#import "Hyphenate.h"
-
-@interface ChatManagerModule () <EMChatManagerDelegate>
-
-@end
 
 @implementation ChatManagerModule
 
@@ -22,7 +17,7 @@ RCT_EXPORT_MODULE();
 #pragma mark - EMChatManagerDelegate
 
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
-    NSLog(aCmdMessages);
+    // TODO
 }
 
 @end

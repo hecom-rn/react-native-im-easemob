@@ -1,5 +1,5 @@
 //
-//  ChatManagerModule.h
+//  ClientModule.h
 //  RNEaseMob
 //
 //  Created by Xiaosong Gao on 2018/6/13.
@@ -9,8 +9,8 @@
 #import <React/RCTBridgeModule.h>
 #import "Hyphenate.h"
 
-@interface ChatManagerModule : NSObject <RCTBridgeModule, EMChatManagerDelegate>
+@interface ClientModule : NSObject <RCTBridgeModule, EMClientDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(ChatManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ClientModule);
 
 @end

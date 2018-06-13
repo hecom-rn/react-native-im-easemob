@@ -11,6 +11,12 @@
 		1FA42BF320CF67D50081F31B /* RNEaseMobModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42BF220CF67D50081F31B /* RNEaseMobModule.m */; };
 		1FA42C1020D0B1B90081F31B /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C0E20D0B1B90081F31B /* NSString+Util.m */; };
 		1FA42C1520D0B1E80081F31B /* ChatManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C1420D0B1E80081F31B /* ChatManagerModule.m */; };
+		1FA42C3C20D0B9160081F31B /* ClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C3B20D0B9160081F31B /* ClientModule.m */; };
+		1FA42C3F20D0B99A0081F31B /* MultiDevicesModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C3E20D0B99A0081F31B /* MultiDevicesModule.m */; };
+		1FA42C4220D0BA2A0081F31B /* GroupManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C4120D0BA2A0081F31B /* GroupManagerModule.m */; };
+		1FA42C4520D0BA750081F31B /* ContactManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C4420D0BA750081F31B /* ContactManagerModule.m */; };
+		1FA42C4820D0BAC20081F31B /* ChatroomManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C4720D0BAC20081F31B /* ChatroomManagerModule.m */; };
+		1FA42C4B20D0C8D40081F31B /* NSObject+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42C4A20D0C8D40081F31B /* NSObject+Util.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +50,18 @@
 		1FA42C3320D0B41C0081F31B /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		1FA42C3520D0B4230081F31B /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		1FA42C3720D0B4290081F31B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		1FA42C3A20D0B9160081F31B /* ClientModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientModule.h; sourceTree = "<group>"; };
+		1FA42C3B20D0B9160081F31B /* ClientModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientModule.m; sourceTree = "<group>"; };
+		1FA42C3D20D0B99A0081F31B /* MultiDevicesModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiDevicesModule.h; sourceTree = "<group>"; };
+		1FA42C3E20D0B99A0081F31B /* MultiDevicesModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiDevicesModule.m; sourceTree = "<group>"; };
+		1FA42C4020D0BA2A0081F31B /* GroupManagerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupManagerModule.h; sourceTree = "<group>"; };
+		1FA42C4120D0BA2A0081F31B /* GroupManagerModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupManagerModule.m; sourceTree = "<group>"; };
+		1FA42C4320D0BA750081F31B /* ContactManagerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactManagerModule.h; sourceTree = "<group>"; };
+		1FA42C4420D0BA750081F31B /* ContactManagerModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactManagerModule.m; sourceTree = "<group>"; };
+		1FA42C4620D0BAC20081F31B /* ChatroomManagerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatroomManagerModule.h; sourceTree = "<group>"; };
+		1FA42C4720D0BAC20081F31B /* ChatroomManagerModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatroomManagerModule.m; sourceTree = "<group>"; };
+		1FA42C4920D0C8D40081F31B /* NSObject+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Util.h"; sourceTree = "<group>"; };
+		1FA42C4A20D0C8D40081F31B /* NSObject+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Util.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +128,8 @@
 				1FA42C0D20D0B1B90081F31B /* Singleton.h */,
 				1FA42C0F20D0B1B90081F31B /* NSString+Util.h */,
 				1FA42C0E20D0B1B90081F31B /* NSString+Util.m */,
+				1FA42C4920D0C8D40081F31B /* NSObject+Util.h */,
+				1FA42C4A20D0C8D40081F31B /* NSObject+Util.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -119,6 +139,16 @@
 			children = (
 				1FA42C1320D0B1E80081F31B /* ChatManagerModule.h */,
 				1FA42C1420D0B1E80081F31B /* ChatManagerModule.m */,
+				1FA42C3A20D0B9160081F31B /* ClientModule.h */,
+				1FA42C3B20D0B9160081F31B /* ClientModule.m */,
+				1FA42C3D20D0B99A0081F31B /* MultiDevicesModule.h */,
+				1FA42C3E20D0B99A0081F31B /* MultiDevicesModule.m */,
+				1FA42C4020D0BA2A0081F31B /* GroupManagerModule.h */,
+				1FA42C4120D0BA2A0081F31B /* GroupManagerModule.m */,
+				1FA42C4320D0BA750081F31B /* ContactManagerModule.h */,
+				1FA42C4420D0BA750081F31B /* ContactManagerModule.m */,
+				1FA42C4620D0BAC20081F31B /* ChatroomManagerModule.h */,
+				1FA42C4720D0BAC20081F31B /* ChatroomManagerModule.m */,
 			);
 			path = easemob;
 			sourceTree = "<group>";
@@ -194,8 +224,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA42C4820D0BAC20081F31B /* ChatroomManagerModule.m in Sources */,
 				1FA42BF320CF67D50081F31B /* RNEaseMobModule.m in Sources */,
+				1FA42C4220D0BA2A0081F31B /* GroupManagerModule.m in Sources */,
+				1FA42C3F20D0B99A0081F31B /* MultiDevicesModule.m in Sources */,
+				1FA42C4520D0BA750081F31B /* ContactManagerModule.m in Sources */,
+				1FA42C4B20D0C8D40081F31B /* NSObject+Util.m in Sources */,
 				1FA42C1020D0B1B90081F31B /* NSString+Util.m in Sources */,
+				1FA42C3C20D0B9160081F31B /* ClientModule.m in Sources */,
 				1FA42C1520D0B1E80081F31B /* ChatManagerModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
