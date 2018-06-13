@@ -45,6 +45,7 @@ matrix:
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
       before_script:
+        - nvm install 8
         - nvm use 8
         - npm install -g yarn
         - cd example
