@@ -37,6 +37,7 @@ matrix:
         components:
           - build-tools-27.0.1
           - android-27
+      node: 9
       cache:
         yarn: true
         directories:
