@@ -9,10 +9,34 @@ matrix:
     - language: objective-c
       os: osx
       osx_image: xcode9.3
+      cache:
+        yarn: true
+        directories:
+          - example/node_modules
+          - $HOME/Library/Developer/Xcode/DerivedData
       before_script:
         - npm install -g yarn react-native-cli
+        - cd example
         - yarn
-        - cd example/ios
+        - cd ios
       script:
         - xcodebuild -project EaseMob-Example.xcodeproj -scheme EaseMob-Example
           -destination 'platform=iOS Simulator,name=iPhone X,OS=11.3' build
+    - language: android
+      android:
+        components:
+          - build-tools-27.0.1
+          - android-27
+        cache:
+          yarn: true
+          directories:
+            - example/node_modules
+            - $HOME/.gradle/caches/
+            - $HOME/.gradle/wrapper/
+            - $HOME/.android/build-cache
+        before_script:
+          - cd example
+          - yarn
+          - cd android
+        script:
+          - gradle build
