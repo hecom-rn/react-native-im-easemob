@@ -7,9 +7,17 @@
 //
 
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
-@interface RNEaseMobModule : NSObject <RCTBridgeModule>
+@interface RNEaseMobModule : RCTEventEmitter <RCTBridgeModule>
 
 DEFINE_SINGLETON_FOR_HEADER(RNEaseMobModule);
+
+- (void)sendEventByType:(NSString *)type
+                subType:(NSString *)subType
+                   data:(NSDictionary *)data;
+
+- (void)sendError:(NSString *)message
+             data:(NSDictionary *)data;
 
 @end

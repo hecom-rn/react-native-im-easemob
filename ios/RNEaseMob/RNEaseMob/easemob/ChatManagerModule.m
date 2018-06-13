@@ -7,6 +7,9 @@
 //
 
 #import "ChatManagerModule.h"
+#import "RNEaseMobModule.h"
+
+NSString * const type = @"chat_manager";
 
 @implementation ChatManagerModule
 
@@ -17,7 +20,7 @@ RCT_EXPORT_MODULE();
 #pragma mark - EMChatManagerDelegate
 
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
-    // TODO
+    
 }
 
 @end
