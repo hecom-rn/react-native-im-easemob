@@ -35,10 +35,14 @@ matrix:
     - language: android
       android:
         components:
-          - build-tools-27.0.1
+          - platform-tools
+          - tools
+          - build-tools-27.0.3
           - android-27
         licenses:
+          - 'android-sdk-preview-license-.+'
           - 'android-sdk-license-.+'
+          - 'google-gdk-license-.+'
       cache:
         yarn: true
         directories:
