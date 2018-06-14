@@ -9,7 +9,7 @@ xcuserdata
 *.xccheckout
 DerivedData
 project.xcworkspace
-/ios/RNEaseMob/RNEaseMob/ThirdParty/HyphenateFullSDK-3.4.1/Hyphenate.framework/Hyphenate
+/example/ios/Pods
 
 # Android/IntelliJ
 build/

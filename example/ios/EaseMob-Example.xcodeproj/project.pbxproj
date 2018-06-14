@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5DA79720D279BC001B053C /* libRNEaseMob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5DA79620D279AE001B053C /* libRNEaseMob.a */; };
 		1FA42B4C20C7E9690081F31B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42B4B20C7E9690081F31B /* AppDelegate.m */; };
-		1FA42B4F20C7E9690081F31B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42B4E20C7E9690081F31B /* ViewController.m */; };
-		1FA42B5220C7E9690081F31B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA42B5020C7E9690081F31B /* Main.storyboard */; };
 		1FA42B5420C7E96B0081F31B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA42B5320C7E96B0081F31B /* Assets.xcassets */; };
 		1FA42B5720C7E96B0081F31B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA42B5520C7E96B0081F31B /* LaunchScreen.storyboard */; };
 		1FA42B5A20C7E96B0081F31B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA42B5920C7E96B0081F31B /* main.m */; };
-		1FA42C1720D0B3380081F31B /* libRNEaseMob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42BAD20C8CCD10081F31B /* libRNEaseMob.a */; };
 		1FA42C1920D0B3720081F31B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C1820D0B3720081F31B /* MobileCoreServices.framework */; };
 		1FA42C1B20D0B37A0081F31B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C1A20D0B37A0081F31B /* CFNetwork.framework */; };
 		1FA42C1D20D0B3820081F31B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C1C20D0B3820081F31B /* libsqlite3.tbd */; };
@@ -22,12 +20,28 @@
 		1FA42C2320D0B3960081F31B /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C2220D0B3960081F31B /* libiconv.tbd */; };
 		1FA42C2520D0B3AC0081F31B /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C2420D0B3AC0081F31B /* libresolv.tbd */; };
 		1FA42C2720D0B3B10081F31B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA42C2620D0B3B10081F31B /* libxml2.tbd */; };
+		1FA43FB920D24DFC0081F31B /* RNBridgeModuleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43FB820D24DFC0081F31B /* RNBridgeModuleManager.m */; };
+		1FA43FBC20D24ED30081F31B /* RNViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43FBB20D24ED30081F31B /* RNViewManager.m */; };
+		1FA43FBF20D24F260081F31B /* RNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43FBE20D24F260081F31B /* RNViewController.m */; };
+		1FA43FC020D251260081F31B /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43F9A20D118FB0081F31B /* libReact.a */; };
+		1FA4402D20D254ED0081F31B /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FE220D254110081F31B /* libRCTBlob.a */; };
+		1FA4402E20D254F60081F31B /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FD320D253D80081F31B /* libRCTAnimation.a */; };
+		1FA4402F20D255040081F31B /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FDB20D253F30081F31B /* libRCTActionSheet.a */; };
+		1FA4403020D2550B0081F31B /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FEA20D2542D0081F31B /* libRCTGeolocation.a */; };
+		1FA4403120D255130081F31B /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FF120D254480081F31B /* libRCTImage.a */; };
+		1FA4403220D255180081F31B /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA43FFA20D254600081F31B /* libRCTLinking.a */; };
+		1FA4403320D255220081F31B /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4400320D254760081F31B /* libRCTNetwork.a */; };
+		1FA4403420D255270081F31B /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4400C20D254890081F31B /* libRCTSettings.a */; };
+		1FA4403520D2552C0081F31B /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4401520D254A30081F31B /* libRCTText.a */; };
+		1FA4403620D255340081F31B /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4401D20D254BA0081F31B /* libRCTVibration.a */; };
+		1FA4403720D2553A0081F31B /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4402620D254D70081F31B /* libRCTWebSocket.a */; };
+		5ACDAB4BC01BE992D96F36D9 /* libPods-EaseMob-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFFC349FC37AAB5BF11D3E /* libPods-EaseMob-Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1FA42BAC20C8CCD10081F31B /* PBXContainerItemProxy */ = {
+		1F5DA79520D279AE001B053C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1FA42BA820C8CCD10081F31B /* RNEaseMob.xcodeproj */;
+			containerPortal = 1F5DA79120D279AE001B053C /* RNEaseMob.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1F23E46420C7C7BA005C7A6F;
 			remoteInfo = RNEaseMob;
@@ -130,20 +144,177 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		1FA43FD220D253D80081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FCD20D253D80081F31B /* RCTAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAnimation;
+		};
+		1FA43FD420D253D80081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FCD20D253D80081F31B /* RCTAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
+			remoteInfo = "RCTAnimation-tvOS";
+		};
+		1FA43FDA20D253F30081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FD620D253F30081F31B /* RCTActionSheet.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTActionSheet;
+		};
+		1FA43FE120D254110081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FDC20D254110081F31B /* RCTBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
+			remoteInfo = RCTBlob;
+		};
+		1FA43FE320D254110081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FDC20D254110081F31B /* RCTBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADD01A681E09402E00F6D226;
+			remoteInfo = "RCTBlob-tvOS";
+		};
+		1FA43FE920D2542D0081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FE520D2542D0081F31B /* RCTGeolocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTGeolocation;
+		};
+		1FA43FF020D254480081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FEB20D254470081F31B /* RCTImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTImage;
+		};
+		1FA43FF220D254480081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FEB20D254470081F31B /* RCTImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A283A1D9B042B00D4039D;
+			remoteInfo = "RCTImage-tvOS";
+		};
+		1FA43FF920D254600081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FF420D254600081F31B /* RCTLinking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTLinking;
+		};
+		1FA43FFB20D254600081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FF420D254600081F31B /* RCTLinking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28471D9B043800D4039D;
+			remoteInfo = "RCTLinking-tvOS";
+		};
+		1FA4400220D254760081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FFD20D254760081F31B /* RCTNetwork.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B511DB1A9E6C8500147676;
+			remoteInfo = RCTNetwork;
+		};
+		1FA4400420D254760081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA43FFD20D254760081F31B /* RCTNetwork.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28541D9B044C00D4039D;
+			remoteInfo = "RCTNetwork-tvOS";
+		};
+		1FA4400B20D254890081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4400620D254890081F31B /* RCTSettings.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTSettings;
+		};
+		1FA4400D20D254890081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4400620D254890081F31B /* RCTSettings.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28611D9B046600D4039D;
+			remoteInfo = "RCTSettings-tvOS";
+		};
+		1FA4401420D254A30081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4400F20D254A30081F31B /* RCTText.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
+			remoteInfo = RCTText;
+		};
+		1FA4401620D254A30081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4400F20D254A30081F31B /* RCTText.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A287B1D9B048500D4039D;
+			remoteInfo = "RCTText-tvOS";
+		};
+		1FA4401C20D254BA0081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4401820D254BA0081F31B /* RCTVibration.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
+			remoteInfo = RCTVibration;
+		};
+		1FA4402520D254D70081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C86DF461ADF2C930047B81A;
+			remoteInfo = RCTWebSocket;
+		};
+		1FA4402720D254D70081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28881D9B049200D4039D;
+			remoteInfo = "RCTWebSocket-tvOS";
+		};
+		1FA4402920D254D70081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D001F3B181A0099AA32;
+			remoteInfo = fishhook;
+		};
+		1FA4402B20D254D70081F31B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
+			remoteInfo = "fishhook-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1F5DA71D20D25897001B053C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1F5DA79120D279AE001B053C /* RNEaseMob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNEaseMob.xcodeproj; path = ../../ios/RNEaseMob.xcodeproj; sourceTree = "<group>"; };
 		1FA42B4720C7E9690081F31B /* EaseMob-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EaseMob-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA42B4A20C7E9690081F31B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1FA42B4B20C7E9690081F31B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1FA42B4D20C7E9690081F31B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1FA42B4E20C7E9690081F31B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		1FA42B5120C7E9690081F31B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1FA42B5320C7E96B0081F31B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FA42B5620C7E96B0081F31B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FA42B5820C7E96B0081F31B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA42B5920C7E96B0081F31B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1FA42BA820C8CCD10081F31B /* RNEaseMob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNEaseMob.xcodeproj; path = ../../ios/RNEaseMob/RNEaseMob.xcodeproj; sourceTree = "<group>"; };
 		1FA42C1820D0B3720081F31B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		1FA42C1A20D0B37A0081F31B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1FA42C1C20D0B3820081F31B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -153,6 +324,26 @@
 		1FA42C2420D0B3AC0081F31B /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		1FA42C2620D0B3B10081F31B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		1FA43F8820D118FA0081F31B /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FB720D24DFC0081F31B /* RNBridgeModuleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNBridgeModuleManager.h; sourceTree = "<group>"; };
+		1FA43FB820D24DFC0081F31B /* RNBridgeModuleManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNBridgeModuleManager.m; sourceTree = "<group>"; };
+		1FA43FBA20D24ED30081F31B /* RNViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNViewManager.h; sourceTree = "<group>"; };
+		1FA43FBB20D24ED30081F31B /* RNViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNViewManager.m; sourceTree = "<group>"; };
+		1FA43FBD20D24F260081F31B /* RNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNViewController.h; sourceTree = "<group>"; };
+		1FA43FBE20D24F260081F31B /* RNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNViewController.m; sourceTree = "<group>"; };
+		1FA43FCD20D253D80081F31B /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FD620D253F30081F31B /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FDC20D254110081F31B /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FE520D2542D0081F31B /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FEB20D254470081F31B /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FF420D254600081F31B /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		1FA43FFD20D254760081F31B /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
+		1FA4400620D254890081F31B /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
+		1FA4400F20D254A30081F31B /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		1FA4401820D254BA0081F31B /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
+		1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
+		22CFFC349FC37AAB5BF11D3E /* libPods-EaseMob-Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EaseMob-Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A610261D8B52C3A672BB879 /* Pods-EaseMob-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EaseMob-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5465088E6CEAEE1B285D53C7 /* Pods-EaseMob-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EaseMob-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +351,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5DA79720D279BC001B053C /* libRNEaseMob.a in Frameworks */,
+				1FA4403720D2553A0081F31B /* libRCTWebSocket.a in Frameworks */,
+				1FA4403620D255340081F31B /* libRCTVibration.a in Frameworks */,
+				1FA4403520D2552C0081F31B /* libRCTText.a in Frameworks */,
+				1FA4403420D255270081F31B /* libRCTSettings.a in Frameworks */,
+				1FA4403320D255220081F31B /* libRCTNetwork.a in Frameworks */,
+				1FA4403220D255180081F31B /* libRCTLinking.a in Frameworks */,
+				1FA4403120D255130081F31B /* libRCTImage.a in Frameworks */,
+				1FA4403020D2550B0081F31B /* libRCTGeolocation.a in Frameworks */,
+				1FA4402F20D255040081F31B /* libRCTActionSheet.a in Frameworks */,
+				1FA4402E20D254F60081F31B /* libRCTAnimation.a in Frameworks */,
+				1FA4402D20D254ED0081F31B /* libRCTBlob.a in Frameworks */,
+				1FA43FC020D251260081F31B /* libReact.a in Frameworks */,
 				1FA42C2720D0B3B10081F31B /* libxml2.tbd in Frameworks */,
 				1FA42C2520D0B3AC0081F31B /* libresolv.tbd in Frameworks */,
 				1FA42C2320D0B3960081F31B /* libiconv.tbd in Frameworks */,
@@ -168,13 +372,21 @@
 				1FA42C1D20D0B3820081F31B /* libsqlite3.tbd in Frameworks */,
 				1FA42C1B20D0B37A0081F31B /* CFNetwork.framework in Frameworks */,
 				1FA42C1920D0B3720081F31B /* MobileCoreServices.framework in Frameworks */,
-				1FA42C1720D0B3380081F31B /* libRNEaseMob.a in Frameworks */,
+				5ACDAB4BC01BE992D96F36D9 /* libPods-EaseMob-Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F5DA79220D279AE001B053C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F5DA79620D279AE001B053C /* libRNEaseMob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1FA42B3E20C7E9690081F31B = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +394,7 @@
 				1FA42B6120C800AB0081F31B /* Library */,
 				1FA42B4820C7E9690081F31B /* Products */,
 				1FA42C1620D0B3380081F31B /* Frameworks */,
+				620FA5B137D3326B23682456 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -196,11 +409,9 @@
 		1FA42B4920C7E9690081F31B /* EaseMob-Example */ = {
 			isa = PBXGroup;
 			children = (
+				1FA43FB620D24DE90081F31B /* ReactNative */,
 				1FA42B4A20C7E9690081F31B /* AppDelegate.h */,
 				1FA42B4B20C7E9690081F31B /* AppDelegate.m */,
-				1FA42B4D20C7E9690081F31B /* ViewController.h */,
-				1FA42B4E20C7E9690081F31B /* ViewController.m */,
-				1FA42B5020C7E9690081F31B /* Main.storyboard */,
 				1FA42B5320C7E96B0081F31B /* Assets.xcassets */,
 				1FA42B5520C7E96B0081F31B /* LaunchScreen.storyboard */,
 				1FA42B5820C7E96B0081F31B /* Info.plist */,
@@ -212,18 +423,21 @@
 		1FA42B6120C800AB0081F31B /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1F5DA79120D279AE001B053C /* RNEaseMob.xcodeproj */,
+				1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */,
+				1FA4401820D254BA0081F31B /* RCTVibration.xcodeproj */,
+				1FA4400F20D254A30081F31B /* RCTText.xcodeproj */,
+				1FA4400620D254890081F31B /* RCTSettings.xcodeproj */,
+				1FA43FFD20D254760081F31B /* RCTNetwork.xcodeproj */,
+				1FA43FF420D254600081F31B /* RCTLinking.xcodeproj */,
+				1FA43FEB20D254470081F31B /* RCTImage.xcodeproj */,
+				1FA43FE520D2542D0081F31B /* RCTGeolocation.xcodeproj */,
+				1FA43FDC20D254110081F31B /* RCTBlob.xcodeproj */,
+				1FA43FD620D253F30081F31B /* RCTActionSheet.xcodeproj */,
+				1FA43FCD20D253D80081F31B /* RCTAnimation.xcodeproj */,
 				1FA43F8820D118FA0081F31B /* React.xcodeproj */,
-				1FA42BA820C8CCD10081F31B /* RNEaseMob.xcodeproj */,
 			);
 			name = Library;
-			sourceTree = "<group>";
-		};
-		1FA42BA920C8CCD10081F31B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1FA42BAD20C8CCD10081F31B /* libRNEaseMob.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		1FA42C1620D0B3380081F31B /* Frameworks */ = {
@@ -237,6 +451,7 @@
 				1FA42C1C20D0B3820081F31B /* libsqlite3.tbd */,
 				1FA42C1A20D0B37A0081F31B /* CFNetwork.framework */,
 				1FA42C1820D0B3720081F31B /* MobileCoreServices.framework */,
+				22CFFC349FC37AAB5BF11D3E /* libPods-EaseMob-Example.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,6 +477,126 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1FA43FB620D24DE90081F31B /* ReactNative */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FB720D24DFC0081F31B /* RNBridgeModuleManager.h */,
+				1FA43FB820D24DFC0081F31B /* RNBridgeModuleManager.m */,
+				1FA43FBA20D24ED30081F31B /* RNViewManager.h */,
+				1FA43FBB20D24ED30081F31B /* RNViewManager.m */,
+				1FA43FBD20D24F260081F31B /* RNViewController.h */,
+				1FA43FBE20D24F260081F31B /* RNViewController.m */,
+			);
+			path = ReactNative;
+			sourceTree = "<group>";
+		};
+		1FA43FCE20D253D80081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FD320D253D80081F31B /* libRCTAnimation.a */,
+				1FA43FD520D253D80081F31B /* libRCTAnimation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FD720D253F30081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FDB20D253F30081F31B /* libRCTActionSheet.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FDD20D254110081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FE220D254110081F31B /* libRCTBlob.a */,
+				1FA43FE420D254110081F31B /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FE620D2542D0081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FEA20D2542D0081F31B /* libRCTGeolocation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FEC20D254470081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FF120D254480081F31B /* libRCTImage.a */,
+				1FA43FF320D254480081F31B /* libRCTImage-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FF520D254600081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA43FFA20D254600081F31B /* libRCTLinking.a */,
+				1FA43FFC20D254600081F31B /* libRCTLinking-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA43FFE20D254760081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA4400320D254760081F31B /* libRCTNetwork.a */,
+				1FA4400520D254760081F31B /* libRCTNetwork-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA4400720D254890081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA4400C20D254890081F31B /* libRCTSettings.a */,
+				1FA4400E20D254890081F31B /* libRCTSettings-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA4401020D254A30081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA4401520D254A30081F31B /* libRCTText.a */,
+				1FA4401720D254A30081F31B /* libRCTText-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA4401920D254BA0081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA4401D20D254BA0081F31B /* libRCTVibration.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FA4401F20D254D60081F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FA4402620D254D70081F31B /* libRCTWebSocket.a */,
+				1FA4402820D254D70081F31B /* libRCTWebSocket-tvOS.a */,
+				1FA4402A20D254D70081F31B /* libfishhook.a */,
+				1FA4402C20D254D70081F31B /* libfishhook-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		620FA5B137D3326B23682456 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A610261D8B52C3A672BB879 /* Pods-EaseMob-Example.debug.xcconfig */,
+				5465088E6CEAEE1B285D53C7 /* Pods-EaseMob-Example.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -269,9 +604,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FA42B5D20C7E96B0081F31B /* Build configuration list for PBXNativeTarget "EaseMob-Example" */;
 			buildPhases = (
+				D027D92D7F73DA85DBD49B16 /* [CP] Check Pods Manifest.lock */,
 				1FA42B4320C7E9690081F31B /* Sources */,
 				1FA42B4420C7E9690081F31B /* Frameworks */,
 				1FA42B4520C7E9690081F31B /* Resources */,
+				1F5DA71D20D25897001B053C /* Embed Frameworks */,
+				ED5AC6E201303C8470376868 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -309,12 +647,56 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 1FA43FD720D253F30081F31B /* Products */;
+					ProjectRef = 1FA43FD620D253F30081F31B /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FCE20D253D80081F31B /* Products */;
+					ProjectRef = 1FA43FCD20D253D80081F31B /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FDD20D254110081F31B /* Products */;
+					ProjectRef = 1FA43FDC20D254110081F31B /* RCTBlob.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FE620D2542D0081F31B /* Products */;
+					ProjectRef = 1FA43FE520D2542D0081F31B /* RCTGeolocation.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FEC20D254470081F31B /* Products */;
+					ProjectRef = 1FA43FEB20D254470081F31B /* RCTImage.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FF520D254600081F31B /* Products */;
+					ProjectRef = 1FA43FF420D254600081F31B /* RCTLinking.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA43FFE20D254760081F31B /* Products */;
+					ProjectRef = 1FA43FFD20D254760081F31B /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA4400720D254890081F31B /* Products */;
+					ProjectRef = 1FA4400620D254890081F31B /* RCTSettings.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA4401020D254A30081F31B /* Products */;
+					ProjectRef = 1FA4400F20D254A30081F31B /* RCTText.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA4401920D254BA0081F31B /* Products */;
+					ProjectRef = 1FA4401820D254BA0081F31B /* RCTVibration.xcodeproj */;
+				},
+				{
+					ProductGroup = 1FA4401F20D254D60081F31B /* Products */;
+					ProjectRef = 1FA4401E20D254D60081F31B /* RCTWebSocket.xcodeproj */;
+				},
+				{
 					ProductGroup = 1FA43F8920D118FA0081F31B /* Products */;
 					ProjectRef = 1FA43F8820D118FA0081F31B /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 1FA42BA920C8CCD10081F31B /* Products */;
-					ProjectRef = 1FA42BA820C8CCD10081F31B /* RNEaseMob.xcodeproj */;
+					ProductGroup = 1F5DA79220D279AE001B053C /* Products */;
+					ProjectRef = 1F5DA79120D279AE001B053C /* RNEaseMob.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -325,11 +707,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1FA42BAD20C8CCD10081F31B /* libRNEaseMob.a */ = {
+		1F5DA79620D279AE001B053C /* libRNEaseMob.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNEaseMob.a;
-			remoteRef = 1FA42BAC20C8CCD10081F31B /* PBXContainerItemProxy */;
+			remoteRef = 1F5DA79520D279AE001B053C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1FA43F9A20D118FB0081F31B /* libReact.a */ = {
@@ -430,6 +812,153 @@
 			remoteRef = 1FA43FB320D118FB0081F31B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		1FA43FD320D253D80081F31B /* libRCTAnimation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAnimation.a;
+			remoteRef = 1FA43FD220D253D80081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FD520D253D80081F31B /* libRCTAnimation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAnimation.a;
+			remoteRef = 1FA43FD420D253D80081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FDB20D253F30081F31B /* libRCTActionSheet.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTActionSheet.a;
+			remoteRef = 1FA43FDA20D253F30081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FE220D254110081F31B /* libRCTBlob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBlob.a;
+			remoteRef = 1FA43FE120D254110081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FE420D254110081F31B /* libRCTBlob-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTBlob-tvOS.a";
+			remoteRef = 1FA43FE320D254110081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FEA20D2542D0081F31B /* libRCTGeolocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTGeolocation.a;
+			remoteRef = 1FA43FE920D2542D0081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FF120D254480081F31B /* libRCTImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTImage.a;
+			remoteRef = 1FA43FF020D254480081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FF320D254480081F31B /* libRCTImage-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTImage-tvOS.a";
+			remoteRef = 1FA43FF220D254480081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FFA20D254600081F31B /* libRCTLinking.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTLinking.a;
+			remoteRef = 1FA43FF920D254600081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA43FFC20D254600081F31B /* libRCTLinking-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTLinking-tvOS.a";
+			remoteRef = 1FA43FFB20D254600081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4400320D254760081F31B /* libRCTNetwork.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTNetwork.a;
+			remoteRef = 1FA4400220D254760081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4400520D254760081F31B /* libRCTNetwork-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTNetwork-tvOS.a";
+			remoteRef = 1FA4400420D254760081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4400C20D254890081F31B /* libRCTSettings.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTSettings.a;
+			remoteRef = 1FA4400B20D254890081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4400E20D254890081F31B /* libRCTSettings-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTSettings-tvOS.a";
+			remoteRef = 1FA4400D20D254890081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4401520D254A30081F31B /* libRCTText.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTText.a;
+			remoteRef = 1FA4401420D254A30081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4401720D254A30081F31B /* libRCTText-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTText-tvOS.a";
+			remoteRef = 1FA4401620D254A30081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4401D20D254BA0081F31B /* libRCTVibration.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTVibration.a;
+			remoteRef = 1FA4401C20D254BA0081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4402620D254D70081F31B /* libRCTWebSocket.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWebSocket.a;
+			remoteRef = 1FA4402520D254D70081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4402820D254D70081F31B /* libRCTWebSocket-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTWebSocket-tvOS.a";
+			remoteRef = 1FA4402720D254D70081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4402A20D254D70081F31B /* libfishhook.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfishhook.a;
+			remoteRef = 1FA4402920D254D70081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FA4402C20D254D70081F31B /* libfishhook-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libfishhook-tvOS.a";
+			remoteRef = 1FA4402B20D254D70081F31B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -439,18 +968,58 @@
 			files = (
 				1FA42B5720C7E96B0081F31B /* LaunchScreen.storyboard in Resources */,
 				1FA42B5420C7E96B0081F31B /* Assets.xcassets in Resources */,
-				1FA42B5220C7E9690081F31B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D027D92D7F73DA85DBD49B16 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EaseMob-Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED5AC6E201303C8470376868 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example-frameworks.sh",
+				"${PODS_ROOT}/Hyphenate/iOS_Pods_IMFullSDK_V3.4.1/Hyphenate.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hyphenate.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1FA42B4320C7E9690081F31B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA42B4F20C7E9690081F31B /* ViewController.m in Sources */,
+				1FA43FBC20D24ED30081F31B /* RNViewManager.m in Sources */,
+				1FA43FB920D24DFC0081F31B /* RNBridgeModuleManager.m in Sources */,
+				1FA43FBF20D24F260081F31B /* RNViewController.m in Sources */,
 				1FA42B5A20C7E96B0081F31B /* main.m in Sources */,
 				1FA42B4C20C7E9690081F31B /* AppDelegate.m in Sources */,
 			);
@@ -459,14 +1028,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1FA42B5020C7E9690081F31B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1FA42B5120C7E9690081F31B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1FA42B5520C7E96B0081F31B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -590,13 +1151,22 @@
 		};
 		1FA42B5E20C7E96B0081F31B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A610261D8B52C3A672BB879 /* Pods-EaseMob-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EaseMob-Example/HyphenateFullSDK-3.4.1",
+				);
 				INFOPLIST_FILE = "EaseMob-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hecom.EaseMob-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -606,13 +1176,22 @@
 		};
 		1FA42B5F20C7E96B0081F31B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5465088E6CEAEE1B285D53C7 /* Pods-EaseMob-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EaseMob-Example/HyphenateFullSDK-3.4.1",
+				);
 				INFOPLIST_FILE = "EaseMob-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hecom.EaseMob-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";

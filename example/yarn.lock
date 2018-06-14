@@ -3751,7 +3751,7 @@ react-is@^16.3.1:
   version "16.4.0"
   resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.4.0.tgz#cc9fdc855ac34d2e7d9d2eb7059bbc240d35ffcf"
 
-react-native-hecom-easemob@../:
+"react-native-hecom-easemob@file:..":
   version "0.0.1"
 
 react-native@0.50.0:

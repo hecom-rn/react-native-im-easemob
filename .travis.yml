@@ -14,6 +14,7 @@ matrix:
       os: osx
       osx_image: xcode9.3
       cache:
+        cocoapods: true
         yarn: true
         directories:
           - example/node_modules
@@ -24,8 +25,9 @@ matrix:
         - cd example
         - yarn
         - cd ios
+        - pod install --repo-update
       script:
-        - xcodebuild -project EaseMob-Example.xcodeproj -scheme EaseMob-Example
+        - xcodebuild -workspace EaseMob-Example.xcworkspace -scheme EaseMob-Example
           -destination 'platform=iOS Simulator,name=iPhone X,OS=11.3' build
     - language: android
       android:

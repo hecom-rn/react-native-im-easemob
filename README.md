@@ -6,24 +6,6 @@
 
 环信IM的原生接口React-Native封装库。
 
-## 配置Git-LFS
-
-下载开发时，需要先配置环境。
-
-在OS X上使用Homebrew安装Git-LFS:
-
-```
-brew install git-lfs
-```
-
-如果仓库先进行clone操作，然后安装的Git-LFS，则需要进行LFS的设置:
-
-```
-cd [PROJECT_DIR_PATH]
-git lfs install
-git lfs pull origin
-```
-
 ## 安装
 
 使用Yarn安装:
@@ -38,7 +20,32 @@ yarn add react-native-easemob
 npm install --save react-native-easemob
 ```
 
+## example工程设置
+
+下载后，在example目录中执行npm install或者yarn，而不要在根目录下安装node_modules。
+
 ## iOS环境设置
+
+添加Podfile，类似如下格式：
+
+```
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+workspace "MainProject"
+
+target "MainProject" do
+    project "./MainProject.xcodeproj"
+    pod 'Hyphenate', '= 3.4.1'
+    pod 'MJExtension', '= 3.0.13'
+end
+
+target "RNEaseMob" do
+    project "../node_modules/react-native-easemob/ios/RNEaseMob.xcodeproj"
+    pod 'Hyphenate', '= 3.4.1'
+    pod 'MJExtension', '= 3.0.13'
+end
+```
 
 在主工程中，右键添加node_modules/react-native-easemob/ios/RNEaseMob.xcodeproj。
 
@@ -52,11 +59,11 @@ npm install --save react-native-easemob
 * libiconv.tbd
 * libresolv.tbd
 * libxml2.tbd
+* libRNEaseMob.a
 
-向Build Settings → Linking → Other Linker Flags中添加-ObjC。
+向Build Settings → Linking → Other Linker Flags中添加-ObjC -lc++。
 
-* libstdc++.6.0.9.tbd设置
-* libstdc++.6.0.9.tbd
+在Build Settings中的General中，在Embedded Binaries中添加Hyphenate.framework。
 
 ## Android环境设置
 

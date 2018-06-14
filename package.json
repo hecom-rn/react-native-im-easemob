@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "eslint src/*.js src/**/*.js",
+    "lint": "node node_modules/eslint/bin/eslint.js src/*.js src/**/*.js",
     "test": "jest"
   },
   "repository": {
@@ -33,10 +33,7 @@
     "eslint": "^4.17.0",
     "eslint-plugin-react": "^7.6.1",
     "eslint-plugin-react-native": "^3.2.1",
-    "jest": "^22.1.4",
-    "prop-types": "^15.6.1",
-    "react": "^16.2.0",
-    "react-native": "^0.52.2"
+    "jest": "^22.1.4"
   },
   "jest": {
     "preset": "react-native"

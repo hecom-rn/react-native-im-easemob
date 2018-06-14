@@ -1,0 +1,16 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+workspace "EaseMob-Example"
+
+target "EaseMob-Example" do
+    project "./EaseMob-Example.xcodeproj"
+    pod 'Hyphenate', '= 3.4.1'
+    pod 'MJExtension', '= 3.0.13'
+end
+
+target "RNEaseMob" do
+    project "../../ios/RNEaseMob.xcodeproj"
+    pod 'Hyphenate', '= 3.4.1'
+    pod 'MJExtension', '= 3.0.13'
+end
