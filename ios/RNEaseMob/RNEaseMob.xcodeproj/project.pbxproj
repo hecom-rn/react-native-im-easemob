@@ -175,6 +175,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F23E46D20C7C7BA005C7A6F /* Build configuration list for PBXNativeTarget "RNEaseMob" */;
 			buildPhases = (
+				1FA43FB520D2132D0081F31B /* ShellScript */,
 				1F23E46020C7C7BA005C7A6F /* Sources */,
 				1F23E46120C7C7BA005C7A6F /* Frameworks */,
 				1F23E46220C7C7BA005C7A6F /* CopyFiles */,
@@ -218,6 +219,22 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1FA43FB520D2132D0081F31B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT\"\nexec ./install-easemob-ios.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1F23E46020C7C7BA005C7A6F /* Sources */ = {

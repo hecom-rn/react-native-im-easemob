@@ -2,9 +2,6 @@ branches:
   only:
     - master
 
-git:
-  lfs_skip_smudge: true
-
 matrix:
   include:
     - language: node_js
@@ -21,10 +18,8 @@ matrix:
         directories:
           - example/node_modules
           - $HOME/Library/Developer/Xcode/DerivedData
+          - $HOME/.rncache
       before_script:
-        - brew install git-lfs
-        - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
-        - git lfs pull
         - npm install -g yarn
         - cd example
         - yarn
