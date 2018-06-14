@@ -37,6 +37,8 @@ matrix:
         components:
           - build-tools-27.0.1
           - android-27
+        licenses:
+          - 'android-sdk-license-.+'
       cache:
         yarn: true
         directories:
