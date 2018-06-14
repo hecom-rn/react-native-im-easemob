@@ -1,7 +1,10 @@
+import { Platform } from 'react-native';
+
 export default function (func, data, hasCallback = true) {
-    const params = JSON.stringify(data);
+    const isIOS = Platform.OS === 'ios';
+    const params = isIOS ? JSON.stringify(data) : data;
     if (hasCallback) {
-        return func(params).then(result => JSON.parse(result));
+        return isIOS ? func(params).then(result => JSON.parse(result)) : func(params);
     } else {
         func(params);
     }

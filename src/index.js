@@ -8,13 +8,20 @@ export {
     ChatManager,
     Client,
 };
-
+const isIOS = Platform.OS === 'ios';
 const RNEaseMobModule = NativeModules.RNEaseMobModule;
-const event = Platform.OS === 'ios' ? new NativeEventEmitter(RNEaseMobModule) : DeviceEventEmitter;
+const event = isIOS ? new NativeEventEmitter(RNEaseMobModule) : DeviceEventEmitter;
 const handlers = {};
 
 export function initWithAppKey(appKey, options = {}) {
     return NativeUtil(RNEaseMobModule.init, {appKey, ...options});
+}
+
+/**
+ * Android Only
+ */
+export function notifyJSDidLoad() {
+    !isIOS && RNEaseMobModule.notifyJSDidLoad();
 }
 
 export function registerEventHandler(func) {

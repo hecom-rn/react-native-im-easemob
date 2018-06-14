@@ -20,11 +20,11 @@ const instructions = Platform.select({
     android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
 });
-const appKey = 'tusou001#v40test';
+const demo = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980820', password: '123'};
 export default class App extends Component {
     constructor(props) {
         super(props);
-        initWithAppKey(appKey);
+        initWithAppKey(demo.appKey);
     }
 
     render() {
