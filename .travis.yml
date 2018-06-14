@@ -52,4 +52,4 @@ matrix:
         - yarn
         - cd android
       script:
-        - gradle build
+        - ./gradlew build
