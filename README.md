@@ -54,3 +54,31 @@ npm install --save react-native-easemob
 * libxml2.tbd
 
 向Build Settings → Linking → Other Linker Flags中添加-ObjC。
+
+* libstdc++.6.0.9.tbd设置
+* libstdc++.6.0.9.tbd
+
+## Android环境设置
+
+在settings.gradle文件中添加：
+```
+include ':react-native-hecom-easemob'
+project(':react-native-hecom-easemob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-hecom-easemob/android')
+```
+在module级的build.gradle中添加：
+```
+dependencies {
+    implementation project(':react-native-hecom-easemob')
+}
+```
+在ReactNativeHost中添加：
+```
+import com.hecom.easemob.EasemobPackage;
+
+@Override
+protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+        new EasemobPackage()
+    );
+}
+```
