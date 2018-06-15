@@ -17,15 +17,17 @@ matrix:
         cocoapods: true
         yarn: true
         directories:
-          - example/node_modules
           - $HOME/Library/Developer/Xcode/DerivedData
+          - $HOME/Library/Caches/CocoaPods
           - $HOME/.rncache
+          - example/ios/Pods
+          - example/ios/EaseMob-Example.xcworkspace
       before_script:
         - npm install -g yarn
         - cd example
         - yarn
         - cd ios
-        - pod install --repo-update
+        - pod update --verbose --repo-update
       script:
         - xcodebuild -workspace EaseMob-Example.xcworkspace -scheme EaseMob-Example
           -destination 'platform=iOS Simulator,name=iPhone X,OS=11.3' build
@@ -43,7 +45,6 @@ matrix:
       cache:
         yarn: true
         directories:
-          - example/node_modules
           - $HOME/.gradle/caches/
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
