@@ -1,13 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
-import { initWithAppKey, Client } from 'react-native-hecom-easemob';
+import React  from 'react';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    TouchableHighlight,
+    TextInput,
+    ScrollView,
+} from 'react-native';
+import { initWithAppKey, Client, registerEventHandler, notifyJSDidLoad } from 'react-native-hecom-easemob';
 
-const demo = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980820', password: '123'};
+const test = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980820', password: '123'};
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        initWithAppKey(demo.appKey);
+        initWithAppKey(test.appKey);
+        registerEventHandler(newMsg => this.setState(({message}) => ({message: message + '\n' + JSON.stringify(newMsg)})))
+        this.state = {message: ''}
     }
 
     render() {
@@ -16,8 +26,17 @@ export default class extends React.Component {
                 <TextInput
                     placeholder={'账号'}
                     onChangeText={text => this.account = text}
+                    defaultValue={test.account}
                 />
-                <TextInput placeholder={'密码'} onChangeText={text => this.password = text} />
+                <TextInput
+                    placeholder={'密码'}
+                    onChangeText={text => this.password = text}
+                    defaultValue={test.password}
+                />
+                {Platform.OS === 'android' &&
+                <TouchableHighlight onPress={() => notifyJSDidLoad()}>
+                    <Text style={styles.welcome}>JS Loaded</Text>
+                </TouchableHighlight>}
                 <TouchableHighlight onPress={() => {
                     if (this.account && this.password) {
                         Client.login(this.account, this.password)
@@ -27,6 +46,9 @@ export default class extends React.Component {
                         Login
                     </Text>
                 </TouchableHighlight>
+                <ScrollView>
+                    <Text>{this.state.message}</Text>
+                </ScrollView>
             </View>
         );
     }
