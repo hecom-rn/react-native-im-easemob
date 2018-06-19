@@ -22,15 +22,17 @@ class EasemobModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void init(ReadableMap params) {
+    public void init(ReadableMap params, Promise promise) {
         EasemobHelper.getInstance().init(getReactApplicationContext(), MessageConverter.toOption(params));
+        promise.resolve(null);
     }
 
     @ReactMethod
-    public void notifyJSDidLoad() {
+    public void notifyJSDidLoad(Promise promise) {
         if (getReactApplicationContext().hasActiveCatalystInstance()) {
             EasemobHelper.getInstance().notifyJSDidLoad(getReactApplicationContext());
         }
+        promise.resolve(null);
     }
 
     @ReactMethod

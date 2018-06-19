@@ -21,7 +21,7 @@ export function initWithAppKey(appKey, options = {}) {
  * Android Only
  */
 export function notifyJSDidLoad() {
-    !isIOS && RNEaseMobModule.notifyJSDidLoad();
+    return !isIOS && RNEaseMobModule.notifyJSDidLoad();
 }
 
 export function registerEventHandler(func) {

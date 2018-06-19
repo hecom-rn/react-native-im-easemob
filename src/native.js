@@ -6,6 +6,6 @@ export default function (func, data, hasCallback = true) {
     if (hasCallback) {
         return isIOS ? func(params).then(result => JSON.parse(result)) : func(params);
     } else {
-        func(params);
+        return func(params);
     }
 }
