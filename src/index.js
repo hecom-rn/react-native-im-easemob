@@ -44,6 +44,10 @@ export const EaseMobEventTypes = {
     },
     client: {
         type: 'client',
+        logout: 'logout',
         login: 'login',
+        loginOnOtherDevice: 'loginOnOtherDevice',
+        disconnectChatServer: 'disconnectChatServer',
+        noNetwork: 'noNetwork',
     },
 };

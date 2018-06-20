@@ -2,7 +2,6 @@ package com.hecom.easemob;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Process;
 import android.util.Log;
 
@@ -11,24 +10,31 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 import static com.hecom.easemob.EventName.CMD_MESSAGE_RECEIVED;
+import static com.hecom.easemob.EventName.DISCONNECT_CHAT_SERVER;
+import static com.hecom.easemob.EventName.LOGIN_ON_OTHER_DEVICE;
+import static com.hecom.easemob.EventName.NO_NETWORK;
 import static com.hecom.easemob.EventName.TYPE_CHAT_MANAGER;
+import static com.hecom.easemob.EventName.TYPE_CLIENT;
 
 /**
+ * 环信接口辅助类
  * Created by kevin.bai on 2018/6/13.
  */
 
-public class EasemobHelper {
+class EasemobHelper {
     private static final String TAG = EasemobHelper.class.getSimpleName();
     private boolean sdkInited = false;
     private Context mContext;
@@ -39,7 +45,7 @@ public class EasemobHelper {
         private static EasemobHelper INSTANCE = new EasemobHelper();
     }
 
-    public static EasemobHelper getInstance() {
+    static EasemobHelper getInstance() {
         return Inner.INSTANCE;
     }
 
@@ -47,9 +53,9 @@ public class EasemobHelper {
         cache = new ArrayList<>();
     }
 
-    public void init(Context context, EMOptions options) {
+    void init(Context context, EMOptions options) {
         if (sdkInited) return;
-        this.mContext = context;
+        this.mContext = context.getApplicationContext();
         int pid = Process.myPid();
         String processAppName = getAppName(pid);
         if (processAppName == null || !processAppName.equalsIgnoreCase(context.getPackageName())) {
@@ -64,7 +70,7 @@ public class EasemobHelper {
         sdkInited = true;
     }
 
-    public void notifyJSDidLoad(ReactContext reactContext) {
+    void notifyJSDidLoad(ReactContext reactContext) {
         this.mReactContext = reactContext;
         sendCachedEvent();
     }
@@ -76,6 +82,27 @@ public class EasemobHelper {
     }
 
     private void registerListener() {
+        EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
+            @Override
+            public void onConnected() {
+
+            }
+
+            @Override
+            public void onDisconnected(int i) {
+                if (i == EMError.USER_REMOVED) {
+                    // 账号在服务端被删除
+                } else if (i == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                    sendEvent(TYPE_CLIENT, LOGIN_ON_OTHER_DEVICE);
+                } else {
+                    if (NetUtils.hasNetwork(mContext)) {
+                        sendEvent(TYPE_CLIENT, DISCONNECT_CHAT_SERVER);
+                    } else {
+                        sendEvent(TYPE_CLIENT, NO_NETWORK);
+                    }
+                }
+            }
+        });
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> list) {
@@ -107,6 +134,10 @@ public class EasemobHelper {
 
             }
         });
+    }
+
+    private void sendEvent(String type, String subType) {
+        sendEvent(type, subType, null);
     }
 
     private void sendEvent(String type, String subType, Object data) {
@@ -155,21 +186,19 @@ public class EasemobHelper {
     }
 
     private String getAppName(int pid) {
-        String processName = null;
         ActivityManager am = (ActivityManager) mContext.getSystemService(ACTIVITY_SERVICE);
-        List l = am.getRunningAppProcesses();
-        Iterator i = l.iterator();
-        PackageManager pm = mContext.getPackageManager();
-        while (i.hasNext()) {
-            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
-            try {
-                if (info.pid == pid) {
-                    processName = info.processName;
-                    return processName;
+        if (am != null) {
+            List l = am.getRunningAppProcesses();
+            for (Object aL : l) {
+                ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (aL);
+                try {
+                    if (info.pid == pid) {
+                        return info.processName;
+                    }
+                } catch (Exception ignore) {
                 }
-            } catch (Exception ignore) {
             }
         }
-        return processName;
+        return null;
     }
 }

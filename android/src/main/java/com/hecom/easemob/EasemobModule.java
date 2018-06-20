@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.hyphenate.chat.EMClient;
 
 /**
+ * 环信JS接口类
  * Created by kevin.bai on 2018/6/12.
  */
 
