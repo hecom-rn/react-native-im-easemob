@@ -6,8 +6,8 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import "RCTBridgeModule.h"
-#import "Hyphenate.h"
+#import <React/RCTBridgeModule.h>
+#import <Hyphenate/Hyphenate.h>
 #import "Singleton.h"
 
 @interface ChatroomManagerModule : NSObject <RCTBridgeModule, EMChatroomManagerDelegate>

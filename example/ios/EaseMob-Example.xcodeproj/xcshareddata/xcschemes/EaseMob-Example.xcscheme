@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "83CBBA2D1A601D0E00E9B192"
+               BuildableName = "libReact.a"
+               BlueprintName = "React"
+               ReferencedContainer = "container:../node_modules/react-native/React/React.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "1FA42B4620C7E9690081F31B"
                BuildableName = "EaseMob-Example.app"
                BlueprintName = "EaseMob-Example"
