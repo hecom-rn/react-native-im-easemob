@@ -6,8 +6,8 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
+#import "RCTBridgeModule.h"
+#import "RCTEventEmitter.h"
 #import "Singleton.h"
 
 @interface RNEaseMobModule : RCTEventEmitter <RCTBridgeModule>

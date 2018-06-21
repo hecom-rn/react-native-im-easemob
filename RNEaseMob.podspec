@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author             = { "Xiaosong Gao" => "gaoxiaosong06@gmail.com" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/RNCommon/react-native-easemob.git", :tag => s.version }
-  s.source_files  = "ios"
+  s.source_files  = "ios", "ios/easemob", "ios/util"
   s.exclude_files = ""
   # s.public_header_files = "Classes/**/*.h"
   # s.resource  = "icon.png"
