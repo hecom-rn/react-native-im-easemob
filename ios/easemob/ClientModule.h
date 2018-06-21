@@ -1,5 +1,5 @@
 //
-//  ContactManagerModule.h
+//  ClientModule.h
 //  RNEaseMob
 //
 //  Created by Xiaosong Gao on 2018/6/13.
@@ -8,9 +8,10 @@
 
 #import <React/RCTBridgeModule.h>
 #import <Hyphenate/Hyphenate.h>
+#import "Singleton.h"
 
-@interface ContactManagerModule : NSObject <RCTBridgeModule, EMContactManagerDelegate>
+@interface ClientModule : NSObject <RCTBridgeModule, EMClientDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(ContactManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ClientModule);
 
 @end

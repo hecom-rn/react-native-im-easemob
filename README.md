@@ -1,8 +1,8 @@
 # react-native-easemob
 
-[![Build Status](https://travis-ci.org/HecomBJ/react-native-easemob.svg?branch=master)](https://travis-ci.org/HecomBJ/react-native-easemob)
+[![Build Status](https://travis-ci.org/RNCommon/react-native-easemob.svg?branch=master)](https://travis-ci.org/RNCommon/react-native-easemob)
 [![React Native](https://img.shields.io/badge/react%20native-0.52.2-brightgreen.svg)](https://github.com/facebook/react-native)
-[![License](https://img.shields.io/aur/license/yaourt.svg)](https://github.com/HecomBJ/react-native-easemob/blob/master/LICENSE)
+[![License](https://img.shields.io/aur/license/yaourt.svg)](https://github.com/RNCommon/react-native-easemob/blob/master/LICENSE)
 
 环信IM的原生接口React-Native封装库。
 

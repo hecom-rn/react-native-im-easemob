@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HecomBJ/react-native-easemob.git"
+    "url": "git+https://github.com/RNCommon/react-native-easemob.git"
   },
   "keywords": [
     "React-Native",
@@ -21,10 +21,10 @@
   "author": "Xiaosong Gao",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/HecomBJ/react-native-easemob/issues",
+    "url": "https://github.com/RNCommon/react-native-easemob/issues",
     "email": "gaoxiaosong06@gmail.com"
   },
-  "homepage": "https://github.com/HecomBJ/react-native-easemob#readme",
+  "homepage": "https://github.com/RNCommon/react-native-easemob#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",

@@ -1,5 +1,5 @@
 //
-//  GroupManagerModule.h
+//  ChatManagerModule.h
 //  RNEaseMob
 //
 //  Created by Xiaosong Gao on 2018/6/13.
@@ -8,9 +8,10 @@
 
 #import <React/RCTBridgeModule.h>
 #import <Hyphenate/Hyphenate.h>
+#import "Singleton.h"
 
-@interface GroupManagerModule : NSObject <RCTBridgeModule, EMGroupManagerDelegate>
+@interface ChatManagerModule : NSObject <RCTBridgeModule, EMChatManagerDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(GroupManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ChatManagerModule);
 
 @end

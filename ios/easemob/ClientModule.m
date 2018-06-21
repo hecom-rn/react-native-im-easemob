@@ -8,6 +8,7 @@
 
 #import "ClientModule.h"
 #import "RNEaseMobModule.h"
+#import "NSString+Util.h"
 
 static NSString * const type = @"client";
 static NSString * const subtype_login = @"login";

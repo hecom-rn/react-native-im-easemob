@@ -57,13 +57,14 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNEaseMob (0.0.1)
   - yoga (0.50.0.React)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - GLog (from `../node_modules/react-native/third-party-podspecs/GLog.podspec`)
-  - Hyphenate
+  - Hyphenate (~> 3.4.2)
   - React (from `../node_modules/react-native`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNEaseMob (from `../../RNEaseMob.podspec`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -89,6 +91,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/GLog.podspec"
   React:
     :path: "../node_modules/react-native"
+  RNEaseMob:
+    :podspec: "../../RNEaseMob.podspec"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -99,8 +103,9 @@ SPEC CHECKSUMS:
   GLog: 3e4e4ae9746ce6bf6e9420c7fc1e08ad59c8ba1a
   Hyphenate: 25e6dc90d5171a5bf77a92fa11a7638db85575d0
   React: 9914d9682e3e7f052c6e9d3ada61378014dca2ac
+  RNEaseMob: 35ce04745b72fc6a637ad771a248dd036b19f8b4
   yoga: 17521bbb0dd54a47c0b3ac43253e78cdac7488e0
 
-PODFILE CHECKSUM: be1691d30c914c77409c767df8041a6a3344d4f8
+PODFILE CHECKSUM: d47bc2a9761519f6d9ac4efd4990fdbf42b5f40b
 
 COCOAPODS: 1.5.3

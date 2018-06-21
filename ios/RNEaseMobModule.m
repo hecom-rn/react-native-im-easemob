@@ -13,6 +13,8 @@
 #import "GroupManagerModule.h"
 #import "ContactManagerModule.h"
 #import "ChatroomManagerModule.h"
+#import "NSString+Util.h"
+#import "NSObject+Util.h"
 
 NSString * const EASEMOB_EVENT_NAME = @"RNEaseMob";
 

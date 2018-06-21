@@ -8,6 +8,7 @@
 
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
+#import "Singleton.h"
 
 @interface RNEaseMobModule : RCTEventEmitter <RCTBridgeModule>
 
