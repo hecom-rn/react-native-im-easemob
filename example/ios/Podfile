@@ -1,16 +1,28 @@
-source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-workspace "EaseMob-Example"
-
-target "EaseMob-Example" do
-    project "./EaseMob-Example.xcodeproj"
-    pod 'Hyphenate', '= 3.4.1'
-    pod 'MJExtension', '= 3.0.13'
-end
-
-target "RNEaseMob" do
-    project "../../ios/RNEaseMob.xcodeproj"
-    pod 'Hyphenate', '= 3.4.1'
-    pod 'MJExtension', '= 3.0.13'
+target 'EaseMob-Example' do
+    pod 'React', :path => '../node_modules/react-native'
+    pod 'React', :path => '../node_modules/react-native', :subspecs => [
+        'Core',
+        'CxxBridge',
+        'DevSupport',
+        'RCTText',
+        'RCTNetwork',
+        'RCTWebSocket',
+        'RCTAnimation',
+        'BatchedBridge',
+    ]
+    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+    pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+    pod 'GLog', :podspec => '../node_modules/react-native/third-party-podspecs/GLog.podspec'
+    pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+    pod 'Hyphenate', '~> 3.4.2'
+    pod 'RNEaseMob', :podspec => '../../RNEaseMob.podspec'
+    post_install do |installer|
+        installer.pods_project.targets.each do |target|
+            if target.name == "React"
+                target.remove_from_project
+            end
+        end
+    end
 end
