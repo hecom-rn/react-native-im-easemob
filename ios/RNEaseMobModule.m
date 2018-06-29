@@ -56,15 +56,15 @@ RCT_EXPORT_MODULE();
     NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
     [body setObject:type forKey:@"type"];
     [body setObject:subType forKey:@"subType"];
-    if ([body objectForKey:@"error_message"]) {
-        [body removeObjectForKey:@"error_message"];
+    if ([body objectForKey:@"errorMessage"]) {
+        [body removeObjectForKey:@"errorMessage"];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
 
 + (void)sendError:(NSString *)message data:(NSDictionary *)data {
     NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
-    [body setObject:message forKey:@"error_message"];
+    [body setObject:message forKey:@"errorMessage"];
     [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
 

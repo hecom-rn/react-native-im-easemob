@@ -37,9 +37,9 @@ RCT_EXPORT_METHOD(login:(NSString *)params
     if (!isAutoLoginEnabled) {
         [[EMClient sharedClient] loginWithUsername:username password:password completion:^(NSString *aUsername, EMError *aError) {
             if (!aError) {
-                [RNEaseMobModule sendEventByType:type subType:subtype_login data:@{username: aUsername}];
+                resolve(@"{}");
             } else {
-                [RNEaseMobModule sendError:aError.errorDescription data:nil];
+                reject([NSString stringWithFormat:@"%ld",(long)aError.code],aError.errorDescription,nil);
             }
         }];
     }
