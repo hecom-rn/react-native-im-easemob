@@ -34,7 +34,23 @@ RCT_EXPORT_MODULE();
     return @[EASEMOB_EVENT_NAME];
 }
 
-- (void)sendEventByType:(NSString *)type
+- (void)startObserving {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sendEaseMobEvent:)
+                                                 name:EASEMOB_EVENT_NAME
+                                               object:nil];
+}
+
+- (void)stopObserving {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)sendEaseMobEvent:(NSNotification *)notification {
+    [self sendEventWithName:EASEMOB_EVENT_NAME
+                       body:notification.object];
+}
+
++ (void)sendEventByType:(NSString *)type
                 subType:(NSString *)subType
                    data:(NSDictionary *)data {
     NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
@@ -43,17 +59,13 @@ RCT_EXPORT_MODULE();
     if ([body objectForKey:@"error_message"]) {
         [body removeObjectForKey:@"error_message"];
     }
-    [self sendEvent:body];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
 
-- (void)sendError:(NSString *)message data:(NSDictionary *)data {
++ (void)sendError:(NSString *)message data:(NSDictionary *)data {
     NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
     [body setObject:message forKey:@"error_message"];
-    [self sendEvent:body];
-}
-
-- (void)sendEvent:(NSDictionary *)params {
-    [self sendEventWithName:EASEMOB_EVENT_NAME body:params];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
 
 #pragma mark - App
@@ -80,6 +92,7 @@ RCT_EXPORT_METHOD(init:(NSString *)params
     [[EMClient sharedClient].contactManager addDelegate:[ContactManagerModule sharedContactManagerModule] delegateQueue:nil];
     [[EMClient sharedClient].roomManager addDelegate:[ChatroomManagerModule sharedChatroomManagerModule] delegateQueue:nil];
     [[EMClient sharedClient].chatManager addDelegate:[ChatManagerModule sharedChatManagerModule] delegateQueue:nil];
+    resolve(@"{}");
 }
 
 @end

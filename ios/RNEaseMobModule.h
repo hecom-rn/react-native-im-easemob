@@ -14,11 +14,11 @@
 
 DEFINE_SINGLETON_FOR_HEADER(RNEaseMobModule);
 
-- (void)sendEventByType:(NSString *)type
++ (void)sendEventByType:(NSString *)type
                 subType:(NSString *)subType
                    data:(NSDictionary *)data;
 
-- (void)sendError:(NSString *)message
++ (void)sendError:(NSString *)message
              data:(NSDictionary *)data;
 
 @end
