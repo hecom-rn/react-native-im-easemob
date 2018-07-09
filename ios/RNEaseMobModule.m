@@ -95,4 +95,19 @@ RCT_EXPORT_METHOD(init:(NSString *)params
     resolve(@"{}");
 }
 
+RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[RNEaseMobModule sharedRNEaseMobModule] logout_local:resolve rejecter:reject];
+}
+
+- (void)logout_local:(RCTPromiseResolveBlock)resolve
+            rejecter:(RCTPromiseRejectBlock)reject {
+    EMError *error = [[EMClient sharedClient] logout:YES];
+    if (!error) {
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
 @end

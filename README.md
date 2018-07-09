@@ -32,22 +32,12 @@ npm install --save react-native-easemob
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-workspace "MainProject"
-
 target "MainProject" do
-    project "./MainProject.xcodeproj"
-    pod 'Hyphenate', '= 3.4.1'
-    pod 'MJExtension', '= 3.0.13'
-end
-
-target "RNEaseMob" do
-    project "../node_modules/react-native-easemob/ios/RNEaseMob.xcodeproj"
-    pod 'Hyphenate', '= 3.4.1'
-    pod 'MJExtension', '= 3.0.13'
+    pod 'Hyphenate', '= 3.4.2'
 end
 ```
 
-在主工程中，右键添加node_modules/react-native-easemob/ios/RNEaseMob.xcodeproj。
+在主工程中，右键添加ios目录中的所有源文件。
 
 向Build → Link Binary With Libraries中添加依赖库：
 
@@ -59,7 +49,6 @@ end
 * libiconv.tbd
 * libresolv.tbd
 * libxml2.tbd
-* libRNEaseMob.a
 
 向Build Settings → Linking → Other Linker Flags中添加-ObjC -lc++。
 
