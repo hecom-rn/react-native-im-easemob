@@ -1,20 +1,24 @@
 PODS:
   - Hyphenate (3.4.2)
   - MJExtension (3.0.15.1)
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - Hyphenate (~> 3.4.2)
   - MJExtension
+  - YYModel
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Hyphenate
     - MJExtension
+    - YYModel
 
 SPEC CHECKSUMS:
   Hyphenate: 25e6dc90d5171a5bf77a92fa11a7638db85575d0
   MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 6ccfb67a0d69ce331ab2cc8b88cd09be33824f04
+PODFILE CHECKSUM: 9cb657c483be809dd654507ee19e1ec831f87931
 
 COCOAPODS: 1.5.3
