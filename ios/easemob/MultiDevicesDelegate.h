@@ -10,8 +10,8 @@
 #import <Hyphenate/Hyphenate.h>
 #import "Singleton.h"
 
-@interface MultiDevicesModule : NSObject <RCTBridgeModule, EMMultiDevicesDelegate>
+@interface MultiDevicesDelegate : NSObject <RCTBridgeModule, EMMultiDevicesDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(MultiDevicesModule);
+DEFINE_SINGLETON_FOR_HEADER(MultiDevicesDelegate);
 
 @end

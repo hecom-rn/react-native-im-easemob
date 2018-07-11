@@ -27,15 +27,16 @@
 		1FF3FB3C20DB7DCB00696962 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF3FAC320DA5B3D00696962 /* libRCTNetwork.a */; };
 		1FF3FB3D20DB7DCB00696962 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF3FAB920DA5AFF00696962 /* libRCTText.a */; };
 		1FF3FB3E20DB7DCB00696962 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF3FAAA20DA5AB600696962 /* libRCTWebSocket.a */; };
-		1FF3FB5520DB7E4600696962 /* ChatroomManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4120DB7E4500696962 /* ChatroomManagerModule.m */; };
-		1FF3FB5620DB7E4600696962 /* ClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4420DB7E4500696962 /* ClientModule.m */; };
-		1FF3FB5720DB7E4600696962 /* MultiDevicesModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4720DB7E4500696962 /* MultiDevicesModule.m */; };
-		1FF3FB5820DB7E4600696962 /* GroupManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4A20DB7E4500696962 /* GroupManagerModule.m */; };
-		1FF3FB5920DB7E4600696962 /* ChatManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4B20DB7E4500696962 /* ChatManagerModule.m */; };
-		1FF3FB5A20DB7E4600696962 /* ContactManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB4C20DB7E4500696962 /* ContactManagerModule.m */; };
 		1FF3FB5B20DB7E4600696962 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB5020DB7E4500696962 /* NSString+Util.m */; };
 		1FF3FB5C20DB7E4600696962 /* NSObject+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB5120DB7E4500696962 /* NSObject+Util.m */; };
-		1FF3FB5D20DB7E4600696962 /* RNEaseMobModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FB5420DB7E4500696962 /* RNEaseMobModule.m */; };
+		22E7656C20F5B14000C9EEFD /* MultiDevicesDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7655E20F5B13F00C9EEFD /* MultiDevicesDelegate.m */; };
+		22E7656D20F5B14000C9EEFD /* ContactManagerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7656020F5B13F00C9EEFD /* ContactManagerDelegate.m */; };
+		22E7656E20F5B14000C9EEFD /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7656120F5B14000C9EEFD /* Client.m */; };
+		22E7656F20F5B14000C9EEFD /* ChatManagerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7656220F5B14000C9EEFD /* ChatManagerDelegate.m */; };
+		22E7657020F5B14000C9EEFD /* ClientDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7656520F5B14000C9EEFD /* ClientDelegate.m */; };
+		22E7657220F5B14000C9EEFD /* GroupManagerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7656B20F5B14000C9EEFD /* GroupManagerDelegate.m */; };
+		22E7657520F5D66900C9EEFD /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7657420F5D66900C9EEFD /* ChatManager.m */; };
+		22E7659020F5D6BA00C9EEFD /* GroupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E7658F20F5D6BA00C9EEFD /* GroupManager.m */; };
 		5ACDAB4BC01BE992D96F36D9 /* libPods-EaseMob-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFFC349FC37AAB5BF11D3E /* libPods-EaseMob-Example.a */; };
 /* End PBXBuildFile section */
 
@@ -252,26 +253,29 @@
 		1FF3FAB320DA5AFF00696962 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		1FF3FABD20DA5B3D00696962 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		1FF3FAC720DA5B8000696962 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		1FF3FB4120DB7E4500696962 /* ChatroomManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomManagerModule.m; sourceTree = "<group>"; };
-		1FF3FB4220DB7E4500696962 /* MultiDevicesModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiDevicesModule.h; sourceTree = "<group>"; };
-		1FF3FB4320DB7E4500696962 /* GroupManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupManagerModule.h; sourceTree = "<group>"; };
-		1FF3FB4420DB7E4500696962 /* ClientModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientModule.m; sourceTree = "<group>"; };
-		1FF3FB4520DB7E4500696962 /* ContactManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManagerModule.h; sourceTree = "<group>"; };
-		1FF3FB4620DB7E4500696962 /* ChatManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManagerModule.h; sourceTree = "<group>"; };
-		1FF3FB4720DB7E4500696962 /* MultiDevicesModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiDevicesModule.m; sourceTree = "<group>"; };
-		1FF3FB4820DB7E4500696962 /* ChatroomManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomManagerModule.h; sourceTree = "<group>"; };
-		1FF3FB4920DB7E4500696962 /* ClientModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientModule.h; sourceTree = "<group>"; };
-		1FF3FB4A20DB7E4500696962 /* GroupManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupManagerModule.m; sourceTree = "<group>"; };
-		1FF3FB4B20DB7E4500696962 /* ChatManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManagerModule.m; sourceTree = "<group>"; };
-		1FF3FB4C20DB7E4500696962 /* ContactManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManagerModule.m; sourceTree = "<group>"; };
-		1FF3FB4D20DB7E4500696962 /* RNEaseMobModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEaseMobModule.h; sourceTree = "<group>"; };
 		1FF3FB4F20DB7E4500696962 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		1FF3FB5020DB7E4500696962 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		1FF3FB5120DB7E4500696962 /* NSObject+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Util.m"; sourceTree = "<group>"; };
 		1FF3FB5220DB7E4500696962 /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		1FF3FB5320DB7E4500696962 /* NSObject+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Util.h"; sourceTree = "<group>"; };
-		1FF3FB5420DB7E4500696962 /* RNEaseMobModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEaseMobModule.m; sourceTree = "<group>"; };
 		22CFFC349FC37AAB5BF11D3E /* libPods-EaseMob-Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EaseMob-Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22E7655D20F5B13F00C9EEFD /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
+		22E7655E20F5B13F00C9EEFD /* MultiDevicesDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiDevicesDelegate.m; sourceTree = "<group>"; };
+		22E7655F20F5B13F00C9EEFD /* ClientDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientDelegate.h; sourceTree = "<group>"; };
+		22E7656020F5B13F00C9EEFD /* ContactManagerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManagerDelegate.m; sourceTree = "<group>"; };
+		22E7656120F5B14000C9EEFD /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
+		22E7656220F5B14000C9EEFD /* ChatManagerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManagerDelegate.m; sourceTree = "<group>"; };
+		22E7656320F5B14000C9EEFD /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		22E7656420F5B14000C9EEFD /* MultiDevicesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiDevicesDelegate.h; sourceTree = "<group>"; };
+		22E7656520F5B14000C9EEFD /* ClientDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientDelegate.m; sourceTree = "<group>"; };
+		22E7656620F5B14000C9EEFD /* ContactManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManagerDelegate.h; sourceTree = "<group>"; };
+		22E7656720F5B14000C9EEFD /* ChatManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManagerDelegate.h; sourceTree = "<group>"; };
+		22E7656A20F5B14000C9EEFD /* GroupManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupManagerDelegate.h; sourceTree = "<group>"; };
+		22E7656B20F5B14000C9EEFD /* GroupManagerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupManagerDelegate.m; sourceTree = "<group>"; };
+		22E7657320F5D66900C9EEFD /* ChatManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
+		22E7657420F5D66900C9EEFD /* ChatManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatManager.m; sourceTree = "<group>"; };
+		22E7658E20F5D6BA00C9EEFD /* GroupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupManager.h; sourceTree = "<group>"; };
+		22E7658F20F5D6BA00C9EEFD /* GroupManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupManager.m; sourceTree = "<group>"; };
 		3A610261D8B52C3A672BB879 /* Pods-EaseMob-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EaseMob-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5465088E6CEAEE1B285D53C7 /* Pods-EaseMob-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EaseMob-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EaseMob-Example/Pods-EaseMob-Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -442,8 +446,6 @@
 			children = (
 				1FF3FB4020DB7E4500696962 /* easemob */,
 				1FF3FB4E20DB7E4500696962 /* util */,
-				1FF3FB4D20DB7E4500696962 /* RNEaseMobModule.h */,
-				1FF3FB5420DB7E4500696962 /* RNEaseMobModule.m */,
 			);
 			name = ios;
 			path = ../../../ios;
@@ -452,18 +454,23 @@
 		1FF3FB4020DB7E4500696962 /* easemob */ = {
 			isa = PBXGroup;
 			children = (
-				1FF3FB4820DB7E4500696962 /* ChatroomManagerModule.h */,
-				1FF3FB4120DB7E4500696962 /* ChatroomManagerModule.m */,
-				1FF3FB4620DB7E4500696962 /* ChatManagerModule.h */,
-				1FF3FB4B20DB7E4500696962 /* ChatManagerModule.m */,
-				1FF3FB4920DB7E4500696962 /* ClientModule.h */,
-				1FF3FB4420DB7E4500696962 /* ClientModule.m */,
-				1FF3FB4520DB7E4500696962 /* ContactManagerModule.h */,
-				1FF3FB4C20DB7E4500696962 /* ContactManagerModule.m */,
-				1FF3FB4320DB7E4500696962 /* GroupManagerModule.h */,
-				1FF3FB4A20DB7E4500696962 /* GroupManagerModule.m */,
-				1FF3FB4220DB7E4500696962 /* MultiDevicesModule.h */,
-				1FF3FB4720DB7E4500696962 /* MultiDevicesModule.m */,
+				22E7656320F5B14000C9EEFD /* Constant.h */,
+				22E7656720F5B14000C9EEFD /* ChatManagerDelegate.h */,
+				22E7656220F5B14000C9EEFD /* ChatManagerDelegate.m */,
+				22E7655F20F5B13F00C9EEFD /* ClientDelegate.h */,
+				22E7656520F5B14000C9EEFD /* ClientDelegate.m */,
+				22E7656620F5B14000C9EEFD /* ContactManagerDelegate.h */,
+				22E7656020F5B13F00C9EEFD /* ContactManagerDelegate.m */,
+				22E7656A20F5B14000C9EEFD /* GroupManagerDelegate.h */,
+				22E7656B20F5B14000C9EEFD /* GroupManagerDelegate.m */,
+				22E7656420F5B14000C9EEFD /* MultiDevicesDelegate.h */,
+				22E7655E20F5B13F00C9EEFD /* MultiDevicesDelegate.m */,
+				22E7655D20F5B13F00C9EEFD /* Client.h */,
+				22E7656120F5B14000C9EEFD /* Client.m */,
+				22E7657320F5D66900C9EEFD /* ChatManager.h */,
+				22E7657420F5D66900C9EEFD /* ChatManager.m */,
+				22E7658E20F5D6BA00C9EEFD /* GroupManager.h */,
+				22E7658F20F5D6BA00C9EEFD /* GroupManager.m */,
 			);
 			path = easemob;
 			sourceTree = "<group>";
@@ -793,19 +800,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FF3FB5D20DB7E4600696962 /* RNEaseMobModule.m in Sources */,
+				22E7659020F5D6BA00C9EEFD /* GroupManager.m in Sources */,
 				1FA43FBC20D24ED30081F31B /* RNViewManager.m in Sources */,
+				22E7657520F5D66900C9EEFD /* ChatManager.m in Sources */,
+				22E7657020F5B14000C9EEFD /* ClientDelegate.m in Sources */,
+				22E7656F20F5B14000C9EEFD /* ChatManagerDelegate.m in Sources */,
+				22E7657220F5B14000C9EEFD /* GroupManagerDelegate.m in Sources */,
+				22E7656C20F5B14000C9EEFD /* MultiDevicesDelegate.m in Sources */,
 				1FA43FB920D24DFC0081F31B /* RNBridgeModuleManager.m in Sources */,
-				1FF3FB5A20DB7E4600696962 /* ContactManagerModule.m in Sources */,
 				1FA43FBF20D24F260081F31B /* RNViewController.m in Sources */,
-				1FF3FB5720DB7E4600696962 /* MultiDevicesModule.m in Sources */,
+				22E7656D20F5B14000C9EEFD /* ContactManagerDelegate.m in Sources */,
 				1FA42B5A20C7E96B0081F31B /* main.m in Sources */,
-				1FF3FB5520DB7E4600696962 /* ChatroomManagerModule.m in Sources */,
 				1FF3FB5B20DB7E4600696962 /* NSString+Util.m in Sources */,
-				1FF3FB5620DB7E4600696962 /* ClientModule.m in Sources */,
 				1FF3FB5C20DB7E4600696962 /* NSObject+Util.m in Sources */,
-				1FF3FB5920DB7E4600696962 /* ChatManagerModule.m in Sources */,
-				1FF3FB5820DB7E4600696962 /* GroupManagerModule.m in Sources */,
+				22E7656E20F5B14000C9EEFD /* Client.m in Sources */,
 				1FA42B4C20C7E9690081F31B /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,16 +1,20 @@
 PODS:
   - Hyphenate (3.4.2)
+  - MJExtension (3.0.15.1)
 
 DEPENDENCIES:
   - Hyphenate (~> 3.4.2)
+  - MJExtension
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Hyphenate
+    - MJExtension
 
 SPEC CHECKSUMS:
   Hyphenate: 25e6dc90d5171a5bf77a92fa11a7638db85575d0
+  MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
 
-PODFILE CHECKSUM: 9d7cca5916f4f1293184fd49da682e23043c6463
+PODFILE CHECKSUM: 6ccfb67a0d69ce331ab2cc8b88cd09be33824f04
 
 COCOAPODS: 1.5.3

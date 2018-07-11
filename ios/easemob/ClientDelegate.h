@@ -1,5 +1,5 @@
 //
-//  GroupManagerModule.h
+//  ClientModule.h
 //  RNEaseMob
 //
 //  Created by Xiaosong Gao on 2018/6/13.
@@ -10,8 +10,8 @@
 #import <Hyphenate/Hyphenate.h>
 #import "Singleton.h"
 
-@interface GroupManagerModule : NSObject <RCTBridgeModule, EMGroupManagerDelegate>
+@interface ClientDelegate : NSObject <RCTBridgeModule, EMClientDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(GroupManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ClientDelegate);
 
 @end

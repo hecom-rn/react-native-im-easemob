@@ -6,11 +6,11 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import "ContactManagerModule.h"
+#import "ContactManagerDelegate.h"
 
-@implementation ContactManagerModule
+@implementation ContactManagerDelegate
 
-DEFINE_SINGLETON_FOR_CLASS(ContactManagerModule);
+DEFINE_SINGLETON_FOR_CLASS(ContactManagerDelegate);
 
 RCT_EXPORT_MODULE();
 

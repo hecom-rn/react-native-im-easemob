@@ -6,14 +6,13 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import "ChatManagerModule.h"
-#import "RNEaseMobModule.h"
+#import "ChatManagerDelegate.h"
 
 static NSString * const type = @"chat_manager";
 
-@implementation ChatManagerModule
+@implementation ChatManagerDelegate
 
-DEFINE_SINGLETON_FOR_CLASS(ChatManagerModule);
+DEFINE_SINGLETON_FOR_CLASS(ChatManagerDelegate);
 
 RCT_EXPORT_MODULE();
 

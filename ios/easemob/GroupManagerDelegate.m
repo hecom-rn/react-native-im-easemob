@@ -6,11 +6,11 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import "GroupManagerModule.h"
+#import "GroupManagerDelegate.h"
 
-@implementation GroupManagerModule
+@implementation GroupManagerDelegate
 
-DEFINE_SINGLETON_FOR_CLASS(GroupManagerModule);
+DEFINE_SINGLETON_FOR_CLASS(GroupManagerDelegate);
 
 RCT_EXPORT_MODULE();
 

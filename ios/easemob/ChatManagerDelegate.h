@@ -10,8 +10,8 @@
 #import <Hyphenate/Hyphenate.h>
 #import "Singleton.h"
 
-@interface ChatManagerModule : NSObject <RCTBridgeModule, EMChatManagerDelegate>
+@interface ChatManagerDelegate : NSObject <RCTBridgeModule, EMChatManagerDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(ChatManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ChatManagerDelegate);
 
 @end

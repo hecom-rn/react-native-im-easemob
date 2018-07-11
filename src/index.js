@@ -9,7 +9,7 @@ export {
     Client,
 };
 const isIOS = Platform.OS === 'ios';
-const RNEaseMobModule = NativeModules.RNEaseMobModule;
+const RNEaseMobModule = NativeModules.Client;
 const event = isIOS ? new NativeEventEmitter(RNEaseMobModule) : DeviceEventEmitter;
 const handlers = {};
 

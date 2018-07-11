@@ -1,18 +1,18 @@
 //
-//  RNEaseMobModule.h
-//  RNEaseMob
+//  Client.h
+//  CRMPro
 //
-//  Created by Xiaosong Gao on 2018/6/12.
-//  Copyright © 2018年 Hecom. All rights reserved.
+//  Created by zzg on 2018/7/11.
+//  Copyright © 2018年 zhangchunshang. All rights reserved.
 //
 
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 #import "Singleton.h"
 
-@interface RNEaseMobModule : RCTEventEmitter <RCTBridgeModule>
+@interface Client : RCTEventEmitter <RCTBridgeModule>
 
-DEFINE_SINGLETON_FOR_HEADER(RNEaseMobModule);
+DEFINE_SINGLETON_FOR_HEADER(Client);
 
 + (void)sendEventByType:(NSString *)type
                 subType:(NSString *)subType

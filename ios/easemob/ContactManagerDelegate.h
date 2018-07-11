@@ -10,8 +10,8 @@
 #import <Hyphenate/Hyphenate.h>
 #import "Singleton.h"
 
-@interface ContactManagerModule : NSObject <RCTBridgeModule, EMContactManagerDelegate>
+@interface ContactManagerDelegate : NSObject <RCTBridgeModule, EMContactManagerDelegate>
 
-DEFINE_SINGLETON_FOR_HEADER(ContactManagerModule);
+DEFINE_SINGLETON_FOR_HEADER(ContactManagerDelegate);
 
 @end

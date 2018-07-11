@@ -6,11 +6,11 @@
 //  Copyright © 2018年 Hecom. All rights reserved.
 //
 
-#import "MultiDevicesModule.h"
+#import "MultiDevicesDelegate.h"
 
-@implementation MultiDevicesModule
+@implementation MultiDevicesDelegate
 
-DEFINE_SINGLETON_FOR_CLASS(MultiDevicesModule);
+DEFINE_SINGLETON_FOR_CLASS(MultiDevicesDelegate);
 
 RCT_EXPORT_MODULE();
 
