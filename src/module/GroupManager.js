@@ -1,6 +1,3 @@
-/**
- * Created by zzg on 2018/7/11.
- */
 import { NativeModules } from 'react-native';
 import NativeUtil from '../native';
 

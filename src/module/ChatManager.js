@@ -6,4 +6,4 @@ const ChatManager = NativeModules.ChatManager;
 export const getConversation = (conversationId, type, ifCreate) =>
     NativeUtil(ChatManager.getConversation, {conversationId, type, ifCreate});
 
-export const getAllConversations = () => ChatManager.getAllConversations();
+export const getAllConversations = () => NativeUtil(ChatManager.getAllConversations, {});

@@ -1,22 +1,16 @@
 import React  from 'react';
-import {
-    Platform,
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight,
-    TextInput,
-    ScrollView,
-} from 'react-native';
-import { initWithAppKey, Client, registerEventHandler, notifyJSDidLoad } from 'react-native-hecom-easemob';
+import {Platform, StyleSheet, Text, View, TouchableHighlight, TextInput, ScrollView} from 'react-native';
+import { Client, EventEmitter } from 'react-native-hecom-easemob';
 
 const test = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980820', password: '123'};
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        initWithAppKey(test.appKey);
-        registerEventHandler(newMsg => this.setState(({message}) => ({message: message + '\n' + JSON.stringify(newMsg)})))
+        Client.initWithAppKey(test.appKey);
+        EventEmitter.registerEventHandler(newMsg => {
+            this.setState(({message}) => ({message: message + '\n' + JSON.stringify(newMsg)}));
+        });
         this.state = {message: ''}
     }
 
@@ -34,7 +28,7 @@ export default class extends React.Component {
                     defaultValue={test.password}
                 />
                 {Platform.OS === 'android' &&
-                <TouchableHighlight onPress={() => notifyJSDidLoad()}>
+                <TouchableHighlight onPress={() => EventEmitter.notifyJSDidLoad()}>
                     <Text style={styles.welcome}>JS Loaded</Text>
                 </TouchableHighlight>}
                 <TouchableHighlight onPress={() => {
