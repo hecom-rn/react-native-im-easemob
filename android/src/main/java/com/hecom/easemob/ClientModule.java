@@ -8,18 +8,17 @@ import com.facebook.react.bridge.ReadableMap;
 import com.hyphenate.chat.EMClient;
 
 /**
- * 环信JS接口类
- * Created by kevin.bai on 2018/6/12.
+ * Created by kevin.bai on 2018/7/12.
  */
 
-class EasemobModule extends ReactContextBaseJavaModule {
-    EasemobModule(ReactApplicationContext reactContext) {
+public class ClientModule extends ReactContextBaseJavaModule {
+    public ClientModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
     @Override
     public String getName() {
-        return "RNEaseMobModule";
+        return "Client";
     }
 
     @ReactMethod

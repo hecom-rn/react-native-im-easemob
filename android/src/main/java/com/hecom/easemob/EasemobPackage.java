@@ -17,7 +17,11 @@ import java.util.List;
 public class EasemobPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new EasemobModule(reactContext));
+        return Arrays.<NativeModule>asList(
+                new ChatManager(reactContext),
+                new ClientModule(reactContext),
+                new GroupManager(reactContext)
+        );
     }
 
     public List<Class<? extends JavaScriptModule>> createJSModules() {
