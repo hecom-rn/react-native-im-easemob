@@ -10,7 +10,6 @@
 #import <Hyphenate/Hyphenate.h>
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
-#import <MJExtension/MJExtension.h>
 
 @implementation GroupManager
 
@@ -43,7 +42,7 @@ RCT_EXPORT_METHOD(createGroup:(NSString *)params
     }
     EMGroup *group = [[EMClient sharedClient].groupManager createGroupWithSubject:subject description:description invitees:invitees message:message setting:setting error:&error];
     if(!error){
-        resolve([group mj_JSONString]);
+        resolve([group objectToJSONString]);
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
     }

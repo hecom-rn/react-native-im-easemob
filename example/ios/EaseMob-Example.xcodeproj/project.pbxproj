@@ -478,11 +478,11 @@
 		1FF3FB4E20DB7E4500696962 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				1FF3FB4F20DB7E4500696962 /* Singleton.h */,
-				1FF3FB5020DB7E4500696962 /* NSString+Util.m */,
+				1FF3FB5320DB7E4500696962 /* NSObject+Util.h */,
 				1FF3FB5120DB7E4500696962 /* NSObject+Util.m */,
 				1FF3FB5220DB7E4500696962 /* NSString+Util.h */,
-				1FF3FB5320DB7E4500696962 /* NSObject+Util.h */,
+				1FF3FB5020DB7E4500696962 /* NSString+Util.m */,
+				1FF3FB4F20DB7E4500696962 /* Singleton.h */,
 			);
 			path = util;
 			sourceTree = "<group>";

@@ -11,5 +11,7 @@
 @interface NSObject (Util)
 
 - (void)updateWithDictionary:(NSDictionary *)dic;
+- (NSDictionary *)objectToDictionary;
+- (NSString *)objectToJSONString;
 
 @end

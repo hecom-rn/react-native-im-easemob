@@ -8,3 +8,7 @@
 
 
 #define EASEMOB_EVENT_NAME  @"RNEaseMob"
+
+#define JSONSTRING(obj) \
+([[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:obj options:0 error:nil] \
+encoding:NSUTF8StringEncoding])

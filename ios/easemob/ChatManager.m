@@ -10,7 +10,7 @@
 #import <Hyphenate/Hyphenate.h>
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
-#import <MJExtension/MJExtension.h>
+#import "Constant.h"
 
 @implementation ChatManager
 
@@ -32,7 +32,7 @@ RCT_EXPORT_METHOD(getConversation:(NSString *)params
     EMConversationType type = [[allParams objectForKey:@"type"] intValue];
     BOOL aIfCreate = [[allParams objectForKey:@"ifCreate"] boolValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:aIfCreate];
-    resolve([conversation mj_JSONString]);
+    resolve([conversation objectToJSONString]);
 }
 
 RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
@@ -43,8 +43,11 @@ RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
 - (void)getAllConversations_local:(RCTPromiseResolveBlock)resolve
                      rejecter:(RCTPromiseRejectBlock)reject {
     NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
-    NSArray *dictArray = [EMConversation mj_keyValuesArrayWithObjectArray:conversations];
-    resolve([dictArray mj_JSONString]);
+    NSMutableArray *dicArray = [NSMutableArray array];
+    [conversations enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [dicArray addObject:[obj objectToJSONString]];
+    }];
+    resolve(JSONSTRING(dicArray));
 }
 
 @end
