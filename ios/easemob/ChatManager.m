@@ -50,4 +50,67 @@ RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
     resolve(JSONSTRING(dicArray));
 }
 
+RCT_EXPORT_METHOD(sendMessage:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[ChatManager sharedChatManager] sendMessage_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)sendMessage_local:(NSString *)params
+                     resolver:(RCTPromiseResolveBlock)resolve
+                     rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    EMChatType chatType = [[allParams objectForKey:@"chatType"] intValue];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    NSString *to = [allParams objectForKey:@"to"];
+    EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
+    NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
+    NSDictionary *bodyDic = [allParams objectForKey:@"body"];
+    EMTextMessageBody *body;
+    switch (messageType) {
+        case EMMessageBodyTypeText: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeImage: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeLocation: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeVoice: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeVideo: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeFile: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        case EMMessageBodyTypeCmd: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+        }
+            break;
+        default:
+            break;
+    }
+    //生成Message
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
+    message.chatType = chatType;
+    //发送消息
+    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+        if(!error){
+            resolve([message objectToJSONString]);
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+        }
+    }];
+}
+
 @end

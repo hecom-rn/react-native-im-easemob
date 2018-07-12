@@ -1,5 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
-import NativeUtil from '../native';
+import NativeUtil from './native';
 
 const Client = NativeModules.Client;
 const isIos = Platform.OS === 'ios';

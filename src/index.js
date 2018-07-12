@@ -1,26 +1,17 @@
 import * as EventEmitter from './eventemitter';
-import * as ChatManager from './module/ChatManager';
-import * as Client from './module/Client';
-import * as GroupManager from './module/GroupManager';
+import * as ChatManager from './util/ChatUtil';
+import * as GroupManager from './util/GroupUtil';
+import  * as Client from './native/Client';
+import  * as EventType  from './constant/EventType';
+import  * as IMConstant  from './constant/IMConstant';
+import  * as ListenerType  from './constant/ListenerType';
 
 export {
     EventEmitter,
     ChatManager,
     GroupManager,
     Client,
-};
-
-export const EaseMobEventTypes = {
-    chat_manager: {
-        type: 'chat_manager',
-        cmdMessage: 'cmd_message'
-    },
-    client: {
-        type: 'client',
-        logout: 'logout',
-        login: 'login',
-        loginOnOtherDevice: 'loginOnOtherDevice',
-        disconnectChatServer: 'disconnectChatServer',
-        noNetwork: 'noNetwork',
-    },
+    EventType,
+    IMConstant,
+    ListenerType,
 };

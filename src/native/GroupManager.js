@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native';
-import NativeUtil from '../native';
+import NativeUtil from './native';
 
 const GroupManager = NativeModules.GroupManager;
 
