@@ -16,9 +16,8 @@ DEFINE_SINGLETON_FOR_HEADER(Client);
 
 + (void)sendEventByType:(NSString *)type
                 subType:(NSString *)subType
-                   data:(NSDictionary *)data;
+                   data:(id)data;
 
-+ (void)sendError:(NSString *)message
-             data:(NSDictionary *)data;
++ (void)sendError:(NSString *)message;
 
 @end

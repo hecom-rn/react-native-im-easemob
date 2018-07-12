@@ -113,18 +113,16 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
 
 + (void)sendEventByType:(NSString *)type
                 subType:(NSString *)subType
-                   data:(NSDictionary *)data {
-    NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
+                   data:(id)data {
+    NSMutableDictionary *body = [NSMutableDictionary dictionary];
     [body setObject:type forKey:@"type"];
     [body setObject:subType forKey:@"subType"];
-    if ([body objectForKey:@"errorMessage"]) {
-        [body removeObjectForKey:@"errorMessage"];
-    }
+    [body setObject:data forKey:@"data"];
     [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
 
-+ (void)sendError:(NSString *)message data:(NSDictionary *)data {
-    NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:data];
++ (void)sendError:(NSString *)message {
+    NSMutableDictionary *body = [NSMutableDictionary dictionary];
     [body setObject:message forKey:@"errorMessage"];
     [[NSNotificationCenter defaultCenter] postNotificationName:EASEMOB_EVENT_NAME object:body];
 }
