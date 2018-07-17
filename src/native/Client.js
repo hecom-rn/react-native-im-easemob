@@ -9,4 +9,5 @@ export const initWithAppKey = (appKey, options = {}) => NativeUtil(Client.init, 
 export const login = (username, password) => isIos ?
     NativeUtil(Client.login, {username, password}) : Client.login(username, password);
 
-export const logout = () => Client.logout();
+export const logout = () =>
+    NativeUtil(Client.logout, undefined);

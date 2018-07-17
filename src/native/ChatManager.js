@@ -7,7 +7,7 @@ export const getConversation = (conversationId, type, ifCreate) =>
     NativeUtil(ChatManager.getConversation, {conversationId, type, ifCreate});
 
 export const getAllConversations = () =>
-    NativeUtil(ChatManager.getAllConversations, {});
+    NativeUtil(ChatManager.getAllConversations, undefined);
 
 export const sendMessage = (conversationId, chatType, messageType, to, body, messageExt) =>
     NativeUtil(ChatManager.sendMessage, {conversationId, chatType, messageType, to, body, messageExt});
