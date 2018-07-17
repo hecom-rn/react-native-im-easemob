@@ -35,7 +35,7 @@
 }
 
 - (NSDictionary *)objectToDictionary {
-    NSArray *blacklist = @[@"coreObject",@"impl"];//解析不出来的字段
+    NSArray *blacklist = @[@"coreObject",@"coreBody",@"impl"];//解析不出来的字段
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     unsigned int count;
     objc_property_t *propertyList = class_copyPropertyList([self class], &count);

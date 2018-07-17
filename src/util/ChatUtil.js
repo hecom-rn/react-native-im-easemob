@@ -17,7 +17,7 @@ function createConversation(conversationId, type) {
 }
 
 function sendMessage(conversationId, chatType, messageType, to, body, messageExt) {
-    ChatManager.sendMessage(conversationId, chatType, messageType, to, body, messageExt)
+    return ChatManager.sendMessage(conversationId, chatType, messageType, to, body, messageExt)
         .then(message => {
             Listener.trigger([
                 ListenerType.chat.type,
