@@ -32,5 +32,5 @@ function sendMessage(conversationId, chatType, messageType, to, body, messageExt
 export const createSingleConversation = (imId) => createConversation(imId, ChatType.single);
 export const createGroupConversation = (groupId) => createConversation(groupId, ChatType.group);
 export const getAllConversations = () => ChatManager.getAllConversations();
-export const sendText = (conversationId, chatType, to, text) =>
-    sendMessage(conversationId, chatType, MessageType.text, to, {text}, {});
+export const sendText = (conversationId, chatType, text) =>
+    sendMessage(conversationId, chatType, MessageType.text, conversationId, {text}, {});
