@@ -45,7 +45,7 @@ RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
     NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
     NSMutableArray *dicArray = [NSMutableArray array];
     [conversations enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [dicArray addObject:[obj objectToJSONString]];
+        [dicArray addObject:[obj objectToDictionary]];
     }];
     resolve(JSONSTRING(dicArray));
 }
@@ -67,34 +67,41 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
     NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
     NSDictionary *bodyDic = [allParams objectForKey:@"body"];
-    EMTextMessageBody *body;
+    EMMessageBody *body;
     switch (messageType) {
         case EMMessageBodyTypeText: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"] ];
         }
             break;
         case EMMessageBodyTypeImage: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            NSString *path = bodyDic[@"path"];
+            NSData *imageData = [NSData dataWithContentsOfFile:path];
+            body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image"];
         }
             break;
         case EMMessageBodyTypeLocation: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            double latitude = [bodyDic[@"latitude"] doubleValue];
+            double longitude = [bodyDic[@"longitude"] doubleValue];
+            NSString *address = bodyDic[@"address"];
+            body = [[EMLocationMessageBody alloc] initWithLatitude:latitude longitude:longitude address:address];
         }
             break;
         case EMMessageBodyTypeVoice: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            NSString *path = bodyDic[@"path"];
+            int duration = [bodyDic[@"duration"] intValue];
+            EMVoiceMessageBody *voiceBody = [[EMVoiceMessageBody alloc] initWithLocalPath:path displayName:@"audio"];
+            voiceBody.duration = duration;
+            body = voiceBody;
         }
             break;
         case EMMessageBodyTypeVideo: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            NSString *path = bodyDic[@"path"];
+            body = [[EMVideoMessageBody alloc] initWithLocalPath:path displayName:@"video"];
         }
             break;
         case EMMessageBodyTypeFile: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
-        }
-            break;
-        case EMMessageBodyTypeCmd: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"]];
+            NSString *path = bodyDic[@"path"];
+            body = [[EMFileMessageBody alloc] initWithLocalPath:path displayName:@"file"];
         }
             break;
         default:
