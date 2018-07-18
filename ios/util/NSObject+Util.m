@@ -36,7 +36,7 @@
 }
 
 - (NSDictionary *)objectToDictionary {
-    return [self mj_keyValuesWithIgnoredKeys:@[@"coreObject",@"impl",@"coreBody"]];
+    return [self mj_keyValuesWithIgnoredKeys:@[@"coreObject",@"impl",@"coreBody",@"superclass",@"debugDescription"]];
 }
 
 @end
