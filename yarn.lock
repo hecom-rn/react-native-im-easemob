@@ -3446,17 +3446,6 @@ react-deep-force-update@^1.0.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/react-deep-force-update/download/react-deep-force-update-1.1.1.tgz#bcd31478027b64b3339f108921ab520b4313dc2c"
 
-react-native-hecom-common@^0.1.1:
-  version "0.1.1"
-  resolved "http://registry.npm.taobao.org/react-native-hecom-common/download/react-native-hecom-common-0.1.1.tgz#89d98ef70bcd30a5da70902601094989cbfc8a7c"
-  dependencies:
-    md5 "^2.2.1"
-    pinyin "https://github.com/RNCommon/pinyin.git"
-    rc-dialog "^6.5.11"
-    react-native-image-zoom-viewer "^2.2.5"
-    react-native-keyboard-aware-scroll-view "^0.5.0"
-    react-native-root-toast "^2.2.0"
-
 react-native-image-pan-zoom@^2.1.7:
   version "2.1.7"
   resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.7.tgz#1c066e66f8f345f5e1fc187f02d92c482952bb59"

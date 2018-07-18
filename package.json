@@ -39,6 +39,5 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "react-native-hecom-common": "^0.1.1"
   }
 }
