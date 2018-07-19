@@ -50,6 +50,26 @@ RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
     resolve(JSONSTRING(dicArray));
 }
 
+RCT_EXPORT_METHOD(deleteConversation:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[ChatManager sharedChatManager] deleteConversation_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)deleteConversation_local:(NSString *)params
+                        resolver:(RCTPromiseResolveBlock)resolve
+                        rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    [[EMClient sharedClient].chatManager deleteConversation:conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *error){
+        if(!error){
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(sendMessage:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
@@ -127,8 +147,8 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
 }
 
 - (void)loadMessages_local:(NSString *)params
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject {
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject {
     NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
@@ -148,8 +168,5 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
         }
     }];
 }
-
-
-
 
 @end

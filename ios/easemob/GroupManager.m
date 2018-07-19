@@ -10,6 +10,7 @@
 #import <Hyphenate/Hyphenate.h>
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
+#import "Constant.h"
 
 @implementation GroupManager
 
@@ -46,6 +47,21 @@ RCT_EXPORT_METHOD(createGroup:(NSString *)params
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
     }
+}
+
+RCT_EXPORT_METHOD(getJoinedGroups:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[GroupManager sharedGroupManager] getJoinedGroups_local:resolve rejecter:reject];
+}
+
+- (void)getJoinedGroups_local:(RCTPromiseResolveBlock)resolve
+                         rejecter:(RCTPromiseRejectBlock)reject {
+    NSArray *groupList = [[EMClient sharedClient].groupManager getJoinedGroups];
+    NSMutableArray *dicArray = [NSMutableArray array];
+    [groupList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [dicArray addObject:[obj objectToDictionary]];
+    }];
+    resolve(JSONSTRING(dicArray));
 }
 
 @end

@@ -13,6 +13,8 @@ export const createSingleConversation = (imId) => getConversation(imId, ChatType
 export const createGroupConversation = (groupId) => getConversation(groupId, ChatType.group, true);
 export const getAllConversations = () =>
     NativeUtil(ChatManager.getAllConversations, undefined);
+export const deleteConversation = (conversationId) =>
+    NativeUtil(ChatManager.deleteConversation, {conversationId});
 export const sendText = (conversationId, chatType, text) =>
     sendMessage(conversationId, chatType, MessageType.text, conversationId, {text}, {});
 export const sendImage = (conversationId, chatType, path) =>
