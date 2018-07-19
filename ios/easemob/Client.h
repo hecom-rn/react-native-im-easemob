@@ -7,17 +7,10 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
 #import "Singleton.h"
 
-@interface Client : RCTEventEmitter <RCTBridgeModule>
+@interface Client : NSObject <RCTBridgeModule>
 
 DEFINE_SINGLETON_FOR_HEADER(Client);
-
-+ (void)sendEventByType:(NSString *)type
-                subType:(NSString *)subType
-                   data:(id)data;
-
-+ (void)sendError:(NSString *)message;
 
 @end
