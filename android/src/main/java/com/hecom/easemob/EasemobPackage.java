@@ -18,6 +18,7 @@ public class EasemobPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
+                new ChatManagerDelegate(reactContext),
                 new ChatManager(reactContext),
                 new ClientModule(reactContext),
                 new GroupManager(reactContext)

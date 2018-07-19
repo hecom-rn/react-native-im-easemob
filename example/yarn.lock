@@ -3754,9 +3754,6 @@ react-is@^16.3.1:
 react-native-hecom-easemob@../:
   version "0.0.1"
 
-"react-native-hecom-easemob@file:..":
-  version "0.0.1"
-
 react-native@0.50.0:
   version "0.50.0"
   resolved "http://registry.npm.taobao.org/react-native/download/react-native-0.50.0.tgz#edc98470eaf729573b56307e22efe83044088fda"

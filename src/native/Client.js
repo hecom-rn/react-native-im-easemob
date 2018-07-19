@@ -8,7 +8,7 @@ export const initWithAppKey = (appKey, options = {}) => NativeUtil(Client.init, 
 
 // Android Only
 export function notifyJSDidLoad() {
-    return !isIOS && Client.notifyJSDidLoad();
+    return !isIos && Client.notifyJSDidLoad();
 }
 
 export const login = (username, password) => isIos ?

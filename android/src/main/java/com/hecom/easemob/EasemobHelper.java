@@ -21,6 +21,7 @@ import com.hyphenate.chat.EMOptions;
 import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ class EasemobHelper {
 
     private EasemobHelper() {
         cache = new ArrayList<>();
+        delegates = new HashMap<>();
     }
 
     void init(Context context, EMOptions options) {
@@ -116,7 +118,7 @@ class EasemobHelper {
         EMClient.getInstance().chatManager().addConversationListener(new EMConversationListener() {
             @Override
             public void onCoversationUpdate() {
-                if (delegates.containsKey(KEY_CONVERSATION_DID_UPDATE)){
+                if (delegates.containsKey(KEY_CONVERSATION_DID_UPDATE)) {
                     delegates.get(KEY_CONVERSATION_DID_UPDATE).invoke();
                 }
             }
@@ -124,14 +126,14 @@ class EasemobHelper {
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> list) {
-                if (delegates.containsKey(KEY_MESSAGE_DID_RECEIVE)){
+                if (delegates.containsKey(KEY_MESSAGE_DID_RECEIVE)) {
                     delegates.get(KEY_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
                 }
             }
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> list) {
-                if (delegates.containsKey(KEY_CMD_MESSAGE_DID_RECEIVE)){
+                if (delegates.containsKey(KEY_CMD_MESSAGE_DID_RECEIVE)) {
                     delegates.get(KEY_CMD_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
                 }
             }
