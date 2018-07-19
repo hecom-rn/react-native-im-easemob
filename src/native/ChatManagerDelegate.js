@@ -7,6 +7,7 @@ export const setMessageDidReceive = proxy(ChatManagerDelegate.setMessageDidRecei
 export const setCmdMessageDidReceive = proxy(ChatManagerDelegate.setCmdMessageDidReceive);
 export const setConversationListDidUpdate = proxy(ChatManagerDelegate.setConversationListDidUpdate);
 
-function proxy(callback) {
-    return result => callback(!isAndroid ? JSON.parse(result) : result);
+function proxy(native_method) {
+    return callback => native_method(
+        (...result) => isAndroid ? callback(...result) : callback(...result.map(item => JSON.parse(item))));
 }

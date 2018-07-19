@@ -14,6 +14,6 @@ export const MessageType = {
 };
 
 export const MessageSearchDirection = {
-    up:0,
-    down:1,
+    up: 0,
+    down: 1,
 };
