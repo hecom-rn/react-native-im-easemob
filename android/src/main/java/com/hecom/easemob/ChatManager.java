@@ -8,10 +8,14 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMessageBody;
+import com.hyphenate.chat.EMTextMessageBody;
 
 import java.util.Map;
 
@@ -50,7 +54,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         boolean ifCreate = false;
         if (param.hasKey("type")) {
-            type = convertType(param.getString("type"));
+            type = convertConversationType(param.getString("type"));
         }
         if (param.hasKey("ifCreate")) {
             ifCreate = param.getBoolean("ifCreate");
@@ -64,9 +68,9 @@ public class ChatManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getAllConversations(Promise promise) {
         Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
-        WritableMap result = Arguments.createMap();
+        WritableArray result = Arguments.createArray();
         for (String key : map.keySet()) {
-            result.putMap(key, convertConversation(map.get(key)));
+            result.pushMap(convertConversation(map.get(key)));
         }
         promise.resolve(result);
     }
@@ -131,7 +135,33 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     private WritableMap convertConversation(EMConversation conversation) {
         WritableMap result = Arguments.createMap();
-        result.putString("id", conversation.conversationId());
+        result.putString("conversationId", conversation.conversationId());
+        result.putMap("latestMessage", convertMessage(conversation.getLastMessage()));
+        result.putInt("unreadMessagesCount", conversation.getUnreadMsgCount());
+        result.putString("chatType", toConversationType(conversation.getType()));
+        return result;
+    }
+
+    private WritableMap convertMessage(EMMessage message) {
+        WritableMap result = Arguments.createMap();
+        result.putString("conversationId", message.conversationId());
+        result.putString("from", message.getFrom());
+        result.putString("to", message.getTo());
+        result.putString("msgId", message.getMsgId());
+        result.putInt("timestamp", (int) message.getMsgTime());
+        result.putMap("body", convertBody(message.getBody()));
+        return result;
+    }
+
+    private WritableMap convertBody(EMMessageBody body) {
+        WritableMap result = Arguments.createMap();
+        if (body instanceof EMTextMessageBody) {
+            EMTextMessageBody text = (EMTextMessageBody) body;
+            result.putString("text", text.getMessage());
+        } else if (body instanceof EMImageMessageBody) {
+            EMImageMessageBody image = (EMImageMessageBody) body;
+            result.putString("remoteUrl", image.getRemoteUrl());
+        }
         return result;
     }
 
@@ -145,7 +175,17 @@ public class ChatManager extends ReactContextBaseJavaModule {
         }
     }
 
-    private EMConversation.EMConversationType convertType(String type) {
+    private String toConversationType(EMConversation.EMConversationType type) {
+        switch (type) {
+            case Chat:
+            default:
+                return CONVERSATION_TYPE_CHAT;
+            case GroupChat:
+                return CONVERSATION_TYPE_GROUP;
+        }
+    }
+
+    private EMConversation.EMConversationType convertConversationType(String type) {
         if (CONVERSATION_TYPE_CHAT.equals(type)) {
             return EMConversation.EMConversationType.Chat;
         } else if (CONVERSATION_TYPE_GROUP.equals(type)) {
