@@ -6,11 +6,13 @@ import android.os.Process;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -20,13 +22,12 @@ import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.ACTIVITY_SERVICE;
-import static com.hecom.easemob.EventName.CMD_MESSAGE_RECEIVED;
 import static com.hecom.easemob.EventName.DISCONNECT_CHAT_SERVER;
 import static com.hecom.easemob.EventName.LOGIN_ON_OTHER_DEVICE;
 import static com.hecom.easemob.EventName.NO_NETWORK;
-import static com.hecom.easemob.EventName.TYPE_CHAT_MANAGER;
 import static com.hecom.easemob.EventName.TYPE_CLIENT;
 
 /**
@@ -36,10 +37,15 @@ import static com.hecom.easemob.EventName.TYPE_CLIENT;
 
 class EasemobHelper {
     private static final String TAG = EasemobHelper.class.getSimpleName();
+    static final String KEY_MESSAGE_DID_RECEIVE = "KEY_MESSAGE_DID_RECEIVE";
+    static final String KEY_CMD_MESSAGE_DID_RECEIVE = "KEY_CMD_MESSAGE_DID_RECEIVE";
+    static final String KEY_CONVERSATION_DID_UPDATE = "KEY_CONVERSATION_DID_UPDATE";
+
     private boolean sdkInited = false;
     private Context mContext;
     private ReactContext mReactContext;
     private List<WritableMap> cache;
+    private Map<String, Callback> delegates;
 
     private static class Inner {
         private static EasemobHelper INSTANCE = new EasemobHelper();
@@ -75,6 +81,10 @@ class EasemobHelper {
         sendCachedEvent();
     }
 
+    void putDelegate(String key, Callback callback) {
+        delegates.put(key, callback);
+    }
+
     private void sendCachedEvent() {
         for (WritableMap param : cache) {
             sendEvent(param);
@@ -103,15 +113,27 @@ class EasemobHelper {
                 }
             }
         });
+        EMClient.getInstance().chatManager().addConversationListener(new EMConversationListener() {
+            @Override
+            public void onCoversationUpdate() {
+                if (delegates.containsKey(KEY_CONVERSATION_DID_UPDATE)){
+                    delegates.get(KEY_CONVERSATION_DID_UPDATE).invoke();
+                }
+            }
+        });
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> list) {
-
+                if (delegates.containsKey(KEY_MESSAGE_DID_RECEIVE)){
+                    delegates.get(KEY_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
+                }
             }
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> list) {
-                sendEvent(TYPE_CHAT_MANAGER, CMD_MESSAGE_RECEIVED, MessageConverter.toMessageArray(list));
+                if (delegates.containsKey(KEY_CMD_MESSAGE_DID_RECEIVE)){
+                    delegates.get(KEY_CMD_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
+                }
             }
 
             @Override
