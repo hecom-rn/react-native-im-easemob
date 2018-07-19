@@ -12,3 +12,8 @@ export const MessageType = {
     file: 6,
     cmd: 7,
 };
+
+export const MessageSearchDirection = {
+    up:0,
+    down:1,
+};
