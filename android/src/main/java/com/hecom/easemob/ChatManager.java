@@ -24,8 +24,8 @@ import java.util.Map;
  */
 
 public class ChatManager extends ReactContextBaseJavaModule {
-    private static final String CONVERSATION_TYPE_CHAT = "0";
-    private static final String CONVERSATION_TYPE_GROUP = "1";
+    private static final int CONVERSATION_TYPE_CHAT = 0;
+    private static final int CONVERSATION_TYPE_GROUP = 1;
 
     private static final int MESSAGE_TYPE_TEXT = 1;
     private static final int MESSAGE_TYPE_IMAGE = 2;
@@ -54,7 +54,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         boolean ifCreate = false;
         if (param.hasKey("type")) {
-            type = convertConversationType(param.getString("type"));
+            type = convertConversationType(param.getInt("type"));
         }
         if (param.hasKey("ifCreate")) {
             ifCreate = param.getBoolean("ifCreate");
@@ -93,7 +93,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
             return;
         }
         String id = params.getString("conversationId");
-        EMMessage.ChatType type = convertChatType(params.getString("chatType"));
+        EMMessage.ChatType type = convertChatType(params.getInt("chatType"));
         EMMessage.Type messageType = convertMessageType(params.getInt("messageType"));
         String to = params.getString("to");
         String content = params.getString("body");
@@ -138,7 +138,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         result.putString("conversationId", conversation.conversationId());
         result.putMap("latestMessage", convertMessage(conversation.getLastMessage()));
         result.putInt("unreadMessagesCount", conversation.getUnreadMsgCount());
-        result.putString("chatType", toConversationType(conversation.getType()));
+        result.putInt("chatType", toConversationType(conversation.getType()));
         return result;
     }
 
@@ -165,17 +165,17 @@ public class ChatManager extends ReactContextBaseJavaModule {
         return result;
     }
 
-    private EMMessage.ChatType convertChatType(String type) {
-        if (CONVERSATION_TYPE_CHAT.equals(type)) {
+    private EMMessage.ChatType convertChatType(int type) {
+        if (CONVERSATION_TYPE_CHAT == type) {
             return EMMessage.ChatType.Chat;
-        } else if (CONVERSATION_TYPE_GROUP.equals(type)) {
+        } else if (CONVERSATION_TYPE_GROUP == type) {
             return EMMessage.ChatType.GroupChat;
         } else {
             return EMMessage.ChatType.Chat;
         }
     }
 
-    private String toConversationType(EMConversation.EMConversationType type) {
+    private int toConversationType(EMConversation.EMConversationType type) {
         switch (type) {
             case Chat:
             default:
@@ -185,10 +185,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
         }
     }
 
-    private EMConversation.EMConversationType convertConversationType(String type) {
-        if (CONVERSATION_TYPE_CHAT.equals(type)) {
+    private EMConversation.EMConversationType convertConversationType(int type) {
+        if (CONVERSATION_TYPE_CHAT == type) {
             return EMConversation.EMConversationType.Chat;
-        } else if (CONVERSATION_TYPE_GROUP.equals(type)) {
+        } else if (CONVERSATION_TYPE_GROUP == type) {
             return EMConversation.EMConversationType.GroupChat;
         } else {
             return EMConversation.EMConversationType.Chat;
