@@ -120,4 +120,36 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     }];
 }
 
+RCT_EXPORT_METHOD(loadMessages:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[ChatManager sharedChatManager] loadMessages_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)loadMessages_local:(NSString *)params
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+    NSString *fromId = [allParams objectForKey:@"fromId"];
+    int count = [[allParams objectForKey:@"count"] intValue];
+    EMMessageSearchDirection searchDirection = [[allParams objectForKey:@"searchDirection"] intValue];
+    [conversation loadMessagesStartFromId:fromId count:count searchDirection:searchDirection completion:^(NSArray *aMessages, EMError *error) {
+        NSMutableArray *dicArray = [NSMutableArray array];
+        [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [dicArray addObject:[obj objectToDictionary]];
+        }];
+        if(!error){
+            resolve([dicArray objectToJSONString]);
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+        }
+    }];
+}
+
+
+
+
 @end

@@ -1,5 +1,5 @@
-import * as ChatManager from './util/ChatUtil';
-import * as GroupManager from './util/GroupUtil';
+import * as ChatManager from './native/ChatManager';
+import * as GroupManager from './native/GroupManager';
 import * as Client from './native/Client';
 import * as IMConstant  from './constant/IMConstant';
 import * as ChatManagerDelegate from './native/ChatManagerDelegate';
