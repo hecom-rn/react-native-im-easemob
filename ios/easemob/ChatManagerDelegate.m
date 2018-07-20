@@ -10,37 +10,11 @@
 #import "Client.h"
 #import "NSObject+Util.h"
 
-@interface ChatManagerDelegate ()
-
-@property (nonatomic, strong) NSMutableDictionary<NSString *, RCTResponseSenderBlock> *delegate;
-
-@end
-
 @implementation ChatManagerDelegate
 
 DEFINE_SINGLETON_FOR_CLASS(ChatManagerDelegate);
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.delegate = [NSMutableDictionary dictionary];
-    }
-    return self;
-}
-
 RCT_EXPORT_MODULE();
-
-RCT_EXPORT_METHOD(setMessageDidReceive:(RCTResponseSenderBlock)block) {
-    [ChatManagerDelegate sharedChatManagerDelegate].delegate[@"messageDidReceive"] = block;
-}
-
-RCT_EXPORT_METHOD(setCmdMessageDidReceive:(RCTResponseSenderBlock)block) {
-    [ChatManagerDelegate sharedChatManagerDelegate].delegate[@"cmdMessageDidReceive"] = block;
-}
-
-RCT_EXPORT_METHOD(setConversationListDidUpdate:(RCTResponseSenderBlock)block) {
-    [ChatManagerDelegate sharedChatManagerDelegate].delegate[@"conversationListDidUpdate"] = block;
-}
 
 #pragma mark - EMChatManagerDelegate
 
@@ -49,9 +23,7 @@ RCT_EXPORT_METHOD(setConversationListDidUpdate:(RCTResponseSenderBlock)block) {
     [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    if ([self.delegate objectForKey:@"messageDidReceive"]) {
-        [self.delegate objectForKey:@"messageDidReceive"](@[[NSNull null], dicArray]);
-    }
+    [Client sendEventByType:@"ChatManagerDelegate" subType:@"messageDidReceive" data:dicArray];
 }
 
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
@@ -59,9 +31,7 @@ RCT_EXPORT_METHOD(setConversationListDidUpdate:(RCTResponseSenderBlock)block) {
     [aCmdMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    if ([self.delegate objectForKey:@"cmdMessageDidReceive"]) {
-        [self.delegate objectForKey:@"cmdMessageDidReceive"](@[[NSNull null], dicArray]);
-    }
+    [Client sendEventByType:@"ChatManagerDelegate" subType:@"cmdMessageDidReceive" data:dicArray];
 }
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
@@ -69,9 +39,7 @@ RCT_EXPORT_METHOD(setConversationListDidUpdate:(RCTResponseSenderBlock)block) {
     [aConversationList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    if ([self.delegate objectForKey:@"conversationListDidUpdate"]) {
-        [self.delegate objectForKey:@"conversationListDidUpdate"](@[[NSNull null], dicArray]);
-    }
+    [Client sendEventByType:@"ChatManagerDelegate" subType:@"conversationListDidUpdate" data:dicArray];
 }
 
 @end
