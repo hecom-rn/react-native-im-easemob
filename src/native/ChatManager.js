@@ -15,8 +15,8 @@ export const getAllConversations = () =>
     NativeUtil(ChatManager.getAllConversations, undefined);
 export const deleteConversation = (conversationId) =>
     NativeUtil(ChatManager.deleteConversation, {conversationId});
-export const sendText = (conversationId, chatType, text) =>
-    sendMessage(conversationId, chatType, MessageType.text, conversationId, {text}, {});
+export const sendText = (conversationId, chatType, text, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.text, conversationId, {text}, ext);
 export const sendImage = (conversationId, chatType, path) =>
     sendMessage(conversationId, chatType, MessageType.image, conversationId, {path}, {});
 export const sendLocation = (conversationId, chatType, latitude, longitude, address) =>
