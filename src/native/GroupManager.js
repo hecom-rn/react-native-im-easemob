@@ -10,5 +10,5 @@ export const getJoinedGroups = () =>
 export const getGroupMemberList = (groupId, cursor = '', pageSize = 10) =>
     NativeUtil(GroupManager.getGroupMemberList, {group, cursor, pageSize});
 export const getGroupSpecification = (groupId) =>
-    NativeUtil(GroupManager.getGroupSpecification, {group});
+    NativeUtil(GroupManager.getGroupSpecification, {groupId});
 
