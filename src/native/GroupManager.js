@@ -7,3 +7,5 @@ export const createGroup = (imIds) =>
     NativeUtil(GroupManager.createGroup, {subject: '', description: '', invitees: imIds, message: '', setting: {}});
 export const getJoinedGroups = () =>
     NativeUtil(GroupManager.getJoinedGroups, undefined);
+export const getGroupMemberList = (groupId, cursor = '', pageSize = 10) =>
+    NativeUtil(GroupManager.getGroupMemberList, {group, cursor, pageSize});

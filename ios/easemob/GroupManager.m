@@ -64,4 +64,28 @@ RCT_EXPORT_METHOD(getJoinedGroups:(RCTPromiseResolveBlock)resolve
     resolve(JSONSTRING(dicArray));
 }
 
+RCT_EXPORT_METHOD(getGroupMemberList:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[GroupManager sharedGroupManager] getGroupMemberList_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)getGroupMemberList_local:(NSString *)params
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    EMError *error = nil;
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    NSString *cursor = [allParams objectForKey:@"cursor"];
+    int pageSize = [[allParams objectForKey:@"pageSize"] intValue];
+    
+    [[EMClient sharedClient].groupManager getGroupMemberListFromServerWithId:groupId cursor:cursor pageSize:pageSize completion:^(EMCursorResult *aResult, EMError *aError) {
+        if (!aError) {
+            resolve([aResult objectToJSONString]);
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+        }
+    }];
+}
+
 @end
