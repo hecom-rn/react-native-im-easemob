@@ -17,3 +17,8 @@ export const MessageSearchDirection = {
     up: 0,
     down: 1,
 };
+
+export const EMMessageDirection = {
+    send: 0,
+    receive: 1,
+};
