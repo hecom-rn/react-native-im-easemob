@@ -95,7 +95,8 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
             break;
         case EMMessageBodyTypeImage: {
             NSString *path = bodyDic[@"path"];
-            body = [[EMImageMessageBody alloc] initWithLocalPath:path displayName:@"image"];
+            NSData *imageData = [NSData dataWithContentsOfFile:path];
+            body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image"];
         }
             break;
         case EMMessageBodyTypeLocation: {
