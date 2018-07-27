@@ -171,4 +171,26 @@ RCT_EXPORT_METHOD(changeGroupSubject:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(updateGroupExt:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[GroupManager sharedGroupManager] updateGroupExt_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)updateGroupExt_local:(NSString *)params
+                        resolver:(RCTPromiseResolveBlock)resolve
+                        rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    EMError *error = nil;
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    NSDictionary *ext = [allParams objectForKey:@"ext"];
+    NSString *extString = JSONSTRING(ext);
+    EMGroup *group = [[EMClient sharedClient].groupManager updateGroupExtWithId:groupId ext:extString error:&error];
+    if(!error){
+        resolve([group objectToJSONString]);
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
 @end

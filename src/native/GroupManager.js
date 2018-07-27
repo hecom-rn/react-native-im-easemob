@@ -17,4 +17,6 @@ export const removeOccupants = (groupId,members) =>
     NativeUtil(GroupManager.removeOccupants, {groupId,members});
 export const changeGroupSubject = (groupId,subject) =>
     NativeUtil(GroupManager.changeGroupSubject, {groupId,subject});
+export const updateGroupExt = (groupId,ext) =>
+    NativeUtil(GroupManager.updateGroupExt, {groupId,ext});
 
