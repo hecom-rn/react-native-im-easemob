@@ -1,7 +1,8 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
 
 const GroupManager = NativeModules.GroupManager;
+const isAndroid = Platform.OS === 'android';
 
 export const createGroup = (imIds) =>
     NativeUtil(GroupManager.createGroup, {subject: '', description: '', invitees: imIds, message: '', setting: {}});
@@ -20,7 +21,7 @@ export const changeGroupSubject = (groupId,subject) =>
 export const destroyGroup = (groupId) =>
     NativeUtil(GroupManager.destroyGroup, {groupId});
 export const updateGroupExt = (groupId,ext) =>
-    NativeUtil(GroupManager.updateGroupExt, {groupId,ext});
+    NativeUtil(GroupManager.updateGroupExt,  isAndroid ? {groupId, ext: JSON.stringify(ext)} : {groupId, ext});
 export const updateGroupOwner = (groupId,newOwner) =>
     NativeUtil(GroupManager.updateGroupOwner, {groupId,newOwner});
 

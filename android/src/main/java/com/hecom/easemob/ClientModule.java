@@ -12,7 +12,7 @@ import com.hyphenate.chat.EMClient;
  */
 
 public class ClientModule extends ReactContextBaseJavaModule {
-    public ClientModule(ReactApplicationContext reactContext) {
+    ClientModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
@@ -23,7 +23,7 @@ public class ClientModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void init(ReadableMap params, Promise promise) {
-        EasemobHelper.getInstance().init(getReactApplicationContext(), MessageConverter.toOption(params));
+        EasemobHelper.getInstance().init(getReactApplicationContext(), EasemobConverter.buildOption(params));
         promise.resolve(null);
     }
 

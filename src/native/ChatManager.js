@@ -23,8 +23,8 @@ export const sendLocation = (conversationId, chatType, latitude, longitude, addr
     sendMessage(conversationId, chatType, MessageType.location, conversationId, {latitude, longitude, address}, {name});
 export const sendVoice = (conversationId, chatType, path, duration) =>
     sendMessage(conversationId, chatType, MessageType.voice, conversationId, {path, duration}, {});
-export const sendVideo = (conversationId, chatType, path) =>
-    sendMessage(conversationId, chatType, MessageType.video, conversationId, {path}, {});
+export const sendVideo = (conversationId, chatType, path, thumbPath = '', duration = 0) =>
+    sendMessage(conversationId, chatType, MessageType.video, conversationId, {path, thumbPath, duration}, {});
 export const sendFile = (conversationId, chatType, path) =>
     sendMessage(conversationId, chatType, MessageType.file, conversationId, {path}, {});
 export const sendObject = (conversationId, chatType, object) =>

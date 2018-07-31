@@ -8,15 +8,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.WritableMap;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMMessageBody;
-import com.hyphenate.chat.EMTextMessageBody;
 
+import org.json.JSONException;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,16 +25,6 @@ import java.util.Map;
  */
 
 public class ChatManager extends ReactContextBaseJavaModule {
-    private static final int CONVERSATION_TYPE_CHAT = 0;
-    private static final int CONVERSATION_TYPE_GROUP = 1;
-
-    private static final int MESSAGE_TYPE_TEXT = 1;
-    private static final int MESSAGE_TYPE_IMAGE = 2;
-    private static final int MESSAGE_TYPE_VIDEO = 3;
-    private static final int MESSAGE_TYPE_LOCATION = 4;
-    private static final int MESSAGE_TYPE_VOICE = 5;
-    private static final int MESSAGE_TYPE_FILE = 6;
-    private static final int MESSAGE_TYPE_CMD = 7;
 
     ChatManager(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -45,24 +36,23 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getConversation(ReadableMap param, Promise promise) {
-        if (!param.hasKey("conversationId")) {
-            promise.reject("-1", "必须包含会话id");
+    public void getConversation(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
             return;
         }
-        String conversationId = param.getString("conversationId");
+        String conversationId = params.getString("conversationId");
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         boolean ifCreate = false;
-        if (param.hasKey("type")) {
-            type = convertConversationType(param.getInt("type"));
+        if (params.hasKey("type")) {
+            type = EasemobConverter.toConversationType(params.getInt("type"));
         }
-        if (param.hasKey("ifCreate")) {
-            ifCreate = param.getBoolean("ifCreate");
+        if (params.hasKey("ifCreate")) {
+            ifCreate = params.getBoolean("ifCreate");
         }
 
         EMConversation conversation = EMClient.getInstance().chatManager()
                 .getConversation(conversationId, type, ifCreate);
-        promise.resolve(convertConversation(conversation));
+        promise.resolve(EasemobConverter.convert(conversation));
     }
 
     @ReactMethod
@@ -70,128 +60,130 @@ public class ChatManager extends ReactContextBaseJavaModule {
         Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
         WritableArray result = Arguments.createArray();
         for (String key : map.keySet()) {
-            result.pushMap(convertConversation(map.get(key)));
+            result.pushMap(EasemobConverter.convert(map.get(key)));
         }
         promise.resolve(result);
     }
 
-    private boolean checkParamKey(ReadableMap params, String key, Promise promise) {
-        if (!params.hasKey(key)) {
-            promise.reject("-1", "必须包含" + key);
-            return true;
+    @ReactMethod
+    public void deleteConversation(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
+            return;
         }
-        return false;
+        String conversationId = params.getString("conversationId");
+        boolean ifClearAllMessage = false;
+        if (params.hasKey("ifClearAllMessage")) {
+            ifClearAllMessage = params.getBoolean("ifClearAllMessage");
+        }
+        promise.resolve(EMClient.getInstance().chatManager().deleteConversation(conversationId, ifClearAllMessage));
+    }
+
+    @ReactMethod
+    public void loadMessages(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId"}, promise)) {
+            return;
+        }
+        String conversationId = params.getString("conversationId");
+        EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
+        if (params.hasKey("chatType")) {
+            type = EasemobConverter.toConversationType(params.getInt("chatType"));
+        }
+        String fromId = "";
+        if (params.hasKey("fromId")) {
+            fromId = params.getString("fromId");
+        }
+        int count = 20;
+        if (params.hasKey("count")) {
+            count = params.getInt("count");
+        }
+        List<EMMessage> list = EMClient.getInstance().chatManager().getConversation(conversationId, type)
+                .loadMoreMsgFromDB(fromId, count);
+        promise.resolve(EasemobConverter.convertList(list));
     }
 
     @ReactMethod
     public void sendMessage(ReadableMap params, Promise promise) {
-        if (checkParamKey(params, "conversationId", promise)
-                || checkParamKey(params, "chatType", promise)
-                || checkParamKey(params, "messageType", promise)
-                || checkParamKey(params, "to", promise)
-                || checkParamKey(params, "body", promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{"chatType", "messageType", "to", "body"}, promise)) {
             return;
         }
-        String id = params.getString("conversationId");
-        EMMessage.ChatType type = convertChatType(params.getInt("chatType"));
-        EMMessage.Type messageType = convertMessageType(params.getInt("messageType"));
+        ReadableMap ext = null;
+        if (params.hasKey("messageExt")) {
+            if (params.getType("messageExt") == ReadableType.Map) {
+                ext = params.getMap("messageExt");
+            } else {
+                promise.reject("-1", "messageExt字段必须是对象");
+                return;
+            }
+        }
+        EMMessage.ChatType type = EasemobConverter.toChatType(params.getInt("chatType"));
+        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
         String to = params.getString("to");
-        String content = params.getString("body");
+        ReadableMap body = params.getMap("body");
+
         EMMessage message;
         if (messageType == EMMessage.Type.IMAGE) {
-            message = EMMessage.createImageSendMessage(content, false, to);
+            message = EMMessage.createImageSendMessage(body.getString("path"), false, to);
+        } else if (messageType == EMMessage.Type.LOCATION) {
+            message = EMMessage.createLocationSendMessage(
+                    body.getDouble("latitude"), body.getDouble("longitude"),
+                    body.getString("address"), to);
+        } else if (messageType == EMMessage.Type.VIDEO) {
+            message = EMMessage.createVideoSendMessage(body.getString("path"),
+                    body.getString("thumbPath"), body.getInt("duration"), to);
+        } else if (messageType == EMMessage.Type.FILE) {
+            message = EMMessage.createFileSendMessage(body.getString("path"), to);
         } else if (messageType == EMMessage.Type.VOICE) {
-            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-            mmr.setDataSource(content);
-            String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            int mDuration = Integer.valueOf(duration);
-            message = EMMessage.createVoiceSendMessage(content, mDuration, to);
+            int duration;
+            String path = body.getString("path");
+            if (body.hasKey("duration")) {
+                duration = body.getInt("duration");
+            } else {
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                mmr.setDataSource(path);
+                duration = Integer.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+            }
+            message = EMMessage.createVoiceSendMessage(path, duration, to);
         } else {
-            message = EMMessage.createTxtSendMessage(content, to);
+            message = EMMessage.createTxtSendMessage(body.getString("text"), to);
         }
         message.setChatType(type);
+        if (ext != null) {
+            try {
+                setExt(message, ext);
+            } catch (JSONException e) {
+                promise.reject(e);
+                return;
+            }
+        }
         EMClient.getInstance().chatManager().sendMessage(message);
+        promise.resolve(EasemobConverter.convert(message));
     }
 
-    private EMMessage.Type convertMessageType(int type) {
-        switch (type) {
-            case MESSAGE_TYPE_TEXT:
-            default:
-                return EMMessage.Type.TXT;
-            case MESSAGE_TYPE_IMAGE:
-                return EMMessage.Type.IMAGE;
-            case MESSAGE_TYPE_VIDEO:
-                return EMMessage.Type.VIDEO;
-            case MESSAGE_TYPE_LOCATION:
-                return EMMessage.Type.LOCATION;
-            case MESSAGE_TYPE_VOICE:
-                return EMMessage.Type.VOICE;
-            case MESSAGE_TYPE_FILE:
-                return EMMessage.Type.FILE;
-            case MESSAGE_TYPE_CMD:
-                return EMMessage.Type.CMD;
+    private void setExt(EMMessage message, ReadableMap map) throws JSONException {
+        ReadableMapKeySetIterator iterator = map.keySetIterator();
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            ReadableType type = map.getType(key);
+            switch (type) {
+                case Null:
+                    break;
+                case Boolean:
+                    message.setAttribute(key, map.getBoolean(key));
+                    break;
+                case Number:
+                    message.setAttribute(key, map.getInt(key));
+                    break;
+                case String:
+                    message.setAttribute(key, map.getString(key));
+                    break;
+                case Map:
+                    message.setAttribute(key, EasemobConverter.toJsonObject(map.getMap(key)));
+                    break;
+                case Array:
+                    message.setAttribute(key, EasemobConverter.toJsonArray(map.getArray(key)));
+                    break;
+            }
         }
     }
 
-    private WritableMap convertConversation(EMConversation conversation) {
-        WritableMap result = Arguments.createMap();
-        result.putString("conversationId", conversation.conversationId());
-        result.putMap("latestMessage", convertMessage(conversation.getLastMessage()));
-        result.putInt("unreadMessagesCount", conversation.getUnreadMsgCount());
-        result.putInt("chatType", toConversationType(conversation.getType()));
-        return result;
-    }
-
-    private WritableMap convertMessage(EMMessage message) {
-        WritableMap result = Arguments.createMap();
-        result.putString("conversationId", message.conversationId());
-        result.putString("from", message.getFrom());
-        result.putString("to", message.getTo());
-        result.putString("msgId", message.getMsgId());
-        result.putInt("timestamp", (int) message.getMsgTime());
-        result.putMap("body", convertBody(message.getBody()));
-        return result;
-    }
-
-    private WritableMap convertBody(EMMessageBody body) {
-        WritableMap result = Arguments.createMap();
-        if (body instanceof EMTextMessageBody) {
-            EMTextMessageBody text = (EMTextMessageBody) body;
-            result.putString("text", text.getMessage());
-        } else if (body instanceof EMImageMessageBody) {
-            EMImageMessageBody image = (EMImageMessageBody) body;
-            result.putString("remoteUrl", image.getRemoteUrl());
-        }
-        return result;
-    }
-
-    private EMMessage.ChatType convertChatType(int type) {
-        if (CONVERSATION_TYPE_CHAT == type) {
-            return EMMessage.ChatType.Chat;
-        } else if (CONVERSATION_TYPE_GROUP == type) {
-            return EMMessage.ChatType.GroupChat;
-        } else {
-            return EMMessage.ChatType.Chat;
-        }
-    }
-
-    private int toConversationType(EMConversation.EMConversationType type) {
-        switch (type) {
-            case Chat:
-            default:
-                return CONVERSATION_TYPE_CHAT;
-            case GroupChat:
-                return CONVERSATION_TYPE_GROUP;
-        }
-    }
-
-    private EMConversation.EMConversationType convertConversationType(int type) {
-        if (CONVERSATION_TYPE_CHAT == type) {
-            return EMConversation.EMConversationType.Chat;
-        } else if (CONVERSATION_TYPE_GROUP == type) {
-            return EMConversation.EMConversationType.GroupChat;
-        } else {
-            return EMConversation.EMConversationType.Chat;
-        }
-    }
 }

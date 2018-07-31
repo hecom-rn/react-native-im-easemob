@@ -6,30 +6,17 @@ import android.os.Process;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.hyphenate.EMConnectionListener;
-import com.hyphenate.EMConversationListener;
-import com.hyphenate.EMError;
-import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
-import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static android.content.Context.ACTIVITY_SERVICE;
-import static com.hecom.easemob.EventName.DISCONNECT_CHAT_SERVER;
-import static com.hecom.easemob.EventName.LOGIN_ON_OTHER_DEVICE;
-import static com.hecom.easemob.EventName.NO_NETWORK;
-import static com.hecom.easemob.EventName.TYPE_CLIENT;
 
 /**
  * 环信接口辅助类
@@ -38,15 +25,10 @@ import static com.hecom.easemob.EventName.TYPE_CLIENT;
 
 class EasemobHelper {
     private static final String TAG = EasemobHelper.class.getSimpleName();
-    static final String KEY_MESSAGE_DID_RECEIVE = "KEY_MESSAGE_DID_RECEIVE";
-    static final String KEY_CMD_MESSAGE_DID_RECEIVE = "KEY_CMD_MESSAGE_DID_RECEIVE";
-    static final String KEY_CONVERSATION_DID_UPDATE = "KEY_CONVERSATION_DID_UPDATE";
-
     private boolean sdkInited = false;
     private Context mContext;
     private ReactContext mReactContext;
     private List<WritableMap> cache;
-    private Map<String, Callback> delegates;
 
     private static class Inner {
         private static EasemobHelper INSTANCE = new EasemobHelper();
@@ -58,7 +40,6 @@ class EasemobHelper {
 
     private EasemobHelper() {
         cache = new ArrayList<>();
-        delegates = new HashMap<>();
     }
 
     void init(Context context, EMOptions options) {
@@ -83,10 +64,6 @@ class EasemobHelper {
         sendCachedEvent();
     }
 
-    void putDelegate(String key, Callback callback) {
-        delegates.put(key, callback);
-    }
-
     private void sendCachedEvent() {
         for (WritableMap param : cache) {
             sendEvent(param);
@@ -94,77 +71,32 @@ class EasemobHelper {
     }
 
     private void registerListener() {
-        EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
-            @Override
-            public void onConnected() {
-
-            }
-
-            @Override
-            public void onDisconnected(int i) {
-                if (i == EMError.USER_REMOVED) {
-                    // 账号在服务端被删除
-                } else if (i == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                    sendEvent(TYPE_CLIENT, LOGIN_ON_OTHER_DEVICE);
-                } else {
-                    if (NetUtils.hasNetwork(mContext)) {
-                        sendEvent(TYPE_CLIENT, DISCONNECT_CHAT_SERVER);
-                    } else {
-                        sendEvent(TYPE_CLIENT, NO_NETWORK);
-                    }
-                }
-            }
-        });
-        EMClient.getInstance().chatManager().addConversationListener(new EMConversationListener() {
-            @Override
-            public void onCoversationUpdate() {
-                if (delegates.containsKey(KEY_CONVERSATION_DID_UPDATE)) {
-                    delegates.get(KEY_CONVERSATION_DID_UPDATE).invoke();
-                }
-            }
-        });
-        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
-            @Override
-            public void onMessageReceived(List<EMMessage> list) {
-                if (delegates.containsKey(KEY_MESSAGE_DID_RECEIVE)) {
-                    delegates.get(KEY_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
-                }
-            }
-
-            @Override
-            public void onCmdMessageReceived(List<EMMessage> list) {
-                if (delegates.containsKey(KEY_CMD_MESSAGE_DID_RECEIVE)) {
-                    delegates.get(KEY_CMD_MESSAGE_DID_RECEIVE).invoke(MessageConverter.toMessageArray(list));
-                }
-            }
-
-            @Override
-            public void onMessageRead(List<EMMessage> list) {
-
-            }
-
-            @Override
-            public void onMessageDelivered(List<EMMessage> list) {
-
-            }
-
-            @Override
-            public void onMessageRecalled(List<EMMessage> list) {
-
-            }
-
-            @Override
-            public void onMessageChanged(EMMessage emMessage, Object o) {
-
-            }
-        });
+        EasemobListener listener = new EasemobListener(mContext);
+        EMClient instance = EMClient.getInstance();
+        instance.addConnectionListener(listener);
+        instance.chatManager().addConversationListener(listener);
+        instance.groupManager().addGroupChangeListener(listener);
+        instance.chatManager().addMessageListener(listener);
     }
 
-    private void sendEvent(String type, String subType) {
+    /**
+     * 发送事件，不携带数据时使用
+     *
+     * @param type    分类
+     * @param subType 子分类
+     */
+    public void sendEvent(@IMConstant.Type String type, @IMConstant.SubType String subType) {
         sendEvent(type, subType, null);
     }
 
-    private void sendEvent(String type, String subType, Object data) {
+    /**
+     * 发送事件，携带参数
+     *
+     * @param type    分类
+     * @param subType 子分类
+     * @param data    携带参数
+     */
+    public void sendEvent(@IMConstant.Type String type, @IMConstant.SubType String subType, Object data) {
         WritableMap map = Arguments.createMap();
         map.putString("type", type);
         map.putString("subType", subType);
@@ -190,6 +122,13 @@ class EasemobHelper {
         }
     }
 
+    /**
+     * 实际向JS发送Event的方法，除非有特殊的数据结构，否则不应该直接使用此方法
+     *
+     * @param params 发送到JS的数据
+     * @see EasemobHelper#sendEvent(String, String)
+     * @see EasemobHelper#sendEvent(String, String, Object)
+     */
     private void sendEvent(WritableMap params) {
         if (mReactContext != null) {
             mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNEaseMob", params);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight, TextInput, ScrollView } from 'react-native';
-import { Client, ChatManagerDelegate } from 'react-native-hecom-easemob';
+import { Client, EventEmitter } from 'react-native-hecom-easemob';
 
 const test = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980821', password: '123'};
 
@@ -8,10 +8,10 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        ChatManagerDelegate.setCmdMessageDidReceive(newMsg => {
+        EventEmitter.setCmdMessageDidReceive(newMsg => {
             this.setState(({message}) => ({message: message + '\n' + JSON.stringify(newMsg)}));
         });
-        ChatManagerDelegate.setMessageDidReceive(newMsg => {
+        EventEmitter.setMessageDidReceive(newMsg => {
             this.setState(({message}) => ({message: message + '\n' + JSON.stringify(newMsg)}));
         });
         Client.initWithAppKey(test.appKey);
