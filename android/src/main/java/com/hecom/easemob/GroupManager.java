@@ -58,6 +58,34 @@ public class GroupManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void destroyGroup(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, "groupId", promise)) {
+            return;
+        }
+        try {
+            EMClient.getInstance().groupManager().destroyGroup(params.getString("groupId"));
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "删除群失败", e);
+        }
+    }
+
+    @ReactMethod
+    public void updateGroupOwner(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"groupId", "newOwner"}, promise)) {
+            return;
+        }
+        try {
+            EMGroup group = EMClient.getInstance().groupManager().changeOwner(
+                    params.getString("groupId"), params.getString("newOwner"));
+            promise.resolve(EasemobConverter.convert(group));
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "更新群主失败", e);
+        }
+    }
+
+    @ReactMethod
     public void getJoinedGroups(Promise promise) {
         try {
             List<EMGroup> list = EMClient.getInstance().groupManager().getJoinedGroupsFromServer();
