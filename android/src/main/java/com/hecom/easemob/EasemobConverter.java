@@ -195,11 +195,19 @@ public class EasemobConverter {
             } else if (value instanceof Float) {
                 result.putDouble(key, (Float) value);
             } else if (value instanceof String) {
-                result.putString(key, (String) value);
-            } else if (value instanceof JSONObject) {
-                result.putMap(key, convertJsonObject((JSONObject) value));
-            } else if (value instanceof JSONArray) {
-                result.putArray(key, convertJsonArray((JSONArray) value));
+                String str = (String) value;
+                try {
+                    if (str.startsWith("{")) {
+                        result.putMap(key, convertJsonObject(new JSONObject(str)));
+                    } else if (str.startsWith("[")) {
+                        result.putArray(key, convertJsonArray(new JSONArray(str)));
+                    } else {
+                        result.putString(key, str);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    result.putString(key, str);
+                }
             }
         }
         return result;
