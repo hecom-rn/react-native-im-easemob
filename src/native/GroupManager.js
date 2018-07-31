@@ -22,5 +22,5 @@ export const destroyGroup = (groupId) =>
 export const updateGroupExt = (groupId,ext) =>
     NativeUtil(GroupManager.updateGroupExt, {groupId,ext});
 export const updateGroupOwner = (groupId,newOwner) =>
-    NativeUtil(GroupManager.updateGroupExt, {groupId,newOwner});
+    NativeUtil(GroupManager.updateGroupOwner, {groupId,newOwner});
 
