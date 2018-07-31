@@ -171,6 +171,46 @@ RCT_EXPORT_METHOD(changeGroupSubject:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(destroyGroup:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[GroupManager sharedGroupManager] destroyGroup_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)destroyGroup_local:(NSString *)params
+                        resolver:(RCTPromiseResolveBlock)resolve
+                        rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    EMError *error  = [[EMClient sharedClient].groupManager destroyGroup:groupId];
+    if(!error){
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
+RCT_EXPORT_METHOD(updateGroupOwner:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[GroupManager sharedGroupManager] updateGroupOwner_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)updateGroupOwner_local:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    NSString *newOwner = [allParams objectForKey:@"newOwner"];
+    EMError *error = nil;
+    EMGroup *group = [[EMClient sharedClient].groupManager updateGroupOwner:groupId newOwner:newOwner error:&error];
+    if(!error){
+        resolve([group objectToJSONString]);
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
 RCT_EXPORT_METHOD(updateGroupExt:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
