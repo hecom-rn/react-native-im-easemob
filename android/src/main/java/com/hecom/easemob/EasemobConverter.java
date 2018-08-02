@@ -1,5 +1,7 @@
 package com.hecom.easemob;
 
+import android.net.Uri;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -275,7 +277,10 @@ public class EasemobConverter {
         } else if (body instanceof EMImageMessageBody) {
             EMImageMessageBody image = (EMImageMessageBody) body;
             result.putString("remotePath", image.getRemoteUrl());
-            result.putString("localPath", image.getLocalUrl());
+            Uri local = UriPathUtil.getUri(EasemobHelper.getInstance().context(), image.getLocalUrl());
+            if (local != null) {
+                result.putString("localPath", local.toString());
+            }
             WritableMap size = Arguments.createMap();
             size.putInt("height", image.getHeight());
             size.putInt("width", image.getWidth());

@@ -1,5 +1,6 @@
 package com.hecom.easemob;
 
+import android.content.Context;
 import android.media.MediaMetadataRetriever;
 
 import com.facebook.react.bridge.Arguments;
@@ -120,18 +121,22 @@ public class ChatManager extends ReactContextBaseJavaModule {
         String to = params.getString("to");
         ReadableMap body = params.getMap("body");
 
+        Context context = getCurrentActivity();
+        if (context == null) return;
+
         EMMessage message;
         if (messageType == EMMessage.Type.IMAGE) {
-            message = EMMessage.createImageSendMessage(body.getString("path"), false, to);
+            message = EMMessage
+                    .createImageSendMessage(UriPathUtil.getPath(context, body.getString("path")), false, to);
         } else if (messageType == EMMessage.Type.LOCATION) {
             message = EMMessage.createLocationSendMessage(
                     body.getDouble("latitude"), body.getDouble("longitude"),
                     body.getString("address"), to);
         } else if (messageType == EMMessage.Type.VIDEO) {
-            message = EMMessage.createVideoSendMessage(body.getString("path"),
+            message = EMMessage.createVideoSendMessage(UriPathUtil.getPath(context, body.getString("path")),
                     body.getString("thumbPath"), body.getInt("duration"), to);
         } else if (messageType == EMMessage.Type.FILE) {
-            message = EMMessage.createFileSendMessage(body.getString("path"), to);
+            message = EMMessage.createFileSendMessage(UriPathUtil.getPath(context, body.getString("path")), to);
         } else if (messageType == EMMessage.Type.VOICE) {
             int duration;
             String path = body.getString("path");

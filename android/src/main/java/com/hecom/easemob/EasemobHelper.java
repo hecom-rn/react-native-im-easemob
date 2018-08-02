@@ -30,6 +30,10 @@ class EasemobHelper {
     private ReactContext mReactContext;
     private List<WritableMap> cache;
 
+    public Context context() {
+        return mContext;
+    }
+
     private static class Inner {
         private static EasemobHelper INSTANCE = new EasemobHelper();
     }
