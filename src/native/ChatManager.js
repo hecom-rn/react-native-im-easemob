@@ -76,9 +76,10 @@ export const sendText = (conversationId, chatType, text, ext = {}) =>
  * @param conversationId 会话ID
  * @param chatType 聊天类型
  * @param path 图片文件路径
+ * @param ext 附加内容
  */
-export const sendImage = (conversationId, chatType, path) =>
-    sendMessage(conversationId, chatType, MessageType.image, {path}, {});
+export const sendImage = (conversationId, chatType, path, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.image, {path}, ext);
 
 /**
  * 发送位置消息。
@@ -88,9 +89,10 @@ export const sendImage = (conversationId, chatType, path) =>
  * @param longitude 经度
  * @param address 位置的地址
  * @param name 位置的名称
+ * @param ext 附加内容
  */
-export const sendLocation = (conversationId, chatType, latitude, longitude, address, name) =>
-    sendMessage(conversationId, chatType, MessageType.location, {latitude, longitude, address}, {name});
+export const sendLocation = (conversationId, chatType, latitude, longitude, address, name, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.location, {latitude, longitude, address}, {name, ...ext});
 
 /**
  * 发送语音消息。
@@ -98,9 +100,10 @@ export const sendLocation = (conversationId, chatType, latitude, longitude, addr
  * @param chatType 聊天类型
  * @param path 语音文件路径
  * @param duration 语音长度(秒)
+ * @param ext 附加内容
  */
-export const sendVoice = (conversationId, chatType, path, duration) =>
-    sendMessage(conversationId, chatType, MessageType.voice, {path, duration}, {});
+export const sendVoice = (conversationId, chatType, path, duration, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.voice, {path, duration}, ext);
 
 /**
  * 发送视频消息。
@@ -109,15 +112,17 @@ export const sendVoice = (conversationId, chatType, path, duration) =>
  * @param path 视频文件路径
  * @param thumbPath 视频缩略图文件路径
  * @param duration 视频长度(秒)
+ * @param ext 附加内容
  */
-export const sendVideo = (conversationId, chatType, path, thumbPath = '', duration = 0) =>
-    sendMessage(conversationId, chatType, MessageType.video, {path, thumbPath, duration}, {});
+export const sendVideo = (conversationId, chatType, path, thumbPath = '', duration = 0, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.video, {path, thumbPath, duration}, ext);
 
 /**
  * 发送文件消息。
  * @param conversationId 会话ID
  * @param chatType 聊天类型
  * @param path 文件路径
+ * @param ext 附加内容
  */
-export const sendFile = (conversationId, chatType, path) =>
-    sendMessage(conversationId, chatType, MessageType.file, {path}, {});
+export const sendFile = (conversationId, chatType, path, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.file, {path}, ext);
