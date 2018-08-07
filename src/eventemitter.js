@@ -4,11 +4,10 @@ const event = Platform.OS === 'ios' ? new NativeEventEmitter(NativeModules.Clien
 const handlers = {};
 let handlerObj = null;
 
-export const setMessageDidReceive = setCallback('ChatManagerDelegate', 'messageDidReceive');
-export const setCmdMessageDidReceive = setCallback('ChatManagerDelegate', 'cmdMessageDidReceive');
-export const setConversationListDidUpdate = setCallback('ChatManagerDelegate', 'conversationListDidUpdate');
-
-export function init(func) {
+/**
+ * 初始化原生事件监听。
+ */
+export function init() {
     if (handlerObj) {
         handlerObj.remove();
     }
@@ -19,6 +18,21 @@ export function init(func) {
         }
     });
 }
+
+/**
+ * 设置消息接收事件回调。
+ */
+export const setMessageDidReceive = setCallback('ChatManagerDelegate', 'messageDidReceive');
+
+/**
+ * 设置CMD控制消息接收事件回调。
+ */
+export const setCmdMessageDidReceive = setCallback('ChatManagerDelegate', 'cmdMessageDidReceive');
+
+/**
+ * 设置会话列表更新事件回调。
+ */
+export const setConversationListDidUpdate = setCallback('ChatManagerDelegate', 'conversationListDidUpdate');
 
 function setCallback(type, subType) {
     return function (callback) {

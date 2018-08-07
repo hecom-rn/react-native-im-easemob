@@ -4,30 +4,120 @@ import { ChatType, MessageType } from '../constant/IMConstant';
 
 const ChatManager = NativeModules.ChatManager;
 
-const getConversation = (conversationId, type, ifCreate) =>
+/**
+ * 获取单个会话。
+ * @param conversationId 会话ID
+ * @param type 会话类型
+ * @param ifCreate 是否创建
+ */
+export const getConversation = (conversationId, type, ifCreate) =>
     NativeUtil(ChatManager.getConversation, {conversationId, type, ifCreate});
-const sendMessage = (conversationId, chatType, messageType, to, body, messageExt) =>
-    NativeUtil(ChatManager.sendMessage, {conversationId, chatType, messageType, to, body, messageExt});
 
+/**
+ * 创建单聊会话。
+ * @param imId 单聊用户的ImID
+ */
 export const createSingleConversation = (imId) => getConversation(imId, ChatType.single, true);
+
+/**
+ * 创建群聊会话。
+ * @param groupId 群的ID
+ */
 export const createGroupConversation = (groupId) => getConversation(groupId, ChatType.group, true);
-export const getAllConversations = () =>
-    NativeUtil(ChatManager.getAllConversations, undefined);
-export const deleteConversation = (conversationId) =>
-    NativeUtil(ChatManager.deleteConversation, {conversationId});
-export const sendText = (conversationId, chatType, text, ext = {}) =>
-    sendMessage(conversationId, chatType, MessageType.text, conversationId, {text}, ext);
-export const sendImage = (conversationId, chatType, path) =>
-    sendMessage(conversationId, chatType, MessageType.image, conversationId, {path}, {});
-export const sendLocation = (conversationId, chatType, latitude, longitude, address, name) =>
-    sendMessage(conversationId, chatType, MessageType.location, conversationId, {latitude, longitude, address}, {name});
-export const sendVoice = (conversationId, chatType, path, duration) =>
-    sendMessage(conversationId, chatType, MessageType.voice, conversationId, {path, duration}, {});
-export const sendVideo = (conversationId, chatType, path, thumbPath = '', duration = 0) =>
-    sendMessage(conversationId, chatType, MessageType.video, conversationId, {path, thumbPath, duration}, {});
-export const sendFile = (conversationId, chatType, path) =>
-    sendMessage(conversationId, chatType, MessageType.file, conversationId, {path}, {});
-export const sendObject = (conversationId, chatType, object) =>
-    sendMessage(conversationId, chatType, MessageType.text, conversationId, {text: ""}, object);
+
+/**
+ * 获取全部会话列表。
+ */
+export const getAllConversations = () => NativeUtil(ChatManager.getAllConversations, undefined);
+
+/**
+ * 删除指定会话。
+ * @param conversationId 会话ID
+ */
+export const deleteConversation = (conversationId) => NativeUtil(ChatManager.deleteConversation, {conversationId});
+
+/**
+ * 获取会话的消息列表。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param fromId 指定开始的消息ID
+ * @param count 加载数量
+ * @param searchDirection 向上/向下加载
+ */
 export const loadMessages = (conversationId, chatType, fromId, count, searchDirection) =>
     NativeUtil(ChatManager.loadMessages, {conversationId, chatType, fromId, count, searchDirection});
+
+/**
+ * 发送通用消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param messageType 消息类型
+ * @param body 消息体
+ * @param messageExt 附件内容
+ */
+export const sendMessage = (conversationId, chatType, messageType, body, messageExt) =>
+    NativeUtil(
+        ChatManager.sendMessage,
+        {conversationId, chatType, messageType, to: conversationId, body, messageExt}
+    );
+
+/**
+ * 发送文本消息
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param text 文本消息
+ * @param ext 附加内容
+ */
+export const sendText = (conversationId, chatType, text, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.text, {text}, ext);
+
+/**
+ * 发送图片消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param path 图片文件路径
+ */
+export const sendImage = (conversationId, chatType, path) =>
+    sendMessage(conversationId, chatType, MessageType.image, {path}, {});
+
+/**
+ * 发送位置消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param latitude 纬度
+ * @param longitude 经度
+ * @param address 位置的地址
+ * @param name 位置的名称
+ */
+export const sendLocation = (conversationId, chatType, latitude, longitude, address, name) =>
+    sendMessage(conversationId, chatType, MessageType.location, {latitude, longitude, address}, {name});
+
+/**
+ * 发送语音消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param path 语音文件路径
+ * @param duration 语音长度(秒)
+ */
+export const sendVoice = (conversationId, chatType, path, duration) =>
+    sendMessage(conversationId, chatType, MessageType.voice, {path, duration}, {});
+
+/**
+ * 发送视频消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param path 视频文件路径
+ * @param thumbPath 视频缩略图文件路径
+ * @param duration 视频长度(秒)
+ */
+export const sendVideo = (conversationId, chatType, path, thumbPath = '', duration = 0) =>
+    sendMessage(conversationId, chatType, MessageType.video, {path, thumbPath, duration}, {});
+
+/**
+ * 发送文件消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param path 文件路径
+ */
+export const sendFile = (conversationId, chatType, path) =>
+    sendMessage(conversationId, chatType, MessageType.file, {path}, {});
