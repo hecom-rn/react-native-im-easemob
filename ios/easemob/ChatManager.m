@@ -132,11 +132,8 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     message.chatType = chatType;
     //发送消息
     [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
-        if(!error){
-            resolve([message objectToJSONString]);
-        } else {
-            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-        }
+        // 不管有没有错误都会返回message，根据message中的status判断消息的发送状态
+        resolve([message objectToJSONString]);
     }];
 }
 
