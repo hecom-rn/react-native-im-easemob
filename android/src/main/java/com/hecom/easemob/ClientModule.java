@@ -36,8 +36,9 @@ public class ClientModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void login(String userName, String password, final Promise promise) {
-        EMClient.getInstance().login(userName, password, new EasemobCallback() {
+    public void login(ReadableMap params, final Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"userName", "password"}, promise)) return;
+        EMClient.getInstance().login(params.getString("userName"), params.getString("password"), new EasemobCallback() {
             @Override
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();

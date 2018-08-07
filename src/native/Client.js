@@ -12,7 +12,8 @@ const isIos = Platform.OS === 'ios';
 export const initWithAppKey = (appKey, options = {}) => NativeUtil(Client.init, {appKey, ...options});
 
 /**
- * // TODO
+ * 通知Native，JS已经加载完毕
+ * Android Only
  */
 export const notifyJSDidLoad = () => !isIos && Client.notifyJSDidLoad();
 
@@ -21,7 +22,7 @@ export const notifyJSDidLoad = () => !isIos && Client.notifyJSDidLoad();
  * @param username 用户名称
  * @param password 密码
  */
-export const login = (username, password) => isIos ? NativeUtil(Client.login, {username, password}) : Client.login(username, password); // TODO 去掉isIOS，包括上面isIOS定义和Platform导入
+export const login = (username, password) => NativeUtil(Client.login, {username, password});
 
 /**
  * 聊天用户登出。
