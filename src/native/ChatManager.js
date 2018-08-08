@@ -48,6 +48,15 @@ export const loadMessages = (conversationId, chatType, fromId, count, searchDire
     NativeUtil(ChatManager.loadMessages, {conversationId, chatType, fromId, count, searchDirection});
 
 /**
+ * 撤回消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param messageId 撤销的消息ID
+ */
+export const recallMessage = (conversationId, chatType, messageId) =>
+    NativeUtil(ChatManager.recallMessage, {conversationId, chatType, messageId});
+
+/**
  * 发送通用消息。
  * @param conversationId 会话ID
  * @param chatType 聊天类型
