@@ -179,14 +179,21 @@ RCT_EXPORT_METHOD(recallMessage:(NSString *)params
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
-    NSString *fromId = [allParams objectForKey:@"messageId"];
-    [conversation loadMessagesStartFromId:fromId count:1 searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *error) {
-        [[EMClient sharedClient].chatManager recallMessage:aMessages.lastObject
+    NSString *messageId = [allParams objectForKey:@"messageId"];
+    long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
+    [conversation loadMessagesFrom:timestamp - 1 to:timestamp + 1 count:100 completion:^(NSArray *aMessages, EMError *aError) {
+        __block EMMessage *msg;
+        [aMessages enumerateObjectsUsingBlock:^(EMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([message.messageId isEqualToString:messageId] ) {
+                msg = message;
+            }
+        }];
+        [[EMClient sharedClient].chatManager recallMessage:msg
                                                 completion:^(EMMessage *aMessage, EMError *aError) {
                                                     if (!aError) {
                                                         resolve([aMessage objectToJSONString]);
                                                     } else {
-                                                        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+                                                        reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
                                                     }
                                                 }];
     }];

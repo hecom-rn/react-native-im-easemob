@@ -52,9 +52,10 @@ export const loadMessages = (conversationId, chatType, fromId, count, searchDire
  * @param conversationId 会话ID
  * @param chatType 聊天类型
  * @param messageId 撤销的消息ID
+ * @param timestamp 撤销的消息ID
  */
-export const recallMessage = (conversationId, chatType, messageId) =>
-    NativeUtil(ChatManager.recallMessage, {conversationId, chatType, messageId});
+export const recallMessage = (conversationId, chatType, messageId, timestamp) =>
+    NativeUtil(ChatManager.recallMessage, {conversationId, chatType, messageId, timestamp});
 
 /**
  * 发送通用消息。
