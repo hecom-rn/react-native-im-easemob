@@ -127,6 +127,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
             body = [[EMFileMessageBody alloc] initWithLocalPath:path displayName:@"file"];
         }
             break;
+        case EMMessageBodyTypeCmd: {
+            NSString *action = bodyDic[@"action"];
+            body = [[EMCmdMessageBody alloc] initWithAction:action];
+        }
+            break;
         default:
             break;
     }
@@ -209,6 +214,29 @@ RCT_EXPORT_METHOD(recallMessage:(NSString *)params
                                                     }
                                                 }];
     }];
+}
+
+RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[ChatManager sharedChatManager] deleteMessage_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)deleteMessage_local:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+    NSString *messageId = [allParams objectForKey:@"messageId"];
+    EMError *error = nil;
+    [conversation deleteMessageWithId:messageId error:&error];
+    if(!error){
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
 }
 
 @end

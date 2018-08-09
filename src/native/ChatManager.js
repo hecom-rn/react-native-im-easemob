@@ -159,3 +159,13 @@ export const sendVideo = (conversationId, chatType, path, thumbPath = '', durati
  */
 export const sendFile = (conversationId, chatType, path, ext = {}) =>
     sendMessage(conversationId, chatType, MessageType.file, {path}, ext);
+
+/**
+ * 发送透传消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param action 透传类型
+ * @param ext 附加内容
+ */
+export const sendCmd = (conversationId, chatType, action, ext = {}) =>
+    sendMessage(conversationId, chatType, MessageType.cmd, {action}, ext);
