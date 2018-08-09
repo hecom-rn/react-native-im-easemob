@@ -72,6 +72,29 @@ export const sendMessage = (conversationId, chatType, messageType, body, message
     );
 
 /**
+ * 插入系统消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param text 消息提示文本
+ * @param timestamp 时间戳
+ * @param localTime 本地时间戳
+ */
+export const insertSystemMessage = (conversationId, chatType, text, timestamp, localTime) =>
+    NativeUtil(
+        ChatManager.sendMessage,
+        {
+            conversationId,
+            chatType,
+            messageType: MessageType.text,
+            to: conversationId,
+            timestamp,
+            localTime,
+            body: {text},
+            ext: {isSystemMessage: true}
+        }
+    );
+
+/**
  * 发送文本消息
  * @param conversationId 会话ID
  * @param chatType 聊天类型

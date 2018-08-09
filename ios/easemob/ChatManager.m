@@ -87,6 +87,9 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
     NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
     NSDictionary *bodyDic = [allParams objectForKey:@"body"];
+    long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
+    long long localTime = [[allParams objectForKey:@"localTime"] longLongValue];
+    
     EMMessageBody *body;
     switch (messageType) {
         case EMMessageBodyTypeText: {
@@ -127,14 +130,23 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         default:
             break;
     }
+    
     //生成Message
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
-    //发送消息
-    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
-        // 不管有没有错误都会返回message，根据message中的status判断消息的发送状态
+    if (timestamp > 0) {
+        //插入消息
+        EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
+        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+        [conversation insertMessage:message error:nil];
         resolve([message objectToJSONString]);
-    }];
+    } else {
+        //发送消息
+        [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+            // 不管有没有错误都会返回message，根据message中的status判断消息的发送状态
+            resolve([message objectToJSONString]);
+        }];
+    }
 }
 
 RCT_EXPORT_METHOD(loadMessages:(NSString *)params
