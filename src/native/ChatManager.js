@@ -99,7 +99,7 @@ export const insertSystemMessage = (conversationId, chatType, text, timestamp, l
             timestamp,
             localTime,
             body: {text},
-            ext: {isSystemMessage: true}
+            messageExt: {isSystemMessage: true}
         }
     );
 

@@ -135,12 +135,13 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         default:
             break;
     }
-    
     //生成Message
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
     if (timestamp > 0) {
         //插入消息
+        message.timestamp = timestamp;
+        message.localTime = localTime;
         EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
         EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
         [conversation insertMessage:message error:nil];
