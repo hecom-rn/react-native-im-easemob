@@ -34,6 +34,21 @@ export const setCmdMessageDidReceive = setCallback('ChatManagerDelegate', 'cmdMe
  */
 export const setConversationListDidUpdate = setCallback('ChatManagerDelegate', 'conversationListDidUpdate');
 
+/**
+ * 设置群成员加入回调。
+ */
+export const setUserDidJoinGroup = setCallback('GroupManagerDelegate', 'userDidJoinGroup');
+
+/**
+ * 设置群成员删除回调。
+ */
+export const setUserDidLeaveGroup = setCallback('GroupManagerDelegate', 'userDidLeaveGroup');
+
+/**
+ * 设置群主更换回调。
+ */
+export const setGroupOwnerDidUpdate = setCallback('GroupManagerDelegate', 'groupOwnerDidUpdate');
+
 function setCallback(type, subType) {
     return function (callback) {
         if (!handlers[type]) {
