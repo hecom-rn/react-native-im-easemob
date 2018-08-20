@@ -81,7 +81,7 @@ public class EasemobConverter {
         result.putString("from", message.getFrom());
         result.putString("to", message.getTo());
         result.putString("messageId", message.getMsgId());
-        result.putInt("timestamp", (int) message.getMsgTime());
+        result.putDouble("timestamp", message.getMsgTime());
         result.putString("userName", message.getUserName());
         result.putInt("chatType", toChatType(message.getChatType()));
         result.putInt("direct", toDirect(message.direct()));

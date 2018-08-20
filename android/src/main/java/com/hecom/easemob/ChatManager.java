@@ -15,6 +15,7 @@ import com.facebook.react.bridge.WritableArray;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
 
@@ -97,9 +98,35 @@ public class ChatManager extends ReactContextBaseJavaModule {
         if (params.hasKey("count")) {
             count = params.getInt("count");
         }
-        List<EMMessage> list = EMClient.getInstance().chatManager().getConversation(conversationId, type)
+        List<EMMessage> list = EMClient.getInstance().chatManager().getConversation(conversationId, type, true)
                 .loadMoreMsgFromDB(fromId, count);
         promise.resolve(EasemobConverter.convertList(list));
+    }
+
+    @ReactMethod
+    public void deleteMessage(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "messageId"}, promise)) {
+            return;
+        }
+        String conversationId = params.getString("conversationId");
+        String messageId = params.getString("messageId");
+        EMClient.getInstance().chatManager().getConversation(conversationId).removeMessage(messageId);
+    }
+
+    @ReactMethod
+    public void recallMessage(ReadableMap params, Promise promise) {
+        if (CheckUtil
+                .checkParamKey(params, new String[]{"messageId"}, promise)) {
+            return;
+        }
+        String messageId = params.getString("conversationId");
+        EMMessage message = EMClient.getInstance().chatManager().getMessage(messageId);
+        try {
+            EMClient.getInstance().chatManager().recallMessage(message);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
@@ -190,5 +217,4 @@ public class ChatManager extends ReactContextBaseJavaModule {
             }
         }
     }
-
 }
