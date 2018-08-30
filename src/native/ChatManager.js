@@ -178,3 +178,11 @@ export const sendFile = (conversationId, chatType, path, ext = {}) =>
  */
 export const sendCmd = (conversationId, chatType, action, ext = {}) =>
     sendMessage(conversationId, chatType, MessageType.cmd, {action}, ext);
+
+/**
+ * 设置会话消息全部已读。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ */
+export const markAllMessagesAsRead = (conversationId, chatType) =>
+    NativeUtil(ChatManager.markAllMessagesAsRead, {conversationId, chatType});

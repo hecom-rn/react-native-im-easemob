@@ -241,4 +241,26 @@ RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(markAllMessagesAsRead:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    [[ChatManager sharedChatManager] markAllMessagesAsRead_local:params resolver:resolve rejecter:reject];
+}
+
+- (void)markAllMessagesAsRead_local:(NSString *)params
+                   resolver:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject {
+    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+    EMError *error = nil;
+    [conversation markAllMessagesAsRead:&error];
+    if(!error){
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
 @end
