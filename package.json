@@ -19,7 +19,7 @@
     "Hecom"
   ],
   "author": "Xiaosong Gao",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/RNCommon/react-native-easemob/issues",
     "email": "gaoxiaosong06@gmail.com"

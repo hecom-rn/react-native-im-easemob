@@ -54,7 +54,7 @@ export const loadMessages = (conversationId, chatType, fromId, count, searchDire
  * @param messageId 删除的消息ID
  */
 export const deleteMessage = (conversationId, chatType, messageId) =>
-        NativeUtil(ChatManager.deleteMessage, {conversationId, chatType, messageId});
+    NativeUtil(ChatManager.deleteMessage, {conversationId, chatType, messageId});
 
 /**
  * 撤回消息。
