@@ -217,4 +217,14 @@ public class ChatManager extends ReactContextBaseJavaModule {
             }
         }
     }
+
+    @ReactMethod
+    public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "chatType"}, promise)) {
+            return;
+        }
+        String conversationId = params.getString("conversationId");
+        EMConversation.EMConversationType chatType = EasemobConverter.toConversationType(params.getInt("chatType"));
+        EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
+    }
 }
