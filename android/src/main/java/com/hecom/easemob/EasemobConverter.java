@@ -11,14 +11,18 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupOptions;
 import com.hyphenate.chat.EMImageMessageBody;
+import com.hyphenate.chat.EMLocationMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.chat.EMVideoMessageBody;
+import com.hyphenate.chat.EMVoiceMessageBody;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -286,6 +290,33 @@ public class EasemobConverter {
             size.putInt("width", image.getWidth());
             result.putMap("size", size);
             type = IMConstant.MessageType.IMAGE;
+        } else if (body instanceof EMVideoMessageBody) {
+            EMVideoMessageBody video = (EMVideoMessageBody) body;
+            result.putInt("duration", video.getDuration());
+            result.putString("localPath", video.getLocalUrl());
+            result.putString("remotePath", video.getRemoteUrl());
+            result.putString("localThumb", video.getLocalThumb());
+            result.putDouble("fileLength", video.getVideoFileLength());
+            type = IMConstant.MessageType.VIDEO;
+        } else if (body instanceof EMVoiceMessageBody) {
+            EMVoiceMessageBody voice = (EMVoiceMessageBody) body;
+            result.putString("localPath", voice.getLocalUrl());
+            result.putString("remotePath", voice.getRemoteUrl());
+            result.putString("secretKey", voice.getSecret());
+            result.putString("displayName", voice.getFileName());
+            result.putInt("duration", voice.getLength());
+            type = IMConstant.MessageType.VOICE;
+        } else if (body instanceof EMFileMessageBody) {
+            EMFileMessageBody file = (EMFileMessageBody) body;
+            result.putString("localPath", file.getLocalUrl());
+            result.putString("remotePath", file.getRemoteUrl());
+            type = IMConstant.MessageType.FILE;
+        } else if (body instanceof EMLocationMessageBody) {
+            EMLocationMessageBody location = (EMLocationMessageBody) body;
+            result.putString("address", location.getAddress());
+            result.putDouble("latitude", location.getLatitude());
+            result.putDouble("longitude", location.getLongitude());
+            type = IMConstant.MessageType.LOCATION;
         } else if (body instanceof EMCmdMessageBody) {
             EMCmdMessageBody cmd = (EMCmdMessageBody) body;
             result.putString("action", cmd.action());
