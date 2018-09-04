@@ -111,6 +111,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         String conversationId = params.getString("conversationId");
         String messageId = params.getString("messageId");
         EMClient.getInstance().chatManager().getConversation(conversationId).removeMessage(messageId);
+        promise.resolve(null);
     }
 
     @ReactMethod
@@ -123,6 +124,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         EMMessage message = EMClient.getInstance().chatManager().getMessage(messageId);
         try {
             EMClient.getInstance().chatManager().recallMessage(message);
+            promise.resolve(null);
         } catch (HyphenateException e) {
             e.printStackTrace();
             promise.reject(e);
@@ -226,5 +228,6 @@ public class ChatManager extends ReactContextBaseJavaModule {
         String conversationId = params.getString("conversationId");
         EMConversation.EMConversationType chatType = EasemobConverter.toConversationType(params.getInt("chatType"));
         EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
+        promise.resolve(null);
     }
 }

@@ -95,6 +95,7 @@ public class EasemobConverter {
         result.putBoolean("isDeliverAcked", message.isDelivered());
         result.putBoolean("isListened", message.isListened());
         result.putBoolean("isRead", !message.isUnread());
+        result.putInt("direction", toDirect(message.direct()));
         result.putInt("state", message.status().ordinal());
         result.putMap("body", convertBody(message.getBody()));
         result.putMap("ext", convertExt(message.ext()));
