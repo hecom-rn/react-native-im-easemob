@@ -1,4 +1,4 @@
-package com.hecom.easemob;
+package com.im.easemob;
 
 import android.net.Uri;
 
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 将环信的数据结构转换为HecomEasemob的数据结构
+ * 将环信的数据结构转换为ImEasemob的数据结构
  * Created by kevin.bai on 2018/6/13.
  */
 
@@ -114,7 +114,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hyphenate.chat.EMMessage.ChatType}转换为{@link com.hecom.easemob.IMConstant.ChatType}
+     * 将{@link com.hyphenate.chat.EMMessage.ChatType}转换为{@link com.im.easemob.IMConstant.ChatType}
      */
     private static int toChatType(EMMessage.ChatType type) {
         Integer chatType = convertChatType.get(type);
@@ -122,7 +122,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hecom.easemob.IMConstant.ChatType}转换为{@link com.hyphenate.chat.EMMessage.ChatType}
+     * 将{@link com.im.easemob.IMConstant.ChatType}转换为{@link com.hyphenate.chat.EMMessage.ChatType}
      */
     public static EMMessage.ChatType toChatType(int type) {
         EMMessage.ChatType result = toChatType.get(type);
@@ -130,7 +130,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMConversation.EMConversationType}转换为{@link com.hecom.easemob.IMConstant.ChatType}
+     * 将{@link EMConversation.EMConversationType}转换为{@link com.im.easemob.IMConstant.ChatType}
      */
     private static int toConversationType(EMConversation.EMConversationType type) {
         Integer result = convertConversationType.get(type);
@@ -138,7 +138,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hecom.easemob.IMConstant.ChatType}转换为{@link EMConversation.EMConversationType}
+     * 将{@link com.im.easemob.IMConstant.ChatType}转换为{@link EMConversation.EMConversationType}
      */
     public static EMConversation.EMConversationType toConversationType(int type) {
         EMConversation.EMConversationType result = toConversationType.get(type);
@@ -146,7 +146,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMMessage.Type}转换为{@link com.hecom.easemob.IMConstant.MessageType}
+     * 将{@link EMMessage.Type}转换为{@link com.im.easemob.IMConstant.MessageType}
      */
     private static int toMessageType(EMMessage.Type type) {
         Integer result = convertMessageType.get(type);
@@ -154,7 +154,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hecom.easemob.IMConstant.MessageType}转换为{@link EMMessage.Type}
+     * 将{@link com.im.easemob.IMConstant.MessageType}转换为{@link EMMessage.Type}
      */
     public static EMMessage.Type toMessageType(int type) {
         EMMessage.Type result = toMessageType.get(type);
@@ -162,7 +162,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMMessage.Direct}转换为{@link com.hecom.easemob.IMConstant.EMMessageDirection}
+     * 将{@link EMMessage.Direct}转换为{@link com.im.easemob.IMConstant.EMMessageDirection}
      */
     private static int toDirect(EMMessage.Direct direct) {
         Integer result = convertDirect.get(direct);
@@ -170,7 +170,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hecom.easemob.IMConstant.EMMessageDirection}转换为{@link EMMessage.Direct}
+     * 将{@link com.im.easemob.IMConstant.EMMessageDirection}转换为{@link EMMessage.Direct}
      */
     public static EMMessage.Direct toDirect(int type) {
         EMMessage.Direct result = toDirect.get(type);

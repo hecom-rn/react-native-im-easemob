@@ -1,5 +1,5 @@
 rootProject.name = 'example'
 
 include ':app'
-include ':react-native-hecom-easemob'
-project(':react-native-hecom-easemob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-hecom-easemob/android')
+include ':react-native-im-easemob'
+project(':react-native-im-easemob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-im-easemob/android')

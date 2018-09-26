@@ -1,6 +1,6 @@
 platform :ios, '8.0'
 
 target 'EaseMob-Example' do
-    pod 'Hyphenate', '~> 3.4.2'
+    pod 'Hyphenate', '~> 3.5.1'
     pod 'MJExtension'
 end

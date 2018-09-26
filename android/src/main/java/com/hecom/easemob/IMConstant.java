@@ -1,4 +1,4 @@
-package com.hecom.easemob;
+package com.im.easemob;
 
 import android.support.annotation.StringDef;
 

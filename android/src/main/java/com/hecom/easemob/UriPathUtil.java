@@ -1,7 +1,4 @@
-/**
- *
- */
-package com.hecom.easemob;
+package com.im.easemob;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

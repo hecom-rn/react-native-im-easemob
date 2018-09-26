@@ -1,4 +1,4 @@
-package com.hecom.easemob;
+package com.im.easemob;
 
 import android.content.Context;
 
@@ -12,10 +12,10 @@ import com.hyphenate.chat.EMMucSharedFile;
 
 import java.util.List;
 
-import static com.hecom.easemob.IMConstant.CHAT_MANAGER_DELEGATE;
-import static com.hecom.easemob.IMConstant.CMD_MESSAGE_DID_RECEIVE;
-import static com.hecom.easemob.IMConstant.CONVERSATION_LIST_DID_UPDATE;
-import static com.hecom.easemob.IMConstant.MESSAGE_DID_RECEIVE;
+import static com.im.easemob.IMConstant.CHAT_MANAGER_DELEGATE;
+import static com.im.easemob.IMConstant.CMD_MESSAGE_DID_RECEIVE;
+import static com.im.easemob.IMConstant.CONVERSATION_LIST_DID_UPDATE;
+import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
 
 /**
  * 处理环信的监听事件

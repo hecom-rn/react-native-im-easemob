@@ -3,7 +3,7 @@
 //  RNEaseMob
 //
 //  Created by Xiaosong Gao on 2018/6/7.
-//  Copyright © 2018年 Hecom. All rights reserved.
+//  Copyright © 2018年. All rights reserved.
 //
 
 #define DEFINE_SINGLETON_FOR_HEADER(className) \

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight, TextInput, ScrollView } from 'react-native';
-import { Client, EventEmitter } from 'react-native-hecom-easemob';
+import { Client, EventEmitter } from 'react-native-im-easemob';
 
 const test = {appKey: 'easemob-demo#chatdemoui', account: 'zzg980821', password: '123'};
 
