@@ -134,7 +134,8 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void sendMessage(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, new String[]{"chatType", "messageType", "to", "body"}, promise)) {
+        if (com.im.easemob.CheckUtil
+                .checkParamKey(params, new String[]{"chatType", "messageType", "to", "body"}, promise)) {
             return;
         }
         ReadableMap ext = null;
@@ -159,16 +160,19 @@ public class ChatManager extends ReactContextBaseJavaModule {
         EMMessage message = null;
         if (messageType == EMMessage.Type.IMAGE) {
             message = EMMessage
-                    .createImageSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")), false, to);
+                    .createImageSendMessage(com.im.easemob.UriPathUtil
+                            .getPath(context, body.getString("path")), false, to);
         } else if (messageType == EMMessage.Type.LOCATION) {
             message = EMMessage.createLocationSendMessage(
                     body.getDouble("latitude"), body.getDouble("longitude"),
                     body.getString("address"), to);
         } else if (messageType == EMMessage.Type.VIDEO) {
-            message = EMMessage.createVideoSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")),
-                    body.getString("thumbPath"), body.getInt("duration"), to);
+            message = EMMessage
+                    .createVideoSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")),
+                            body.getString("thumbPath"), body.getInt("duration"), to);
         } else if (messageType == EMMessage.Type.FILE) {
-            message = EMMessage.createFileSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")), to);
+            message = EMMessage
+                    .createFileSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")), to);
         } else if (messageType == EMMessage.Type.VOICE) {
             int duration;
             String path = body.getString("path");
@@ -203,13 +207,31 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 message.setMsgTime(timestamp);
                 message.setLocalTime(localTime);
                 message.setStatus(EMMessage.Status.SUCCESS);
-                EMClient.getInstance().chatManager().getConversation(message.conversationId()).insertMessage(message);
+                EMConversation.EMConversationType cType = getCType(type);
+                EMConversation conversation = EMClient.getInstance().chatManager()
+                        .getConversation(message.conversationId(), cType, true);
+                if (conversation != null) {
+                    conversation.insertMessage(message);
+                }
             } else {
                 EMClient.getInstance().chatManager().sendMessage(message);
             }
             promise.resolve(com.im.easemob.EasemobConverter.convert(message));
         } else {
             promise.reject("-1", "无法识别的messageType");
+        }
+    }
+
+    private EMConversation.EMConversationType getCType(EMMessage.ChatType type) {
+        switch (type) {
+            case Chat:
+                return EMConversation.EMConversationType.Chat;
+            case GroupChat:
+                return EMConversation.EMConversationType.GroupChat;
+            case ChatRoom:
+                return EMConversation.EMConversationType.ChatRoom;
+            default:
+                return EMConversation.EMConversationType.Chat;
         }
     }
 
@@ -246,7 +268,8 @@ public class ChatManager extends ReactContextBaseJavaModule {
             return;
         }
         String conversationId = params.getString("conversationId");
-        EMConversation.EMConversationType chatType = com.im.easemob.EasemobConverter.toConversationType(params.getInt("chatType"));
+        EMConversation.EMConversationType chatType = com.im.easemob.EasemobConverter
+                .toConversationType(params.getInt("chatType"));
         EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
         promise.resolve(null);
     }
