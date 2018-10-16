@@ -28,44 +28,47 @@ npm install --save react-native-im-easemob
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-target "MainProject" do
+def common_target
+    pod 'MJExtension', :git => 'https://github.com/RNCommon/MJExtension.git', :commit => 'cd3de71c4955935a762a46e59d90160991f5fa92'
+    // React target and other common target...
+end
+
+target "MainTarget" do
+    common_target
+    pod 'react-native-im-easemob', :path => '../node_modules/react-native-im-easemob'
     pod 'Hyphenate', '= 3.5.1'
+end
+
+target "DeployTarget" do
+    common_target
+    pod 'react-native-im-easemob/Deploy', :path => '../node_modules/react-native-im-easemob'
+    pod 'HyphenateDevice', :podspec => 'https://raw.githubusercontent.com/RNCommon/HyphenateDevice/master/HyphenateDevice.podspec'
 end
 ```
 
-在主工程中，右键添加ios目录中的所有源文件。
+其中MainTarget是真机和模拟器通用的部署Target，主要用于调试。DeployTarget是只支持armv7和arm64的Target，主要用于打包发布。
 
-向Build → Link Binary With Libraries中添加依赖库：
-
-* MobileCoreServices.framework
-* CFNetwork.framework
-* libsqlite3.tbd
-* libc++.tbd
-* libz.tbd
-* libiconv.tbd
-* libresolv.tbd
-* libxml2.tbd
-
-向Build Settings → Linking → Other Linker Flags中添加`-ObjC -lc++`。
-
-在Build Settings中的General中，在Embedded Binaries中添加Hyphenate.framework。
-
-打包需要使用`lipo`来处理`Hyphenate.framework`，从中剔除i386和x86_64的模拟器框架。请参照环信文档进行操作。
+这是因为环信SDK的原因，`Hyphenate`打包需要使用`lipo`来处理`Hyphenate.framework`，从中剔除i386和x86_64的模拟器框架。具体原因请参照环信文档。
 
 ## Android环境设置
 
 在settings.gradle文件中添加：
+
 ```
 include ':react-native-im-easemob'
 project(':react-native-im-easemob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-im-easemob/android')
 ```
+
 在module级的build.gradle中添加：
+
 ```
 dependencies {
     implementation project(':react-native-im-easemob')
 }
 ```
+
 在ReactNativeHost中添加：
+
 ```
 import com.im.easemob.EasemobPackage;
 
