@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.dependency 'React'
   s.dependency 'MJExtension'
 
-  ss.dependency 'HyphenateDevice'
+  s.dependency 'HyphenateDevice'
 end
