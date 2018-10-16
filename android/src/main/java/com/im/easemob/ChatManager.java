@@ -111,8 +111,13 @@ public class ChatManager extends ReactContextBaseJavaModule {
         }
         String conversationId = params.getString("conversationId");
         String messageId = params.getString("messageId");
-        EMClient.getInstance().chatManager().getConversation(conversationId).removeMessage(messageId);
-        promise.resolve(null);
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(conversationId);
+        if (conversation != null) {
+            conversation.removeMessage(messageId);
+            promise.resolve(null);
+        } else {
+            promise.reject("-1", "会话不存在，conversationId=" + conversationId);
+        }
     }
 
     @ReactMethod
@@ -121,7 +126,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 .checkParamKey(params, new String[]{"messageId"}, promise)) {
             return;
         }
-        String messageId = params.getString("conversationId");
+        String messageId = params.getString("messageId");
         EMMessage message = EMClient.getInstance().chatManager().getMessage(messageId);
         try {
             EMClient.getInstance().chatManager().recallMessage(message);
