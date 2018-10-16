@@ -1,6 +1,28 @@
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'EaseMob-Example' do
-    pod 'Hyphenate', '~> 3.5.1'
-    pod 'MJExtension'
+    pod 'React', :path => '../node_modules/react-native', :subspecs => [
+        'Core',
+        'CxxBridge',
+        'DevSupport',
+        'RCTAnimation',
+        'RCTNetwork',
+        'RCTText',
+        'RCTSettings',
+        'RCTWebSocket',
+    ]
+    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+    pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+    pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+    pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+    pod 'Hyphenate', '= 3.5.1'
+    pod 'MJExtension', :git => 'https://github.com/RNCommon/MJExtension.git', :commit => 'cd3de71c4955935a762a46e59d90160991f5fa92'
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '3.0'
+        end
+    end
 end
