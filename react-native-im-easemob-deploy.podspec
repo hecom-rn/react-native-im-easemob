@@ -3,7 +3,7 @@ require 'json'
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
 Pod::Spec.new do |s|
-  s.name         = 'react-native-im-easemob'
+  s.name         = 'react-native-im-easemob-deploy'
   s.version      = package['version']
   s.summary      = package['description']
   s.authors      = { "Xiaosong Gao" => "gaoxiaosong06@gmail.com" }
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.dependency 'React'
   s.dependency 'MJExtension'
 
-  ss.dependency 'Hyphenate'
+  ss.dependency 'HyphenateDevice'
 end
