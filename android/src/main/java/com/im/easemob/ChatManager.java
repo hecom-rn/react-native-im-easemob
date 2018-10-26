@@ -16,6 +16,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
@@ -101,6 +102,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
         }
         List<EMMessage> list = EMClient.getInstance().chatManager().getConversation(conversationId, type, true)
                 .loadMoreMsgFromDB(fromId, count);
+
         promise.resolve(com.im.easemob.EasemobConverter.convertList(list));
     }
 
@@ -195,7 +197,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
             message.setTo(to);
             message.addBody(cmd);
         } else if (messageType == EMMessage.Type.TXT) {
-            message = EMMessage.createTxtSendMessage(body.getString("text"), to);
+            message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+            message.setTo(to);
+            EMTextMessageBody text = new EMTextMessageBody(body.getString("text"));
+            message.addBody(text);
         }
         if (message != null) {
             message.setChatType(type);
