@@ -26,3 +26,6 @@ out/
 node_modules/
 yarn-error.log
 main.jsbundle*
+
+gradle/
+gradlew*
