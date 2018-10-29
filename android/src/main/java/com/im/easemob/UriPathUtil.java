@@ -108,7 +108,7 @@ public class UriPathUtil {
             return uri.getPath();
         }
 
-        return null;
+        return uri.toString();
     }
 
     /**
