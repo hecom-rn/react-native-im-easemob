@@ -7,7 +7,7 @@ const isIos = Platform.OS === 'ios';
 /**
  * 初始化环信SDK。
  * @param appKey 环信APP Key
- * @param options 其他选项
+ * @param options 其他选项 {miAppKey:小米推送appKey,miAppSecret:小米推送appSecret}
  */
 export const initWithAppKey = (appKey, options = {}) => NativeUtil(Client.init, {appKey, ...options});
 
