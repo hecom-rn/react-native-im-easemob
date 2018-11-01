@@ -214,8 +214,6 @@ public class ChatManager extends ReactContextBaseJavaModule {
             }
 
             if (timestamp > 0) {
-                message.setMsgTime(timestamp);
-                message.setLocalTime(localTime);
                 message.setStatus(EMMessage.Status.SUCCESS);
                 EMConversation.EMConversationType cType = getCType(type);
                 EMConversation conversation = EMClient.getInstance().chatManager()
