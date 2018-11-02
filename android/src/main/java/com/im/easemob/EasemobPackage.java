@@ -15,6 +15,13 @@ import java.util.List;
  */
 
 public class EasemobPackage implements ReactPackage {
+    public EasemobPackage() {
+    }
+
+    public EasemobPackage(EaseMobHookDelegate delegate) {
+        EasemobHelper.getInstance().setHookDelegate(delegate);
+    }
+
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(

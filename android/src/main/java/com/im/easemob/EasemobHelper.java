@@ -29,6 +29,7 @@ class EasemobHelper {
     private Context mContext;
     private ReactContext mReactContext;
     private List<WritableMap> cache;
+    private EaseMobHookDelegate mHookDelegate;
 
     public Context context() {
         return mContext;
@@ -46,6 +47,10 @@ class EasemobHelper {
         cache = new ArrayList<>();
     }
 
+    void setHookDelegate(EaseMobHookDelegate delegate) {
+        this.mHookDelegate = delegate;
+    }
+
     void init(Context context, EMOptions options) {
         if (sdkInited) return;
         this.mContext = context.getApplicationContext();
@@ -59,6 +64,10 @@ class EasemobHelper {
         registerListener();
 
         EMClient.getInstance().setDebugMode(BuildConfig.DEBUG);
+
+        if (mHookDelegate != null) {
+            mHookDelegate.onInit(this.mContext, options);
+        }
 
         sdkInited = true;
     }
