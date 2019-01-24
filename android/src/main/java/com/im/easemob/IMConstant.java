@@ -23,6 +23,13 @@ public class IMConstant {
         public static final int CMD = 7;
     }
 
+    public static class MessageStatus {
+        public static final int PENDING = 0; // 发送未开始
+        public static final int DELIVERING = 1; // 正在发送
+        public static final int SUCCEED = 2; // 发送成功
+        public static final int FAILED = 3; // 发送失败
+    }
+
     public static class MessageSearchDirection {
         public static final int UP = 0;
         public static final int DOWN = 1;
@@ -34,8 +41,9 @@ public class IMConstant {
     }
 
     public static final String CHAT_MANAGER_DELEGATE = "ChatManagerDelegate";
+    public static final String GROUP_MANAGER_DELEGATE = "GroupManagerDelegate";
 
-    @StringDef({CHAT_MANAGER_DELEGATE})
+    @StringDef({CHAT_MANAGER_DELEGATE, GROUP_MANAGER_DELEGATE})
     public @interface Type {
     }
 
@@ -43,7 +51,12 @@ public class IMConstant {
     public static final String CMD_MESSAGE_DID_RECEIVE = "cmdMessageDidReceive";
     public static final String CONVERSATION_LIST_DID_UPDATE = "conversationListDidUpdate";
 
-    @StringDef({MESSAGE_DID_RECEIVE, CMD_MESSAGE_DID_RECEIVE, CONVERSATION_LIST_DID_UPDATE})
+    public static final String USER_DID_JOIN_GROUP = "userDidJoinGroup";
+    public static final String USER_DID_LEAVE_GROUP = "userDidLeaveGroup";
+    public static final String GROUP_OWNER_DID_UPDATE = "groupOwnerDidUpdate";
+
+    @StringDef({MESSAGE_DID_RECEIVE, CMD_MESSAGE_DID_RECEIVE, CONVERSATION_LIST_DID_UPDATE, USER_DID_LEAVE_GROUP,
+            USER_DID_JOIN_GROUP, GROUP_OWNER_DID_UPDATE})
     public @interface SubType {
 
     }

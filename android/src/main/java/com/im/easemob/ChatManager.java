@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
@@ -41,14 +42,14 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getConversation(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, "conversationId", promise)) {
+        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
             return;
         }
         String conversationId = params.getString("conversationId");
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         boolean ifCreate = false;
         if (params.hasKey("type")) {
-            type = com.im.easemob.EasemobConverter.toConversationType(params.getInt("type"));
+            type = EasemobConverter.toConversationType(params.getInt("type"));
         }
         if (params.hasKey("ifCreate")) {
             ifCreate = params.getBoolean("ifCreate");
@@ -56,7 +57,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
         EMConversation conversation = EMClient.getInstance().chatManager()
                 .getConversation(conversationId, type, ifCreate);
-        promise.resolve(com.im.easemob.EasemobConverter.convert(conversation));
+        promise.resolve(EasemobConverter.convert(conversation));
     }
 
     @ReactMethod
@@ -64,14 +65,14 @@ public class ChatManager extends ReactContextBaseJavaModule {
         Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
         WritableArray result = Arguments.createArray();
         for (String key : map.keySet()) {
-            result.pushMap(com.im.easemob.EasemobConverter.convert(map.get(key)));
+            result.pushMap(EasemobConverter.convert(map.get(key)));
         }
         promise.resolve(result);
     }
 
     @ReactMethod
     public void deleteConversation(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, "conversationId", promise)) {
+        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
             return;
         }
         String conversationId = params.getString("conversationId");
@@ -84,13 +85,13 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void loadMessages(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, new String[]{"conversationId"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId"}, promise)) {
             return;
         }
         String conversationId = params.getString("conversationId");
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         if (params.hasKey("chatType")) {
-            type = com.im.easemob.EasemobConverter.toConversationType(params.getInt("chatType"));
+            type = EasemobConverter.toConversationType(params.getInt("chatType"));
         }
         String fromId = "";
         if (params.hasKey("fromId")) {
@@ -103,12 +104,12 @@ public class ChatManager extends ReactContextBaseJavaModule {
         List<EMMessage> list = EMClient.getInstance().chatManager().getConversation(conversationId, type, true)
                 .loadMoreMsgFromDB(fromId, count);
 
-        promise.resolve(com.im.easemob.EasemobConverter.convertList(list));
+        promise.resolve(EasemobConverter.convertList(list));
     }
 
     @ReactMethod
     public void deleteMessage(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, new String[]{"conversationId", "messageId"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "messageId"}, promise)) {
             return;
         }
         String conversationId = params.getString("conversationId");
@@ -124,7 +125,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void recallMessage(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil
+        if (CheckUtil
                 .checkParamKey(params, new String[]{"messageId"}, promise)) {
             return;
         }
@@ -140,8 +141,8 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendMessage(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil
+    public void sendMessage(ReadableMap params, final Promise promise) {
+        if (CheckUtil
                 .checkParamKey(params, new String[]{"chatType", "messageType", "to", "body"}, promise)) {
             return;
         }
@@ -154,8 +155,8 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 return;
             }
         }
-        EMMessage.ChatType type = com.im.easemob.EasemobConverter.toChatType(params.getInt("chatType"));
-        EMMessage.Type messageType = com.im.easemob.EasemobConverter.toMessageType(params.getInt("messageType"));
+        EMMessage.ChatType type = EasemobConverter.toChatType(params.getInt("chatType"));
+        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
         String to = params.getString("to");
         ReadableMap body = params.getMap("body");
         long localTime = params.hasKey("localTime") ? (long) params.getDouble("localTime") : 0;
@@ -164,10 +165,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
         Context context = getCurrentActivity();
         if (context == null) return;
 
-        EMMessage message = null;
+        final EMMessage message;
         if (messageType == EMMessage.Type.IMAGE) {
             message = EMMessage
-                    .createImageSendMessage(com.im.easemob.UriPathUtil
+                    .createImageSendMessage(UriPathUtil
                             .getPath(context, body.getString("path")), false, to);
         } else if (messageType == EMMessage.Type.LOCATION) {
             message = EMMessage.createLocationSendMessage(
@@ -175,11 +176,11 @@ public class ChatManager extends ReactContextBaseJavaModule {
                     body.getString("address"), to);
         } else if (messageType == EMMessage.Type.VIDEO) {
             message = EMMessage
-                    .createVideoSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")),
+                    .createVideoSendMessage(UriPathUtil.getPath(context, body.getString("path")),
                             body.getString("thumbPath"), body.getInt("duration"), to);
         } else if (messageType == EMMessage.Type.FILE) {
             message = EMMessage
-                    .createFileSendMessage(com.im.easemob.UriPathUtil.getPath(context, body.getString("path")), to);
+                    .createFileSendMessage(UriPathUtil.getPath(context, body.getString("path")), to);
         } else if (messageType == EMMessage.Type.VOICE) {
             int duration;
             String path = body.getString("path");
@@ -201,6 +202,8 @@ public class ChatManager extends ReactContextBaseJavaModule {
             message.setTo(to);
             EMTextMessageBody text = new EMTextMessageBody(body.getString("text"));
             message.addBody(text);
+        } else {
+            message = null;
         }
         if (message != null) {
             message.setChatType(type);
@@ -221,10 +224,26 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 if (conversation != null) {
                     conversation.insertMessage(message);
                 }
+                promise.resolve(EasemobConverter.convert(message));
             } else {
+                message.setMessageStatusCallback(new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        promise.resolve(EasemobConverter.convert(message));
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        promise.resolve(EasemobConverter.convert(message));
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s) {
+
+                    }
+                });
                 EMClient.getInstance().chatManager().sendMessage(message);
             }
-            promise.resolve(com.im.easemob.EasemobConverter.convert(message));
         } else {
             promise.reject("-1", "无法识别的messageType");
         }
@@ -261,10 +280,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
                     message.setAttribute(key, map.getString(key));
                     break;
                 case Map:
-                    message.setAttribute(key, com.im.easemob.EasemobConverter.toJsonObject(map.getMap(key)));
+                    message.setAttribute(key, EasemobConverter.toJsonObject(map.getMap(key)));
                     break;
                 case Array:
-                    message.setAttribute(key, com.im.easemob.EasemobConverter.toJsonArray(map.getArray(key)));
+                    message.setAttribute(key, EasemobConverter.toJsonArray(map.getArray(key)));
                     break;
             }
         }
@@ -272,11 +291,11 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
-        if (com.im.easemob.CheckUtil.checkParamKey(params, new String[]{"conversationId", "chatType"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "chatType"}, promise)) {
             return;
         }
         String conversationId = params.getString("conversationId");
-        EMConversation.EMConversationType chatType = com.im.easemob.EasemobConverter
+        EMConversation.EMConversationType chatType = EasemobConverter
                 .toConversationType(params.getInt("chatType"));
         EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
         promise.resolve(null);

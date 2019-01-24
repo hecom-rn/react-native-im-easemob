@@ -47,6 +47,8 @@ public class EasemobConverter {
     private static final Map<EMMessage.Type, Integer> convertMessageType = new HashMap<>(7);
     private static final Map<Integer, EMMessage.Direct> toDirect = new HashMap<>(2);
     private static final Map<EMMessage.Direct, Integer> convertDirect = new HashMap<>(2);
+    private static final Map<Integer, EMMessage.Status> toStatus = new HashMap<>(4);
+    private static final Map<EMMessage.Status, Integer> convertStatus = new HashMap<>(4);
 
     static {
         toChatType.put(IMConstant.ChatType.GROUP, EMMessage.ChatType.GroupChat);
@@ -76,6 +78,15 @@ public class EasemobConverter {
         toDirect.put(IMConstant.EMMessageDirection.RECEIVE, EMMessage.Direct.RECEIVE);
         convertDirect.put(EMMessage.Direct.SEND, IMConstant.EMMessageDirection.SEND);
         convertDirect.put(EMMessage.Direct.RECEIVE, IMConstant.EMMessageDirection.RECEIVE);
+
+        toStatus.put(IMConstant.MessageStatus.PENDING, EMMessage.Status.CREATE);
+        toStatus.put(IMConstant.MessageStatus.DELIVERING, EMMessage.Status.INPROGRESS);
+        toStatus.put(IMConstant.MessageStatus.SUCCEED, EMMessage.Status.SUCCESS);
+        toStatus.put(IMConstant.MessageStatus.FAILED, EMMessage.Status.FAIL);
+        convertStatus.put(EMMessage.Status.CREATE, IMConstant.MessageStatus.PENDING);
+        convertStatus.put(EMMessage.Status.INPROGRESS, IMConstant.MessageStatus.DELIVERING);
+        convertStatus.put(EMMessage.Status.SUCCESS, IMConstant.MessageStatus.SUCCEED);
+        convertStatus.put(EMMessage.Status.FAIL, IMConstant.MessageStatus.FAILED);
     }
 
     private static WritableMap convertMessage(EMMessage message) {
@@ -89,14 +100,13 @@ public class EasemobConverter {
         result.putString("userName", message.getUserName());
         result.putInt("chatType", toChatType(message.getChatType()));
         result.putInt("direct", toDirect(message.direct()));
-        result.putString("status", message.status().toString());
+        result.putInt("status", toStatus(message.status()));
         result.putDouble("localTime", message.localTime());
         result.putBoolean("isReadAcked", message.isAcked());
         result.putBoolean("isDeliverAcked", message.isDelivered());
         result.putBoolean("isListened", message.isListened());
         result.putBoolean("isRead", !message.isUnread());
         result.putInt("direction", toDirect(message.direct()));
-        result.putInt("state", message.status().ordinal());
         result.putMap("body", convertBody(message.getBody()));
         result.putMap("ext", convertExt(message.ext()));
         return result;
@@ -117,7 +127,23 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.hyphenate.chat.EMMessage.ChatType}转换为{@link com.im.easemob.IMConstant.ChatType}
+     * 将{@link EMMessage.Status}转换为{@link IMConstant.MessageStatus}
+     */
+    private static int toStatus(EMMessage.Status status) {
+        Integer integer = convertStatus.get(status);
+        return integer != null ? integer : IMConstant.MessageStatus.FAILED;
+    }
+
+    /**
+     * 将{@link IMConstant.MessageStatus}转换为{@link EMMessage.Status}
+     */
+    public static EMMessage.Status toStatus(int status) {
+        EMMessage.Status result = toStatus.get(status);
+        return result != null ? result : EMMessage.Status.FAIL;
+    }
+
+    /**
+     * 将{@link EMMessage.ChatType}转换为{@link IMConstant.ChatType}
      */
     private static int toChatType(EMMessage.ChatType type) {
         Integer chatType = convertChatType.get(type);
@@ -125,7 +151,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.im.easemob.IMConstant.ChatType}转换为{@link com.hyphenate.chat.EMMessage.ChatType}
+     * 将{@link IMConstant.ChatType}转换为{@link EMMessage.ChatType}
      */
     public static EMMessage.ChatType toChatType(int type) {
         EMMessage.ChatType result = toChatType.get(type);
@@ -133,7 +159,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMConversation.EMConversationType}转换为{@link com.im.easemob.IMConstant.ChatType}
+     * 将{@link EMConversation.EMConversationType}转换为{@link IMConstant.ChatType}
      */
     private static int toConversationType(EMConversation.EMConversationType type) {
         Integer result = convertConversationType.get(type);
@@ -141,7 +167,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.im.easemob.IMConstant.ChatType}转换为{@link EMConversation.EMConversationType}
+     * 将{@link IMConstant.ChatType}转换为{@link EMConversation.EMConversationType}
      */
     public static EMConversation.EMConversationType toConversationType(int type) {
         EMConversation.EMConversationType result = toConversationType.get(type);
@@ -149,7 +175,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMMessage.Type}转换为{@link com.im.easemob.IMConstant.MessageType}
+     * 将{@link EMMessage.Type}转换为{@link IMConstant.MessageType}
      */
     private static int toMessageType(EMMessage.Type type) {
         Integer result = convertMessageType.get(type);
@@ -157,7 +183,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.im.easemob.IMConstant.MessageType}转换为{@link EMMessage.Type}
+     * 将{@link IMConstant.MessageType}转换为{@link EMMessage.Type}
      */
     public static EMMessage.Type toMessageType(int type) {
         EMMessage.Type result = toMessageType.get(type);
@@ -165,7 +191,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link EMMessage.Direct}转换为{@link com.im.easemob.IMConstant.EMMessageDirection}
+     * 将{@link EMMessage.Direct}转换为{@link IMConstant.EMMessageDirection}
      */
     private static int toDirect(EMMessage.Direct direct) {
         Integer result = convertDirect.get(direct);
@@ -173,7 +199,7 @@ public class EasemobConverter {
     }
 
     /**
-     * 将{@link com.im.easemob.IMConstant.EMMessageDirection}转换为{@link EMMessage.Direct}
+     * 将{@link IMConstant.EMMessageDirection}转换为{@link EMMessage.Direct}
      */
     public static EMMessage.Direct toDirect(int type) {
         EMMessage.Direct result = toDirect.get(type);
