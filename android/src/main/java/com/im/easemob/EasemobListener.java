@@ -2,6 +2,8 @@ package com.im.easemob;
 
 import android.content.Context;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMGroupChangeListener;
@@ -15,6 +17,8 @@ import java.util.List;
 import static com.im.easemob.IMConstant.CHAT_MANAGER_DELEGATE;
 import static com.im.easemob.IMConstant.CMD_MESSAGE_DID_RECEIVE;
 import static com.im.easemob.IMConstant.CONVERSATION_LIST_DID_UPDATE;
+import static com.im.easemob.IMConstant.GROUP_MANAGER_DELEGATE;
+import static com.im.easemob.IMConstant.GROUP_OWNER_DID_UPDATE;
 import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
 
 /**
@@ -121,18 +125,28 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
     }
 
     @Override
-    public void onOwnerChanged(String s, String s1, String s2) {
-
+    public void onOwnerChanged(String groupId, String newOwner, String oldOwner) {
+        WritableMap map = Arguments.createMap();
+        map.putString("groupId", groupId);
+        map.putString("newOwner", newOwner);
+        map.putString("oldOwner", oldOwner);
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, GROUP_OWNER_DID_UPDATE, map);
     }
 
     @Override
-    public void onMemberJoined(String s, String s1) {
-
+    public void onMemberJoined(String groupId, String member) {
+        WritableMap map = Arguments.createMap();
+        map.putString("groupId", groupId);
+        map.putString("username", member);
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, GROUP_OWNER_DID_UPDATE, map);
     }
 
     @Override
-    public void onMemberExited(String s, String s1) {
-
+    public void onMemberExited(String groupId, String member) {
+        WritableMap map = Arguments.createMap();
+        map.putString("groupId", groupId);
+        map.putString("username", member);
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, GROUP_OWNER_DID_UPDATE, map);
     }
 
     @Override
