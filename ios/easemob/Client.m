@@ -10,7 +10,6 @@
 #import "Constant.h"
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
-#import <MJExtension/MJExtension.h>
 #import <Hyphenate/Hyphenate.h>
 #import "ClientDelegate.h"
 #import "MultiDevicesDelegate.h"
@@ -20,22 +19,14 @@
 
 @implementation Client
 
-DEFINE_SINGLETON_FOR_CLASS(Client);
+#pragma mark - React Native
 
 RCT_EXPORT_MODULE();
-
-#pragma mark - App
 
 RCT_EXPORT_METHOD(init:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[Client sharedClient] init_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)init_local:(NSString *)params
-          resolver:(RCTPromiseResolveBlock)resolve
-          rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSMutableDictionary *allParams = [[params jsonStringToDictionary] mutableCopy];
     EMOptions *options = [EMOptions optionsWithAppkey:[allParams objectForKey:@"appKey"]];
     if ([[allParams allKeys] count] > 1) {
         [allParams removeObjectForKey:@"appKey"];
@@ -53,12 +44,6 @@ RCT_EXPORT_METHOD(init:(NSString *)params
 RCT_EXPORT_METHOD(login:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[Client sharedClient] login_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)login_local:(NSString *)params
-           resolver:(RCTPromiseResolveBlock)resolve
-           rejecter:(RCTPromiseRejectBlock)reject {
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *username = [allParams objectForKey:@"username"];
     NSString *password = [allParams objectForKey:@"password"];
@@ -76,11 +61,6 @@ RCT_EXPORT_METHOD(login:(NSString *)params
 
 RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[Client sharedClient] logout_local:resolve rejecter:reject];
-}
-
-- (void)logout_local:(RCTPromiseResolveBlock)resolve
-            rejecter:(RCTPromiseRejectBlock)reject {
     EMError *error = [[EMClient sharedClient] logout:YES];
     if (!error) {
         resolve(@"{}");
@@ -88,6 +68,7 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
     }
 }
+
 #pragma mark - RCTEventEmitter
 
 - (NSArray<NSString *> *)supportedEvents {

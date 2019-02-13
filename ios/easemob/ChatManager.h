@@ -7,10 +7,7 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import "Singleton.h"
 
 @interface ChatManager : NSObject <RCTBridgeModule>
-
-DEFINE_SINGLETON_FOR_HEADER(ChatManager);
 
 @end

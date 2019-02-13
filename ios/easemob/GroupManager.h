@@ -7,10 +7,7 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import "Singleton.h"
 
 @interface GroupManager : NSObject <RCTBridgeModule>
-
-DEFINE_SINGLETON_FOR_HEADER(GroupManager);
 
 @end

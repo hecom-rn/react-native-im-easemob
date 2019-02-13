@@ -14,20 +14,12 @@
 
 @implementation ChatManager
 
-DEFINE_SINGLETON_FOR_CLASS(ChatManager);
-
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(getConversation:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] getConversation_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)getConversation_local:(NSString *)params
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"type"] intValue];
     BOOL aIfCreate = [[allParams objectForKey:@"ifCreate"] boolValue];
@@ -37,11 +29,6 @@ RCT_EXPORT_METHOD(getConversation:(NSString *)params
 
 RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] getAllConversations_local:resolve rejecter:reject];
-}
-
-- (void)getAllConversations_local:(RCTPromiseResolveBlock)resolve
-                     rejecter:(RCTPromiseRejectBlock)reject {
     NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
     NSMutableArray *dicArray = [NSMutableArray array];
     [conversations enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -53,16 +40,10 @@ RCT_EXPORT_METHOD(getAllConversations:(RCTPromiseResolveBlock)resolve
 RCT_EXPORT_METHOD(deleteConversation:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] deleteConversation_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)deleteConversation_local:(NSString *)params
-                        resolver:(RCTPromiseResolveBlock)resolve
-                        rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     [[EMClient sharedClient].chatManager deleteConversation:conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *error){
-        if(!error){
+        if (!error) {
             resolve(@"{}");
         } else {
             reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
@@ -73,13 +54,7 @@ RCT_EXPORT_METHOD(deleteConversation:(NSString *)params
 RCT_EXPORT_METHOD(sendMessage:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] sendMessage_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)sendMessage_local:(NSString *)params
-                     resolver:(RCTPromiseResolveBlock)resolve
-                     rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMChatType chatType = [[allParams objectForKey:@"chatType"] intValue];
     NSString *from = [[EMClient sharedClient] currentUsername];
@@ -89,7 +64,6 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     NSDictionary *bodyDic = [allParams objectForKey:@"body"];
     long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
     long long localTime = [[allParams objectForKey:@"localTime"] longLongValue];
-    
     EMMessageBody *body;
     switch (messageType) {
         case EMMessageBodyTypeText: {
@@ -135,11 +109,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         default:
             break;
     }
-    //生成Message
+    // 生成Message
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
     if (timestamp > 0) {
-        //插入消息
+        // 插入消息
         message.timestamp = timestamp;
         message.localTime = localTime;
         message.status = EMMessageStatusSucceed;
@@ -148,7 +122,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         [conversation insertMessage:message error:nil];
         resolve([message objectToJSONString]);
     } else {
-        //发送消息
+        // 发送消息
         [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
             // 不管有没有错误都会返回message，根据message中的status判断消息的发送状态
             resolve([message objectToJSONString]);
@@ -159,13 +133,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
 RCT_EXPORT_METHOD(loadMessages:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] loadMessages_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)loadMessages_local:(NSString *)params
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
@@ -177,7 +145,7 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
         [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [dicArray addObject:[obj objectToDictionary]];
         }];
-        if(!error){
+        if (!error){
             resolve([dicArray objectToJSONString]);
         } else {
             reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
@@ -188,53 +156,32 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
 RCT_EXPORT_METHOD(recallMessage:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] recallMessage_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)recallMessage_local:(NSString *)params
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
     NSString *messageId = [allParams objectForKey:@"messageId"];
-    long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
-    [conversation loadMessagesFrom:timestamp - 1 to:timestamp + 1 count:100 completion:^(NSArray *aMessages, EMError *aError) {
-        __block EMMessage *msg;
-        [aMessages enumerateObjectsUsingBlock:^(EMMessage * _Nonnull message, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([message.messageId isEqualToString:messageId] ) {
-                msg = message;
-            }
-        }];
-        [[EMClient sharedClient].chatManager recallMessage:msg
-                                                completion:^(EMMessage *aMessage, EMError *aError) {
-                                                    if (!aError) {
-                                                        resolve([aMessage objectToJSONString]);
-                                                    } else {
-                                                        reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
-                                                    }
-                                                }];
+    EMMessage *message = [conversation loadMessageWithId:messageId error:nil];
+    [[EMClient sharedClient].chatManager recallMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
+        if (!aError) {
+            resolve([aMessage objectToJSONString]);
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
     }];
 }
 
 RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] deleteMessage_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)deleteMessage_local:(NSString *)params
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
     NSString *messageId = [allParams objectForKey:@"messageId"];
     EMError *error = nil;
     [conversation deleteMessageWithId:messageId error:&error];
-    if(!error){
+    if (!error){
         resolve(@"{}");
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
@@ -244,19 +191,13 @@ RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
 RCT_EXPORT_METHOD(markAllMessagesAsRead:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[ChatManager sharedChatManager] markAllMessagesAsRead_local:params resolver:resolve rejecter:reject];
-}
-
-- (void)markAllMessagesAsRead_local:(NSString *)params
-                   resolver:(RCTPromiseResolveBlock)resolve
-                   rejecter:(RCTPromiseRejectBlock)reject {
-    NSMutableDictionary *allParams = [[NSMutableDictionary alloc] initWithDictionary:[params jsonStringToDictionary]];
+    NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
     EMError *error = nil;
     [conversation markAllMessagesAsRead:&error];
-    if(!error){
+    if (!error){
         resolve(@"{}");
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
