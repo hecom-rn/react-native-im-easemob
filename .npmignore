@@ -1,6 +1,1 @@
-/example
-/android/build
-/android/.gradle
-/android/.idea
-/android/android.iml
-/android/local.properties
+.travis.yml

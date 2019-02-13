@@ -1,5 +1,8 @@
 # react-native-im-easemob
 
+[![npm version](https://img.shields.io/npm/v/react-native-im-easemob.svg?style=flat)](https://www.npmjs.com/package/react-native-im-easemob)
+[![Build Status](https://travis-ci.org/gaoxiaosong/react-native-im-easemob.svg?branch=master)](https://travis-ci.org/gaoxiaosong/react-native-im-easemob)
+
 环信IM的原生接口React-Native封装库。
 
 ## 安装
@@ -24,7 +27,7 @@ npm install --save react-native-im-easemob
 
 添加Podfile，类似如下格式：
 
-```
+```perl
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
