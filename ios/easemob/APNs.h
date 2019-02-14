@@ -7,8 +7,7 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
 
-@interface APNs : RCTEventEmitter <RCTBridgeModule>
+@interface APNs : NSObject <RCTBridgeModule>
 
 @end
