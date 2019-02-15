@@ -123,6 +123,9 @@ public class EasemobConverter {
         if (params.hasKey("miAppKey") && params.hasKey("miAppSecret")) {
             options.setMipushConfig(params.getString("miAppKey"), params.getString("miAppKey"));
         }
+        if (params.hasKey("isAutoLogin")) {
+            options.setAutoLogin(params.getBoolean("isAutoLogin"));
+        }
         return options;
     }
 
