@@ -34,3 +34,9 @@ export const MessageDirection = {
     send: 0, // 我发出去的消息
     receive: 1, // 我收到的消息
 };
+
+// 网络连接状态
+export const ConnectionState = {
+    Connected: 0, // 已连接
+    Disconnected: 1, // 未连接
+};

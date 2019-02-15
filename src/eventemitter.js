@@ -21,6 +21,8 @@ export function init() {
 
 const ChatManager = 'ChatManagerDelegate';
 const GroupManager = 'GroupManagerDelegate';
+const Client = 'ClientDelegate';
+
 /**
  * 设置消息接收事件回调。
  */
@@ -50,6 +52,30 @@ export const setUserDidLeaveGroup = setCallback(GroupManager, 'userDidLeaveGroup
  * 设置群主更换回调。
  */
 export const setGroupOwnerDidUpdate = setCallback(GroupManager, 'groupOwnerDidUpdate');
+
+/**
+ * 设置自动登陆回调。
+ * callback方法接收一个对象{code, message}，如果存在code，则表示错误，否则表示成功，message是错误消息。
+ */
+export const setAutoLoginDidComplete = setCallback(Client, 'autoLoginDidComplete');
+
+/**
+ * 设置网络连接状态改变回调。
+ * callback方法接收一个IMConstant中的ConnectionState状态值。
+ */
+export const setConnectionStateDidChange = setCallback(Client, 'connectionStateDidChange');
+
+/**
+ * 设置账号在其它设备登录时回调。
+ * callback方法不接收参数。
+ */
+export const setUserAccountDidLoginFromOtherDevice = setCallback(Client, 'userAccountDidLoginFromOtherDevice');
+
+/**
+ * 设置账号被从服务器端删除回调。
+ * callback方法不接收参数。
+ */
+export const setUserAccountDidRemoveFromServer = setCallback(Client, 'userAccountDidRemoveFromServer');
 
 function setCallback(type, subType) {
     return function (callback) {
