@@ -9,7 +9,7 @@
 #import "ClientDelegate.h"
 #import "Client.h"
 
-NSString *eventType = @"ClientDelegate";
+static NSString *eventType = @"ClientDelegate";
 
 @implementation ClientDelegate
 

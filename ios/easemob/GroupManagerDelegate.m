@@ -9,7 +9,7 @@
 #import "GroupManagerDelegate.h"
 #import "Client.h"
 
-NSString *eventType = @"GroupManagerDelegate";
+static NSString *eventType = @"GroupManagerDelegate";
 
 @implementation GroupManagerDelegate
 

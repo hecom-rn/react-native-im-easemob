@@ -10,7 +10,7 @@
 #import "Client.h"
 #import "NSObject+Util.h"
 
-NSString *eventType = @"ChatManagerDelegate";
+static NSString *eventType = @"ChatManagerDelegate";
 
 @implementation ChatManagerDelegate
 
