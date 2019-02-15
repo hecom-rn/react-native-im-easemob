@@ -27,7 +27,11 @@ RCT_EXPORT_METHOD(init:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSMutableDictionary *allParams = [[params jsonStringToDictionary] mutableCopy];
-    EMOptions *options = [EMOptions optionsWithAppkey:[allParams objectForKey:@"appKey"]];
+    if ([allParams objectForKey:@"isAutoLogin"]) {
+        [allParams removeObjectForKey:@"isAutoLogin"];
+    }
+    NSString *appKey = [allParams objectForKey:@"appKey"];
+    EMOptions *options = [EMOptions optionsWithAppkey:appKey];
     if ([[allParams allKeys] count] > 1) {
         [allParams removeObjectForKey:@"appKey"];
         [options updateWithDictionary:allParams];
@@ -47,15 +51,18 @@ RCT_EXPORT_METHOD(login:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *username = [allParams objectForKey:@"username"];
     NSString *password = [allParams objectForKey:@"password"];
+    BOOL autoLogin = [[allParams objectForKey:@"autoLogin"] boolValue];
     BOOL isAutoLoginEnabled = [EMClient sharedClient].isAutoLogin;
     if (!isAutoLoginEnabled) {
-        [[EMClient sharedClient] loginWithUsername:username password:password completion:^(NSString *aUsername, EMError *aError) {
-            if (!aError) {
-                resolve(@"{}");
-            } else {
-                reject([NSString stringWithFormat:@"%ld",(long)aError.code],aError.errorDescription,nil);
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+        if (!error) {
+            if (autoLogin) {
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
             }
-        }];
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld",(long)error.code], error.errorDescription, nil);
+        }
     }
 }
 
