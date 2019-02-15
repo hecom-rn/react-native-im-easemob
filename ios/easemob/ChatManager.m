@@ -42,7 +42,8 @@ RCT_EXPORT_METHOD(deleteConversation:(NSString *)params
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
-    [[EMClient sharedClient].chatManager deleteConversation:conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *error){
+    BOOL isDeleteMessages = [[allParams objectForKey:@"ifClearAllMessage"] boolValue];
+    [[EMClient sharedClient].chatManager deleteConversation:conversationId isDeleteMessages:isDeleteMessages completion:^(NSString *aConversationId, EMError *error) {
         if (!error) {
             resolve(@"{}");
         } else {

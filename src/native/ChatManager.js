@@ -32,8 +32,8 @@ export const getAllConversations = () => NativeUtil(ChatManager.getAllConversati
 
 /**
  * 删除指定会话。
- * @param conversationId 会话ID
- * @param ifClearAllMessage 是否清空消息  todo iOS默认清空消息，该参数无效
+ * @param {string} conversationId 会话ID
+ * @param {boolean} ifClearAllMessage 是否清空消息
  */
 export const deleteConversation = (conversationId, ifClearAllMessage = true) =>
     NativeUtil(ChatManager.deleteConversation, {
