@@ -41,6 +41,20 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void registerUser(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"username", "password"}, promise)) {
+            return;
+        }
+        try {
+            EMClient.getInstance().createAccount(params.getString("username"), params.getString("password"));
+            promise.resolve(null);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
     public void getConversation(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
             return;
