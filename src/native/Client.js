@@ -22,6 +22,13 @@ export const initWithAppKey = (appKey, options = {}) => NativeUtil(Client.init, 
 export const notifyJSDidLoad = () => !isIos && Client.notifyJSDidLoad();
 
 /**
+ * 注册新用户。
+ * @param {string} username 用户名称
+ * @param {string} password 密码
+ */
+export const register = (username, password) => NativeUtil(Client.registerUser, {username, password});
+
+/**
  * 聊天用户登陆。
  * @param {string} username 用户名称
  * @param {string} password 密码
