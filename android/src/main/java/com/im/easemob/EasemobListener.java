@@ -4,10 +4,14 @@ import android.content.Context;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.hyphenate.EMClientListener;
 import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMContactListener;
 import com.hyphenate.EMConversationListener;
+import com.hyphenate.EMError;
 import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
+import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMucSharedFile;
@@ -15,49 +19,64 @@ import com.hyphenate.chat.EMMucSharedFile;
 import java.util.List;
 
 import static com.im.easemob.IMConstant.CHAT_MANAGER_DELEGATE;
+import static com.im.easemob.IMConstant.CLIENT_DELEGATE;
 import static com.im.easemob.IMConstant.CMD_MESSAGE_DID_RECEIVE;
+import static com.im.easemob.IMConstant.CONNECTION_STATE_DID_CHANGE;
 import static com.im.easemob.IMConstant.CONVERSATION_LIST_DID_UPDATE;
 import static com.im.easemob.IMConstant.GROUP_MANAGER_DELEGATE;
 import static com.im.easemob.IMConstant.GROUP_OWNER_DID_UPDATE;
 import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
+import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE;
+import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_REMOVE_FROM_SERVER;
 
 /**
  * 处理环信的监听事件
  * Created by kevin.bai on 2018/7/30.
  */
 public class EasemobListener implements EMGroupChangeListener, EMMessageListener, EMConversationListener,
-        EMConnectionListener {
+        EMConnectionListener, EMMultiDeviceListener, EMClientListener, EMContactListener {
     private final Context mContext;
 
     EasemobListener(Context context) {
         mContext = context;
     }
 
+    /******************** ConnectionListener ********************/
+
     @Override
     public void onConnected() {
         EMClient.getInstance().groupManager().loadAllGroups();
         EMClient.getInstance().chatManager().loadAllConversations();
+        EasemobHelper.getInstance()
+                .sendEvent(CLIENT_DELEGATE, CONNECTION_STATE_DID_CHANGE, IMConstant.ConnectionState.CONNECTED);
     }
 
     @Override
-    public void onDisconnected(int i) {
-//        if (i == EMError.USER_REMOVED) {
-//            // 账号在服务端被删除
-//        } else if (i == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-//                    sendEvent(TYPE_CLIENT, LOGIN_ON_OTHER_DEVICE);
-//        } else {
+    public void onDisconnected(int error) {
+        if (error == EMError.USER_REMOVED) {
+            // 显示帐号已经被移除
+            EasemobHelper.getInstance().sendEvent(CLIENT_DELEGATE, USER_ACCOUNT_DID_REMOVE_FROM_SERVER);
+        } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+            // 显示帐号在其他设备登录
+            EasemobHelper.getInstance().sendEvent(CLIENT_DELEGATE, USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE);
+        } else {
+            EasemobHelper.getInstance()
+                    .sendEvent(CLIENT_DELEGATE, CONNECTION_STATE_DID_CHANGE, IMConstant.ConnectionState.DISCONNEDTED);
 //            if (NetUtils.hasNetwork(mContext)) {
-//                        sendEvent(TYPE_CLIENT, DISCONNECT_CHAT_SERVER);
+//                //连接不到聊天服务器
 //            } else {
-//                        sendEvent(TYPE_CLIENT, NO_NETWORK);
+//                //当前网络不可用，请检查网络设置
 //            }
-//        }
+        }
     }
 
+    /******************** ConversationListener ********************/
     @Override
     public void onCoversationUpdate() {
         EasemobHelper.getInstance().sendEvent(CHAT_MANAGER_DELEGATE, CONVERSATION_LIST_DID_UPDATE);
     }
+
+    /******************** GroupListener ********************/
 
     @Override
     public void onInvitationReceived(String s, String s1, String s2, String s3) {
@@ -164,6 +183,8 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     }
 
+    /******************** MessageListener ********************/
+
     @Override
     public void onMessageReceived(List<EMMessage> list) {
         EasemobHelper.getInstance().sendEvent(CHAT_MANAGER_DELEGATE, MESSAGE_DID_RECEIVE, EasemobConverter
@@ -184,7 +205,6 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onMessageDelivered(List<EMMessage> list) {
-
     }
 
     @Override
@@ -194,6 +214,46 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onMessageChanged(EMMessage emMessage, Object o) {
+
+    }
+
+    @Override
+    public void onMigrate2x(boolean b) {
+
+    }
+
+    @Override
+    public void onContactAdded(String s) {
+
+    }
+
+    @Override
+    public void onContactDeleted(String s) {
+
+    }
+
+    @Override
+    public void onContactInvited(String s, String s1) {
+
+    }
+
+    @Override
+    public void onFriendRequestAccepted(String s) {
+
+    }
+
+    @Override
+    public void onFriendRequestDeclined(String s) {
+
+    }
+
+    @Override
+    public void onContactEvent(int i, String s, String s1) {
+
+    }
+
+    @Override
+    public void onGroupEvent(int i, String s, List<String> list) {
 
     }
 }
