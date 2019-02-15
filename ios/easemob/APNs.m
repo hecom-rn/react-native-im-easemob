@@ -32,8 +32,12 @@ RCT_EXPORT_METHOD(setApnsNickname:(NSString *)params
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *name = [allParams objectForKey:@"name"];
-    [[EMClient sharedClient] setApnsNickname:name];
-    resolve(@"{}");
+    EMError *error = [[EMClient sharedClient] setApnsNickname:name];
+    if (!error) {
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
 }
 
 RCT_EXPORT_METHOD(setApnsDisplayStyle:(NSString *)params
