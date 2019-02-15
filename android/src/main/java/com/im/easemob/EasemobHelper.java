@@ -90,6 +90,9 @@ class EasemobHelper {
         instance.chatManager().addConversationListener(listener);
         instance.groupManager().addGroupChangeListener(listener);
         instance.chatManager().addMessageListener(listener);
+        instance.addClientListener(listener);
+        instance.addMultiDeviceListener(listener);
+        instance.contactManager().setContactListener(listener);
     }
 
     /**

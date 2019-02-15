@@ -35,6 +35,11 @@ public class IMConstant {
         public static final int DOWN = 1;
     }
 
+    public static class ConnectionState {
+        public static final int CONNECTED = 0; // 已连接
+        public static final int DISCONNEDTED = 1; // 未连接
+    }
+
     public static class EMMessageDirection {
         public static final int SEND = 0;
         public static final int RECEIVE = 1;
@@ -42,8 +47,9 @@ public class IMConstant {
 
     public static final String CHAT_MANAGER_DELEGATE = "ChatManagerDelegate";
     public static final String GROUP_MANAGER_DELEGATE = "GroupManagerDelegate";
+    public static final String CLIENT_DELEGATE = "ClientDelegate";
 
-    @StringDef({CHAT_MANAGER_DELEGATE, GROUP_MANAGER_DELEGATE})
+    @StringDef({CHAT_MANAGER_DELEGATE, GROUP_MANAGER_DELEGATE, CLIENT_DELEGATE})
     public @interface Type {
     }
 
@@ -55,8 +61,14 @@ public class IMConstant {
     public static final String USER_DID_LEAVE_GROUP = "userDidLeaveGroup";
     public static final String GROUP_OWNER_DID_UPDATE = "groupOwnerDidUpdate";
 
+    public static final String USER_ACCOUNT_DID_REMOVE_FROM_SERVER = "userAccountDidRemoveFromServer";
+    public static final String USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE = "userAccountDidLoginFromOtherDevice";
+    public static final String CONNECTION_STATE_DID_CHANGE = "connectionStateDidChange";
+    public static final String AUTO_LOGIN_DID_COMPLETE = "autoLoginDidComplete";
+
     @StringDef({MESSAGE_DID_RECEIVE, CMD_MESSAGE_DID_RECEIVE, CONVERSATION_LIST_DID_UPDATE, USER_DID_LEAVE_GROUP,
-            USER_DID_JOIN_GROUP, GROUP_OWNER_DID_UPDATE})
+            USER_DID_JOIN_GROUP, GROUP_OWNER_DID_UPDATE, USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE,
+            USER_ACCOUNT_DID_REMOVE_FROM_SERVER, CONNECTION_STATE_DID_CHANGE, AUTO_LOGIN_DID_COMPLETE})
     public @interface SubType {
 
     }
