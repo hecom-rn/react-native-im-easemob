@@ -9,6 +9,8 @@
 #import "GroupManagerDelegate.h"
 #import "Client.h"
 
+NSString *eventType = @"GroupManagerDelegate";
+
 @implementation GroupManagerDelegate
 
 DEFINE_SINGLETON_FOR_CLASS(GroupManagerDelegate);
@@ -19,19 +21,19 @@ RCT_EXPORT_MODULE();
 
 - (void)userDidJoinGroup:(EMGroup *)aGroup
                     user:(NSString *)aUsername {
-    [Client sendEventByType:@"GroupManagerDelegate" subType:@"userDidJoinGroup" data:@{@"username":aUsername}];
+    [Client sendEventByType:eventType subType:@"userDidJoinGroup" data:@{@"username":aUsername}];
 }
 
 - (void)userDidLeaveGroup:(EMGroup *)aGroup
                      user:(NSString *)aUsername {
-    [Client sendEventByType:@"GroupManagerDelegate" subType:@"userDidLeaveGroup" data:@{@"username":aUsername}];
+    [Client sendEventByType:eventType subType:@"userDidLeaveGroup" data:@{@"username":aUsername}];
 }
 
 - (void)groupOwnerDidUpdate:(EMGroup *)aGroup
                    newOwner:(NSString *)aNewOwner
                    oldOwner:(NSString *)aOldOwner {
     NSDictionary *dic = @{@"newOwner":aNewOwner,@"oldOwner":aOldOwner};
-    [Client sendEventByType:@"GroupManagerDelegate" subType:@"groupOwnerDidUpdate" data:dic];
+    [Client sendEventByType:eventType subType:@"groupOwnerDidUpdate" data:dic];
 }
 
 @end

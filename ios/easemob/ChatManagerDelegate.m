@@ -10,6 +10,8 @@
 #import "Client.h"
 #import "NSObject+Util.h"
 
+NSString *eventType = @"ChatManagerDelegate";
+
 @implementation ChatManagerDelegate
 
 DEFINE_SINGLETON_FOR_CLASS(ChatManagerDelegate);
@@ -23,7 +25,7 @@ RCT_EXPORT_MODULE();
     [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    [Client sendEventByType:@"ChatManagerDelegate" subType:@"messageDidReceive" data:dicArray];
+    [Client sendEventByType:eventType subType:@"messageDidReceive" data:dicArray];
 }
 
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
@@ -31,7 +33,7 @@ RCT_EXPORT_MODULE();
     [aCmdMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    [Client sendEventByType:@"ChatManagerDelegate" subType:@"cmdMessageDidReceive" data:dicArray];
+    [Client sendEventByType:eventType subType:@"cmdMessageDidReceive" data:dicArray];
 }
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
@@ -39,7 +41,7 @@ RCT_EXPORT_MODULE();
     [aConversationList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [dicArray addObject:[obj objectToDictionary]];
     }];
-    [Client sendEventByType:@"ChatManagerDelegate" subType:@"conversationListDidUpdate" data:dicArray];
+    [Client sendEventByType:eventType subType:@"conversationListDidUpdate" data:dicArray];
 }
 
 @end
