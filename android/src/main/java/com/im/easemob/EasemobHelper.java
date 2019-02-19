@@ -81,6 +81,7 @@ class EasemobHelper {
         for (WritableMap param : cache) {
             sendEvent(param);
         }
+        cache.clear();
     }
 
     private void registerListener() {
