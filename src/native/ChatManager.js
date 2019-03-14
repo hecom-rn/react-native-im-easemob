@@ -91,8 +91,9 @@ export const sendMessage = (conversationId, chatType, messageType, body, message
  * @param text 消息提示文本
  * @param timestamp 时间戳
  * @param localTime 本地时间戳
+ * @param messageExt 附件内容
  */
-export const insertSystemMessage = (conversationId, chatType, text, timestamp, localTime) =>
+export const insertSystemMessage = (conversationId, chatType, text, timestamp, localTime, messageExt) =>
     NativeUtil(
         ChatManager.sendMessage,
         {
@@ -103,7 +104,10 @@ export const insertSystemMessage = (conversationId, chatType, text, timestamp, l
             timestamp,
             localTime,
             body: {text},
-            messageExt: {isSystemMessage: true}
+            messageExt: {
+                ...messageExt,
+                isSystemMessage: true,
+            },
         }
     );
 
