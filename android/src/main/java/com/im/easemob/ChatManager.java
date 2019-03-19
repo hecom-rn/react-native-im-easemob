@@ -230,6 +230,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 }
             }
 
+            if (params.hasKey("from")){
+                message.setFrom(params.getString("from"));
+            }
+
             if (timestamp > 0) {
                 message.setStatus(EMMessage.Status.SUCCESS);
                 EMConversation.EMConversationType cType = getCType(type);
