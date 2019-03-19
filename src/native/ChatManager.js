@@ -85,6 +85,33 @@ export const sendMessage = (conversationId, chatType, messageType, body, message
     );
 
 /**
+ * 插入历史消息。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param fromUserId 发送者Id
+ * @param messageType 消息类型
+ * @param body 消息体
+ * @param timestamp 时间戳
+ * @param localTime 本地时间戳
+ * @param messageExt 附件内容
+ */
+export const insertHistoryMessage = (conversationId, chatType, fromUserId, messageType, body, timestamp, localTime, messageExt) =>
+    NativeUtil(
+        ChatManager.sendMessage,
+        {
+            conversationId,
+            chatType,
+            messageType,
+            from: fromUserId,
+            to: conversationId,
+            timestamp,
+            localTime,
+            body,
+            messageExt,
+        }
+    );
+
+/**
  * 插入系统消息。
  * @param conversationId 会话ID
  * @param chatType 聊天类型

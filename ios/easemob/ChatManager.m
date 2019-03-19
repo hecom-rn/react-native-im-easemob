@@ -58,7 +58,13 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMChatType chatType = [[allParams objectForKey:@"chatType"] intValue];
-    NSString *from = [[EMClient sharedClient] currentUsername];
+    NSString *fromParam = [allParams objectForKey:@"from"];
+    NSString *from;
+    if (fromParam) {
+        from = fromParam;
+    } else {
+        from = [[EMClient sharedClient] currentUsername];
+    }
     NSString *to = [allParams objectForKey:@"to"];
     EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
     NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
