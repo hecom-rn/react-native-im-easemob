@@ -137,7 +137,7 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
-    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:YES];
     NSString *fromId = [allParams objectForKey:@"fromId"];
     int count = [[allParams objectForKey:@"count"] intValue];
     EMMessageSearchDirection searchDirection = [[allParams objectForKey:@"searchDirection"] intValue];
@@ -146,7 +146,7 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
         [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [dicArray addObject:[obj objectToDictionary]];
         }];
-        if (!error){
+        if (!error) {
             resolve([dicArray objectToJSONString]);
         } else {
             reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
@@ -182,7 +182,7 @@ RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
     NSString *messageId = [allParams objectForKey:@"messageId"];
     EMError *error = nil;
     [conversation deleteMessageWithId:messageId error:&error];
-    if (!error){
+    if (!error) {
         resolve(@"{}");
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
@@ -198,7 +198,7 @@ RCT_EXPORT_METHOD(markAllMessagesAsRead:(NSString *)params
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
     EMError *error = nil;
     [conversation markAllMessagesAsRead:&error];
-    if (!error){
+    if (!error) {
         resolve(@"{}");
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
