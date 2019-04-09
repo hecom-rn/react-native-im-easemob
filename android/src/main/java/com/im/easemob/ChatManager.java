@@ -25,6 +25,11 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.Map;
 
+import static com.im.easemob.IMConstant.MessageKey.CHAT_TYPE;
+import static com.im.easemob.IMConstant.MessageKey.CONVERSATION_ID;
+import static com.im.easemob.IMConstant.MessageKey.FROM_ID;
+import static com.im.easemob.IMConstant.MessageKey.MESSAGE_ID;
+
 /**
  * Created by kevin.bai on 2018/7/12.
  */
@@ -56,10 +61,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getConversation(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
+        if (CheckUtil.checkParamKey(params, CONVERSATION_ID, promise)) {
             return;
         }
-        String conversationId = params.getString("conversationId");
+        String conversationId = params.getString(CONVERSATION_ID);
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
         boolean ifCreate = false;
         if (params.hasKey("type")) {
@@ -86,10 +91,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void deleteConversation(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, "conversationId", promise)) {
+        if (CheckUtil.checkParamKey(params, CONVERSATION_ID, promise)) {
             return;
         }
-        String conversationId = params.getString("conversationId");
+        String conversationId = params.getString(CONVERSATION_ID);
         boolean ifClearAllMessage = false;
         if (params.hasKey("ifClearAllMessage")) {
             ifClearAllMessage = params.getBoolean("ifClearAllMessage");
@@ -99,17 +104,17 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void loadMessages(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, new String[]{"conversationId"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID}, promise)) {
             return;
         }
-        String conversationId = params.getString("conversationId");
+        String conversationId = params.getString(CONVERSATION_ID);
         EMConversation.EMConversationType type = EMConversation.EMConversationType.Chat;
-        if (params.hasKey("chatType")) {
-            type = EasemobConverter.toConversationType(params.getInt("chatType"));
+        if (params.hasKey(CHAT_TYPE)) {
+            type = EasemobConverter.toConversationType(params.getInt(CHAT_TYPE));
         }
         String fromId = "";
-        if (params.hasKey("fromId")) {
-            fromId = params.getString("fromId");
+        if (params.hasKey(FROM_ID)) {
+            fromId = params.getString(FROM_ID);
         }
         int count = 20;
         if (params.hasKey("count")) {
@@ -123,11 +128,11 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void deleteMessage(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "messageId"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, MESSAGE_ID}, promise)) {
             return;
         }
-        String conversationId = params.getString("conversationId");
-        String messageId = params.getString("messageId");
+        String conversationId = params.getString(CONVERSATION_ID);
+        String messageId = params.getString(MESSAGE_ID);
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(conversationId);
         if (conversation != null) {
             conversation.removeMessage(messageId);
@@ -140,10 +145,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void recallMessage(ReadableMap params, Promise promise) {
         if (CheckUtil
-                .checkParamKey(params, new String[]{"messageId"}, promise)) {
+                .checkParamKey(params, new String[]{MESSAGE_ID}, promise)) {
             return;
         }
-        String messageId = params.getString("messageId");
+        String messageId = params.getString(MESSAGE_ID);
         EMMessage message = EMClient.getInstance().chatManager().getMessage(messageId);
         try {
             EMClient.getInstance().chatManager().recallMessage(message);
@@ -157,7 +162,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void sendMessage(ReadableMap params, final Promise promise) {
         if (CheckUtil
-                .checkParamKey(params, new String[]{"chatType", "messageType", "to", "body"}, promise)) {
+                .checkParamKey(params, new String[]{CHAT_TYPE, "messageType", "to", "body"}, promise)) {
             return;
         }
         ReadableMap ext = null;
@@ -169,7 +174,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 return;
             }
         }
-        EMMessage.ChatType type = EasemobConverter.toChatType(params.getInt("chatType"));
+        EMMessage.ChatType type = EasemobConverter.toChatType(params.getInt(CHAT_TYPE));
         EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
         String to = params.getString("to");
         ReadableMap body = params.getMap("body");
@@ -312,12 +317,12 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, new String[]{"conversationId", "chatType"}, promise)) {
+        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, CHAT_TYPE}, promise)) {
             return;
         }
-        String conversationId = params.getString("conversationId");
+        String conversationId = params.getString(CONVERSATION_ID);
         EMConversation.EMConversationType chatType = EasemobConverter
-                .toConversationType(params.getInt("chatType"));
+                .toConversationType(params.getInt(CHAT_TYPE));
         EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
         promise.resolve(null);
     }

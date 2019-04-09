@@ -8,6 +8,13 @@ import android.support.annotation.StringDef;
  */
 
 public class IMConstant {
+    public static final class MessageKey{
+        public static final String CONVERSATION_ID = "conversationId";
+        public static final String CHAT_TYPE = "chatType";
+        public static final String FROM_ID = "fromId";
+        public static final String MESSAGE_ID = "messageId";
+    }
+
     public static class ChatType {
         public static final int SINGLE = 0;
         public static final int GROUP = 1;
