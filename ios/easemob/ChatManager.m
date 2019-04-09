@@ -126,7 +126,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         message.status = EMMessageStatusSucceed;
         message.direction = [[allParams objectForKey:@"direction"] intValue];
         EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
-        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
+        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:YES];
         [conversation insertMessage:message error:nil];
         resolve([message objectToJSONString]);
     } else {
