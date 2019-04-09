@@ -236,6 +236,9 @@ public class ChatManager extends ReactContextBaseJavaModule {
 
             if (timestamp > 0) {
                 message.setStatus(EMMessage.Status.SUCCESS);
+                if(params.hasKey("direction")){
+                    message.setDirection(EasemobConverter.toDirect(params.getInt("direction")));
+                }
                 EMConversation.EMConversationType cType = getCType(type);
                 EMConversation conversation = EMClient.getInstance().chatManager()
                         .getConversation(message.conversationId(), cType, true);
