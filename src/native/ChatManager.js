@@ -95,7 +95,7 @@ export const sendMessage = (conversationId, chatType, messageType, body, message
  * @param localTime 本地时间戳
  * @param messageExt 附件内容
  */
-export const insertHistoryMessage = (conversationId, chatType, fromUserId, messageType, body, timestamp, localTime, messageExt) =>
+export const insertHistoryMessage = (conversationId, chatType, fromUserId, messageType, body, timestamp, localTime, direction, messageExt) =>
     NativeUtil(
         ChatManager.sendMessage,
         {
@@ -106,6 +106,7 @@ export const insertHistoryMessage = (conversationId, chatType, fromUserId, messa
             to: conversationId,
             timestamp,
             localTime,
+            direction,
             body,
             messageExt,
         }

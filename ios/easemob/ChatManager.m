@@ -124,6 +124,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         message.timestamp = timestamp;
         message.localTime = localTime;
         message.status = EMMessageStatusSucceed;
+        message.direction = [[allParams objectForKey:@"direction"] intValue];
         EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
         EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
         [conversation insertMessage:message error:nil];
