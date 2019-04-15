@@ -58,19 +58,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     EMChatType chatType = [[allParams objectForKey:@"chatType"] intValue];
-    NSString *fromParam = [allParams objectForKey:@"from"];
-    NSString *from;
-    if (fromParam) {
-        from = fromParam;
-    } else {
-        from = [[EMClient sharedClient] currentUsername];
-    }
+    NSString *from = [[EMClient sharedClient] currentUsername];
     NSString *to = [allParams objectForKey:@"to"];
     EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
     NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
     NSDictionary *bodyDic = [allParams objectForKey:@"body"];
-    long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
-    long long localTime = [[allParams objectForKey:@"localTime"] longLongValue];
     EMMessageBody *body;
     switch (messageType) {
         case EMMessageBodyTypeText: {
@@ -116,25 +108,92 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         default:
             break;
     }
-    // 生成Message
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
-    if (timestamp > 0) {
-        // 插入消息
-        message.timestamp = timestamp;
-        message.localTime = localTime;
-        message.status = EMMessageStatusSucceed;
-        message.direction = [[allParams objectForKey:@"direction"] intValue];
-        EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
-        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:YES];
+    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+        resolve([message objectToJSONString]);
+    }];
+}
+
+RCT_EXPORT_METHOD(insertMessage:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    NSInteger chatType = [[allParams objectForKey:@"chatType"] intValue];
+    NSString *from = [allParams objectForKey:@"from"];
+    NSString *to = [allParams objectForKey:@"to"];
+    EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
+    NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];
+    NSDictionary *bodyDic = [allParams objectForKey:@"body"];
+    long long timestamp = [[allParams objectForKey:@"timestamp"] longLongValue];
+    long long localTime = [[allParams objectForKey:@"localTime"] longLongValue];
+    EMMessageBody *body;
+    BOOL needDownload = NO;
+    switch (messageType) {
+        case EMMessageBodyTypeText: {
+            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"] ];
+        }
+            break;
+        case EMMessageBodyTypeImage: {
+            EMImageMessageBody *imageBody = [[EMImageMessageBody alloc] initWithData:nil displayName:@"image"];
+            imageBody.remotePath = bodyDic[@"remotePath"];
+            imageBody.secretKey = bodyDic[@"secretKey"];
+            body = imageBody;
+            needDownload = YES;
+        }
+            break;
+        case EMMessageBodyTypeLocation: {
+            double latitude = [bodyDic[@"latitude"] doubleValue];
+            double longitude = [bodyDic[@"longitude"] doubleValue];
+            NSString *address = bodyDic[@"address"];
+            body = [[EMLocationMessageBody alloc] initWithLatitude:latitude longitude:longitude address:address];
+        }
+            break;
+        case EMMessageBodyTypeVoice: {
+            EMVoiceMessageBody *voiceBody = [[EMVoiceMessageBody alloc] initWithData:nil displayName:@"audio"];
+            voiceBody.remotePath = bodyDic[@"remotePath"];
+            voiceBody.secretKey = bodyDic[@"secretKey"];
+            voiceBody.duration = [bodyDic[@"duration"] intValue];
+            body = voiceBody;
+            needDownload = YES;
+        }
+            break;
+        case EMMessageBodyTypeVideo: {
+            EMVideoMessageBody *videoBody = [[EMVideoMessageBody alloc] initWithData:nil displayName:@"video"];
+            videoBody.remotePath = bodyDic[@"remotePath"];
+            videoBody.secretKey = bodyDic[@"secretKey"];
+            body = videoBody;
+            needDownload = YES;
+        }
+            break;
+        case EMMessageBodyTypeFile: {
+            EMFileMessageBody *fileBody = [[EMFileMessageBody alloc] initWithData:nil displayName:@"file"];
+            fileBody.remotePath = bodyDic[@"remotePath"];
+            fileBody.secretKey = bodyDic[@"secretKey"];
+            body = fileBody;
+            needDownload = YES;
+        }
+            break;
+        default:
+            break;
+    }
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
+    message.chatType = chatType;
+    message.timestamp = timestamp;
+    message.localTime = localTime;
+    message.status = EMMessageStatusSucceed;
+    message.direction = [[allParams objectForKey:@"direction"] intValue];
+    if (needDownload) {
+        [[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMMessage *result, EMError *error) {
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:chatType createIfNotExist:YES];
+            [conversation insertMessage:result error:nil];
+            resolve([result objectToJSONString]);
+        }];
+    } else {
+        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:chatType createIfNotExist:YES];
         [conversation insertMessage:message error:nil];
         resolve([message objectToJSONString]);
-    } else {
-        // 发送消息
-        [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
-            // 不管有没有错误都会返回message，根据message中的status判断消息的发送状态
-            resolve([message objectToJSONString]);
-        }];
     }
 }
 
