@@ -160,30 +160,86 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendMessage(ReadableMap params, final Promise promise) {
+    public void insertMessage(ReadableMap params, final Promise promise) {
+        if (CheckUtil
+                .checkParamKey(params, new String[]{CHAT_TYPE, CONVERSATION_ID, "messageType", "from", "to", "body"},
+                        promise)) {
+            return;
+        }
+        try {
+            EMMessage message = buildMessage(params);
+            if (message != null) {
+                message.setStatus(EMMessage.Status.SUCCESS);
+                EMConversation conversation = EMClient.getInstance().chatManager()
+                        .getConversation(message.conversationId(), getCType(message.getChatType()), true);
+                if (conversation != null) {
+                    conversation.insertMessage(message);
+                    promise.resolve(EasemobConverter.convert(message));
+                } else {
+                    promise.reject("-1", "会话不存在");
+                }
+            } else {
+                promise.reject("-1", "无法识别的messageType");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void sendMessage(final ReadableMap params, final Promise promise) {
         if (CheckUtil
                 .checkParamKey(params, new String[]{CHAT_TYPE, "messageType", "to", "body"}, promise)) {
             return;
         }
-        ReadableMap ext = null;
-        if (params.hasKey("messageExt")) {
-            if (params.getType("messageExt") == ReadableType.Map) {
-                ext = params.getMap("messageExt");
+        try {
+            final EMMessage message = buildMessage(params);
+            if (message != null) {
+                message.setMessageStatusCallback(new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        promise.resolve(EasemobConverter.convert(message));
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        promise.resolve(EasemobConverter.convert(message));
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s) {
+
+                    }
+                });
+                EMClient.getInstance().chatManager().sendMessage(message);
             } else {
-                promise.reject("-1", "messageExt字段必须是对象");
-                return;
+                promise.reject("-1", "无法识别的messageType");
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            promise.reject(e);
         }
-        EMMessage.ChatType type = EasemobConverter.toChatType(params.getInt(CHAT_TYPE));
-        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
+    }
+
+    @ReactMethod
+    public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, CHAT_TYPE}, promise)) {
+            return;
+        }
+        String conversationId = params.getString(CONVERSATION_ID);
+        EMConversation.EMConversationType chatType = EasemobConverter
+                .toConversationType(params.getInt(CHAT_TYPE));
+        EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
+        promise.resolve(null);
+    }
+
+    private EMMessage buildMessage(ReadableMap params) throws JSONException {
+        Context context = getCurrentActivity();
+        if (context == null) return null;
         String to = params.getString("to");
         ReadableMap body = params.getMap("body");
-        long localTime = params.hasKey("localTime") ? (long) params.getDouble("localTime") : 0;
-        long timestamp = params.hasKey("timestamp") ? (long) params.getDouble("timestamp") : 0;
-
-        Context context = getCurrentActivity();
-        if (context == null) return;
-
+        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
         final EMMessage message;
         if (messageType == EMMessage.Type.IMAGE) {
             message = EMMessage
@@ -225,54 +281,28 @@ public class ChatManager extends ReactContextBaseJavaModule {
             message = null;
         }
         if (message != null) {
-            message.setChatType(type);
-            if (ext != null) {
-                try {
-                    setExt(message, ext);
-                } catch (JSONException e) {
-                    promise.reject(e);
-                    return;
+            message.setChatType(EasemobConverter.toChatType(params.getInt(CHAT_TYPE)));
+            if (params.hasKey("messageExt")) {
+                if (params.getType("messageExt") == ReadableType.Map) {
+                    setExt(message, params.getMap("messageExt"));
+                } else {
+                    throw new RuntimeException("messageExt 必须是一个对象");
                 }
             }
-
-            if (params.hasKey("from")){
+            if (params.hasKey("localTime")) {
+                message.setLocalTime((long) params.getDouble("localTime"));
+            }
+            if (params.hasKey("timestamp")) {
+                message.setMsgTime((long) params.getDouble("timestamp"));
+            }
+            if (params.hasKey("from")) {
                 message.setFrom(params.getString("from"));
             }
-
-            if (timestamp > 0) {
-                message.setStatus(EMMessage.Status.SUCCESS);
-                if(params.hasKey("direction")){
-                    message.setDirection(EasemobConverter.toDirect(params.getInt("direction")));
-                }
-                EMConversation.EMConversationType cType = getCType(type);
-                EMConversation conversation = EMClient.getInstance().chatManager()
-                        .getConversation(message.conversationId(), cType, true);
-                if (conversation != null) {
-                    conversation.insertMessage(message);
-                }
-                promise.resolve(EasemobConverter.convert(message));
-            } else {
-                message.setMessageStatusCallback(new EMCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        promise.resolve(EasemobConverter.convert(message));
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-                        promise.resolve(EasemobConverter.convert(message));
-                    }
-
-                    @Override
-                    public void onProgress(int i, String s) {
-
-                    }
-                });
-                EMClient.getInstance().chatManager().sendMessage(message);
+            if (params.hasKey("direction")) {
+                message.setDirection(EasemobConverter.toDirect(params.getInt("direction")));
             }
-        } else {
-            promise.reject("-1", "无法识别的messageType");
         }
+        return message;
     }
 
     private EMConversation.EMConversationType getCType(EMMessage.ChatType type) {
@@ -313,17 +343,5 @@ public class ChatManager extends ReactContextBaseJavaModule {
                     break;
             }
         }
-    }
-
-    @ReactMethod
-    public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
-        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, CHAT_TYPE}, promise)) {
-            return;
-        }
-        String conversationId = params.getString(CONVERSATION_ID);
-        EMConversation.EMConversationType chatType = EasemobConverter
-                .toConversationType(params.getInt(CHAT_TYPE));
-        EMClient.getInstance().chatManager().getConversation(conversationId, chatType, true).markAllMessagesAsRead();
-        promise.resolve(null);
     }
 }
