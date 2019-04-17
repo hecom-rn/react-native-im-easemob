@@ -13,11 +13,22 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMFileMessageBody;
+import com.hyphenate.chat.EMImageMessageBody;
+import com.hyphenate.chat.EMLocationMessageBody;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMessageBody;
+import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.chat.EMVideoMessageBody;
+import com.hyphenate.chat.EMVoiceMessageBody;
+import com.hyphenate.chat.adapter.message.EMAImageMessageBody;
+import com.hyphenate.chat.adapter.message.EMAVideoMessageBody;
+import com.hyphenate.chat.adapter.message.EMAVoiceMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
@@ -162,17 +173,21 @@ public class ChatManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void insertMessage(ReadableMap params, final Promise promise) {
         if (CheckUtil
-                .checkParamKey(params, new String[]{CHAT_TYPE, CONVERSATION_ID, "messageType", "from", "to", "body"},
+                .checkParamKey(params, new String[]{CHAT_TYPE, CONVERSATION_ID, "direction", "messageType", "from",
+                                "to", "body"},
                         promise)) {
             return;
         }
         try {
-            EMMessage message = buildMessage(params);
+            EMMessage message = buildMessage(params, true);
             if (message != null) {
                 message.setStatus(EMMessage.Status.SUCCESS);
-                EMConversation conversation = EMClient.getInstance().chatManager()
+                EMChatManager manager = EMClient.getInstance().chatManager();
+                EMConversation conversation = manager
                         .getConversation(message.conversationId(), getCType(message.getChatType()), true);
                 if (conversation != null) {
+                    manager.downloadAttachment(message);
+                    manager.downloadThumbnail(message);
                     conversation.insertMessage(message);
                     promise.resolve(EasemobConverter.convert(message));
                 } else {
@@ -194,7 +209,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
             return;
         }
         try {
-            final EMMessage message = buildMessage(params);
+            final EMMessage message = buildMessage(params, false);
             if (message != null) {
                 message.setMessageStatusCallback(new EMCallBack() {
                     @Override
@@ -234,39 +249,41 @@ public class ChatManager extends ReactContextBaseJavaModule {
         promise.resolve(null);
     }
 
-    private EMMessage buildMessage(ReadableMap params) throws JSONException {
-        Context context = getCurrentActivity();
-        if (context == null) return null;
+    private EMMessage buildSendMessage(Context context, ReadableMap params) {
+        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
+        String path = "path";
         String to = params.getString("to");
         ReadableMap body = params.getMap("body");
-        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
         final EMMessage message;
         if (messageType == EMMessage.Type.IMAGE) {
             message = EMMessage
                     .createImageSendMessage(UriPathUtil
-                            .getPath(context, body.getString("path")), false, to);
+                            .getPath(context, body.getString(path)), false, to);
         } else if (messageType == EMMessage.Type.LOCATION) {
             message = EMMessage.createLocationSendMessage(
                     body.getDouble("latitude"), body.getDouble("longitude"),
                     body.getString("address"), to);
         } else if (messageType == EMMessage.Type.VIDEO) {
             message = EMMessage
-                    .createVideoSendMessage(UriPathUtil.getPath(context, body.getString("path")),
+                    .createVideoSendMessage(UriPathUtil.getPath(context, body.getString(path)),
                             body.getString("thumbPath"), body.getInt("duration"), to);
         } else if (messageType == EMMessage.Type.FILE) {
             message = EMMessage
-                    .createFileSendMessage(UriPathUtil.getPath(context, body.getString("path")), to);
+                    .createFileSendMessage(UriPathUtil.getPath(context, body.getString(path)), to);
+            if (body.hasKey("")) {
+                ((EMFileMessageBody) message.getBody()).setSecret(body.getString(""));
+            }
         } else if (messageType == EMMessage.Type.VOICE) {
             int duration;
-            String path = body.getString("path");
+            String uri = body.getString(path);
             if (body.hasKey("duration")) {
                 duration = body.getInt("duration");
             } else {
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                mmr.setDataSource(path);
+                mmr.setDataSource(uri);
                 duration = Integer.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
             }
-            message = EMMessage.createVoiceSendMessage(path, duration, to);
+            message = EMMessage.createVoiceSendMessage(uri, duration, to);
         } else if (messageType == EMMessage.Type.CMD) {
             message = EMMessage.createSendMessage(EMMessage.Type.CMD);
             EMCmdMessageBody cmd = new EMCmdMessageBody(body.getString("action"));
@@ -280,6 +297,70 @@ public class ChatManager extends ReactContextBaseJavaModule {
         } else {
             message = null;
         }
+        return message;
+    }
+
+    private EMMessage buildInsertMessage(ReadableMap params) {
+        EMMessage.Type messageType = EasemobConverter.toMessageType(params.getInt("messageType"));
+        String path = "remotePath";
+        String secret = "secretKey";
+        ReadableMap bodyMap = params.getMap("body");
+        EMMessage.Direct direct = EasemobConverter.toDirect(params.getInt("direction"));
+        final EMMessage message = direct == EMMessage.Direct.SEND ? EMMessage
+                .createSendMessage(messageType) : EMMessage.createReceiveMessage(messageType);
+        EMMessageBody body = null;
+        if (messageType == EMMessage.Type.IMAGE) {
+            EMAImageMessageBody image = new EMAImageMessageBody("", "");
+            image.setRemotePath(bodyMap.getString(path));
+            image.setSecretKey(bodyMap.getString(secret));
+            body = new EMImageMessageBody(image);
+        } else if (messageType == EMMessage.Type.LOCATION) {
+            body = new EMLocationMessageBody(bodyMap.getString("address"),
+                    bodyMap.getDouble("latitude"), bodyMap.getDouble("longitude"));
+        } else if (messageType == EMMessage.Type.VIDEO) {
+            EMAVideoMessageBody video = new EMAVideoMessageBody("", "");
+            video.setRemotePath(bodyMap.getString(path));
+            video.setSecretKey(bodyMap.getString(secret));
+            body = new EMVideoMessageBody(video);
+        } else if (messageType == EMMessage.Type.FILE) {
+            EMNormalFileMessageBody file = new EMNormalFileMessageBody();
+            file.setRemoteUrl(bodyMap.getString(path));
+            file.setSecret(bodyMap.getString(secret));
+            body = file;
+        } else if (messageType == EMMessage.Type.VOICE) {
+            EMAVoiceMessageBody voice = new EMAVoiceMessageBody("", 0);
+            voice.setDuration(bodyMap.getInt("duration"));
+            voice.setRemotePath(bodyMap.getString(path));
+            voice.setSecretKey(bodyMap.getString(secret));
+            body = new EMVoiceMessageBody(voice);
+        } else if (messageType == EMMessage.Type.CMD) {
+            body = new EMCmdMessageBody(bodyMap.getString("action"));
+        } else if (messageType == EMMessage.Type.TXT) {
+            body = new EMTextMessageBody(bodyMap.getString("text"));
+        }
+        message.addBody(body);
+        if (params.hasKey("localTime")) {
+            message.setLocalTime((long) params.getDouble("localTime"));
+        }
+        if (params.hasKey("timestamp")) {
+            message.setMsgTime((long) params.getDouble("timestamp"));
+        }
+        if (params.hasKey("to")) {
+            message.setTo(params.getString("to"));
+        }
+        if (params.hasKey("from")) {
+            message.setFrom(params.getString("from"));
+        }
+        if (params.hasKey("direction")) {
+            message.setDirection(direct);
+        }
+        return message;
+    }
+
+    private EMMessage buildMessage(ReadableMap params, boolean isInsert) throws JSONException {
+        Context context = getCurrentActivity();
+        if (context == null) return null;
+        EMMessage message = isInsert ? buildInsertMessage(params) : buildSendMessage(context, params);
         if (message != null) {
             message.setChatType(EasemobConverter.toChatType(params.getInt(CHAT_TYPE)));
             if (params.hasKey("messageExt")) {
@@ -288,18 +369,6 @@ public class ChatManager extends ReactContextBaseJavaModule {
                 } else {
                     throw new RuntimeException("messageExt 必须是一个对象");
                 }
-            }
-            if (params.hasKey("localTime")) {
-                message.setLocalTime((long) params.getDouble("localTime"));
-            }
-            if (params.hasKey("timestamp")) {
-                message.setMsgTime((long) params.getDouble("timestamp"));
-            }
-            if (params.hasKey("from")) {
-                message.setFrom(params.getString("from"));
-            }
-            if (params.hasKey("direction")) {
-                message.setDirection(EasemobConverter.toDirect(params.getInt("direction")));
             }
         }
         return message;
