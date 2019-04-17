@@ -121,7 +121,13 @@ RCT_EXPORT_METHOD(insertMessage:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *conversationId = [allParams objectForKey:@"conversationId"];
     NSInteger chatType = [[allParams objectForKey:@"chatType"] intValue];
-    NSString *from = [allParams objectForKey:@"from"];
+    NSString *fromParam = [allParams objectForKey:@"from"];
+    NSString *from;
+    if (fromParam) {
+        from = fromParam;
+    } else {
+        from = [[EMClient sharedClient] currentUsername];
+    }
     NSString *to = [allParams objectForKey:@"to"];
     EMMessageBodyType messageType = [[allParams objectForKey:@"messageType"] intValue];
     NSDictionary *messageExt = [allParams objectForKey:@"messageExt"];

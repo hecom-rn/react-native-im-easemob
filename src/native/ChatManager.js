@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 import NativeUtil from './native';
-import { ChatType, MessageType } from '../constant/IMConstant';
+import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
 
 const ChatManager = NativeModules.ChatManager;
 
@@ -123,7 +123,7 @@ export const insertHistoryMessage = (conversationId, chatType, fromUserId, messa
  */
 export const insertSystemMessage = (conversationId, chatType, text, timestamp, localTime, messageExt) =>
     NativeUtil(
-        ChatManager.sendMessage,
+        ChatManager.insertMessage,
         {
             conversationId,
             chatType,
@@ -131,6 +131,7 @@ export const insertSystemMessage = (conversationId, chatType, text, timestamp, l
             to: conversationId,
             timestamp,
             localTime,
+            direction: MessageDirection.send,
             body: {text},
             messageExt: {
                 ...messageExt,
