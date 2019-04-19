@@ -173,8 +173,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void insertMessage(ReadableMap params, final Promise promise) {
         if (CheckUtil
-                .checkParamKey(params, new String[]{CHAT_TYPE, CONVERSATION_ID, "direction", "messageType", "from",
-                                "to", "body"},
+                .checkParamKey(params, new String[]{CHAT_TYPE, CONVERSATION_ID, "direction", "messageType", "body"},
                         promise)) {
             return;
         }
@@ -196,7 +195,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
             } else {
                 promise.reject("-1", "无法识别的messageType");
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             promise.reject(e);
         }
@@ -231,7 +230,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
             } else {
                 promise.reject("-1", "无法识别的messageType");
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             promise.reject(e);
         }
@@ -311,32 +310,49 @@ public class ChatManager extends ReactContextBaseJavaModule {
         EMMessageBody body = null;
         if (messageType == EMMessage.Type.IMAGE) {
             EMAImageMessageBody image = new EMAImageMessageBody("", "");
-            image.setRemotePath(bodyMap.getString(path));
-            image.setSecretKey(bodyMap.getString(secret));
-            body = new EMImageMessageBody(image);
+            if (hasKeys(bodyMap, secret, path)) {
+                image.setSecretKey(bodyMap.getString(secret));
+                image.setRemotePath(bodyMap.getString(path));
+                body = new EMImageMessageBody(image);
+            }
         } else if (messageType == EMMessage.Type.LOCATION) {
-            body = new EMLocationMessageBody(bodyMap.getString("address"),
-                    bodyMap.getDouble("latitude"), bodyMap.getDouble("longitude"));
+            if (hasKeys(bodyMap, "address", "latitude", "longitude")) {
+                body = new EMLocationMessageBody(bodyMap.getString("address"),
+                        bodyMap.getDouble("latitude"), bodyMap.getDouble("longitude"));
+            }
         } else if (messageType == EMMessage.Type.VIDEO) {
             EMAVideoMessageBody video = new EMAVideoMessageBody("", "");
-            video.setRemotePath(bodyMap.getString(path));
-            video.setSecretKey(bodyMap.getString(secret));
-            body = new EMVideoMessageBody(video);
+            if (hasKeys(bodyMap, path, secret)) {
+                video.setRemotePath(bodyMap.getString(path));
+                video.setSecretKey(bodyMap.getString(secret));
+                body = new EMVideoMessageBody(video);
+            }
         } else if (messageType == EMMessage.Type.FILE) {
             EMNormalFileMessageBody file = new EMNormalFileMessageBody();
-            file.setRemoteUrl(bodyMap.getString(path));
-            file.setSecret(bodyMap.getString(secret));
-            body = file;
+            if (hasKeys(bodyMap, path, secret)) {
+                file.setRemoteUrl(bodyMap.getString(path));
+                file.setSecret(bodyMap.getString(secret));
+                body = file;
+            }
         } else if (messageType == EMMessage.Type.VOICE) {
             EMAVoiceMessageBody voice = new EMAVoiceMessageBody("", 0);
-            voice.setDuration(bodyMap.getInt("duration"));
-            voice.setRemotePath(bodyMap.getString(path));
-            voice.setSecretKey(bodyMap.getString(secret));
-            body = new EMVoiceMessageBody(voice);
+            if (hasKeys(bodyMap, path, secret, "duration")) {
+                voice.setDuration(bodyMap.getInt("duration"));
+                voice.setRemotePath(bodyMap.getString(path));
+                voice.setSecretKey(bodyMap.getString(secret));
+                body = new EMVoiceMessageBody(voice);
+            }
         } else if (messageType == EMMessage.Type.CMD) {
-            body = new EMCmdMessageBody(bodyMap.getString("action"));
+            if (hasKeys(bodyMap, "action")) {
+                body = new EMCmdMessageBody(bodyMap.getString("action"));
+            }
         } else if (messageType == EMMessage.Type.TXT) {
-            body = new EMTextMessageBody(bodyMap.getString("text"));
+            if (hasKeys(bodyMap, "text")) {
+                body = new EMTextMessageBody(bodyMap.getString("text"));
+            }
+        }
+        if (body == null) {
+            throw new RuntimeException("body 缺少字段");
         }
         message.addBody(body);
         if (params.hasKey("localTime")) {
@@ -355,6 +371,14 @@ public class ChatManager extends ReactContextBaseJavaModule {
             message.setDirection(direct);
         }
         return message;
+    }
+
+    private boolean hasKeys(ReadableMap map, String... keys) {
+        boolean result = true;
+        for (String key : keys) {
+            result = result && map.hasKey(key);
+        }
+        return result;
     }
 
     private EMMessage buildMessage(ReadableMap params, boolean isInsert) throws JSONException {
