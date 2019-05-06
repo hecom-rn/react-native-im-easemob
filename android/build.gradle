@@ -28,6 +28,17 @@ android {
         targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0.0"
+
+
+        //离线推送配置appId和appSecret(小米，oppo,meizu)
+        resValue("string", "XIAOMI_PUSH_APP_ID", "")
+        resValue("string", "XIAOMI_PUSH_APP_KEY", "")
+
+        resValue("string", "OPPO_PUSH_APP_KEY", "")
+        resValue("string", "OPPO_PUSH_APP_SECRET", "")
+
+        resValue("string", "MEIZU_PUSH_APP_ID", "")
+        resValue("string", "MEIZU_PUSH_APP_KEY", "")
     }
     lintOptions {
         abortOnError false
