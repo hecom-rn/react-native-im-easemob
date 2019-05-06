@@ -188,8 +188,8 @@ class EasemobHelper {
 
      private void configOfflinePushPar(EMOptions options){
             String brand= Build.BRAND.toLowerCase();
-            EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
             if(mContext == null) return;
+            EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
             String appId,appKey,appSecret;
             switch (brand){
                 case "meizu":
