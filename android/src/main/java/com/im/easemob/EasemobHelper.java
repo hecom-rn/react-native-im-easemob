@@ -59,7 +59,10 @@ class EasemobHelper {
         if (processAppName == null || !processAppName.equalsIgnoreCase(context.getPackageName())) {
             Log.e(TAG, "enter the service process!");
         }
-        EMClient.getInstance().init(context, initOptions(options));
+
+        EMOptions emOptions = initOptions(options);
+        configOfflinePushPar(emOptions);
+        EMClient.getInstance().init(context, emOptions);
 
         registerListener();
 
@@ -181,4 +184,38 @@ class EasemobHelper {
         }
         return null;
     }
+
+
+     private void configOfflinePushPar(EMOptions options){
+            String brand= Build.BRAND.toLowerCase();
+            if(mContext == null) return;
+            EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
+            String appId,appKey,appSecret;
+            switch (brand){
+                case "meizu":
+                       appId = mContext.getString(R.string.MEIZU_PUSH_APP_ID);
+                       appKey = mContext.getString(R.string.MEIZU_PUSH_APP_KEY);
+                       if("".equals(appId) || "".equals(appKey)) return;
+                       builder.enableMeiZuPush(appId,appKey);
+                      break;
+                case "xiaomi":
+                     appId = mContext.getString(R.string.XIAOMI_PUSH_APP_ID);
+                     appKey = mContext.getString(R.string.XIAOMI_PUSH_APP_KEY);
+                    if("".equals(appId) || "".equals(appKey)) return;
+                    builder.enableMiPush(appId,appKey);
+                    break;
+                case "oppo":
+                       appKey = mContext.getString(R.string.OPPO_PUSH_APP_KEY);
+                       appSecret = mContext.getString(R.string.OPPO_PUSH_APP_SECRET);
+                      if("".equals(appSecret) || "".equals(appKey)) return;
+                      builder.enableOppoPush(appKey,appSecret);
+                     break;
+                case "huawei":
+                    builder.enableHWPush();
+                    break;
+                default:
+                    return;
+            }
+            options.setPushConfig(builder.build());
+        }
 }
