@@ -2,6 +2,7 @@ package com.im.easemob;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
@@ -16,6 +17,10 @@ import com.hyphenate.chat.EMOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyphenate.push.EMPushConfig;
+import com.hyphenate.push.EMPushHelper;
+import com.hyphenate.push.EMPushType;
+import com.hyphenate.push.PushListener;
 import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
