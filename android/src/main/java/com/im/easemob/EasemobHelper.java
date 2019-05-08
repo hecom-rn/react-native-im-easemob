@@ -2,7 +2,10 @@ package com.im.easemob;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
 
@@ -35,7 +38,12 @@ class EasemobHelper {
     private ReactContext mReactContext;
     private List<WritableMap> cache;
     private EaseMobHookDelegate mHookDelegate;
-
+    private static final String XIAOMI_PUSH_APP_ID = "IM_EASEMOB_XIAOMI_PUSH_APP_ID";
+    private static final String XIAOMI_PUSH_APP_KEY = "IM_EASEMOB_XIAOMI_PUSH_APP_KEY";
+    private static final String OPPO_PUSH_APP_KEY = "IM_EASEMOB_OPPO_PUSH_APP_KEY";
+    private static final String OPPO_PUSH_APP_SECRET = "IM_EASEMOB_OPPO_PUSH_APP_SECRET";
+    private static final String MEIZU_PUSH_APP_ID = "IM_EASEMOB_MEIZU_PUSH_APP_ID";
+    private static final String MEIZU_PUSH_APP_KEY = "IM_EASEMOB_MEIZU_PUSH_APP_KEY";
     public Context context() {
         return mContext;
     }
@@ -191,36 +199,53 @@ class EasemobHelper {
     }
 
 
-     private void configOfflinePushPar(EMOptions options){
-            String brand= Build.BRAND.toLowerCase();
-            if(mContext == null) return;
-            EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
-            String appId,appKey,appSecret;
-            switch (brand){
-                case "meizu":
-                       appId = mContext.getString(R.string.MEIZU_PUSH_APP_ID);
-                       appKey = mContext.getString(R.string.MEIZU_PUSH_APP_KEY);
-                       if("".equals(appId) || "".equals(appKey)) return;
-                       builder.enableMeiZuPush(appId,appKey);
-                      break;
-                case "xiaomi":
-                     appId = mContext.getString(R.string.XIAOMI_PUSH_APP_ID);
-                     appKey = mContext.getString(R.string.XIAOMI_PUSH_APP_KEY);
-                    if("".equals(appId) || "".equals(appKey)) return;
-                    builder.enableMiPush(appId,appKey);
-                    break;
-                case "oppo":
-                       appKey = mContext.getString(R.string.OPPO_PUSH_APP_KEY);
-                       appSecret = mContext.getString(R.string.OPPO_PUSH_APP_SECRET);
-                      if("".equals(appSecret) || "".equals(appKey)) return;
-                      builder.enableOppoPush(appKey,appSecret);
+      private void configOfflinePushPar(EMOptions options){
+             String brand= Build.BRAND.toLowerCase();
+             EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
+             if(mContext == null) return;
+             String appId,appKey,appSecret;
+             switch (brand){
+                 case "meizu":
+                        appId = getPushPar(MEIZU_PUSH_APP_ID);
+                        appKey = getPushPar(MEIZU_PUSH_APP_KEY);
+                        if("".equals(appId) || "".equals(appKey)) return;
+                        builder.enableMeiZuPush(appId,appKey);
+                       break;
+                 case "xiaomi":
+                      appId = getPushPar(XIAOMI_PUSH_APP_ID);
+                      appKey = getPushPar(XIAOMI_PUSH_APP_KEY);
+                     if("".equals(appId) || "".equals(appKey)) return;
+                     builder.enableMiPush(appId,appKey);
                      break;
-                case "huawei":
-                    builder.enableHWPush();
-                    break;
-                default:
-                    return;
-            }
-            options.setPushConfig(builder.build());
-        }
+                 case "oppo":
+                        appKey = getPushPar(OPPO_PUSH_APP_KEY);
+                        appSecret = getPushPar(OPPO_PUSH_APP_SECRET);
+                       if("".equals(appSecret) || "".equals(appKey)) return;
+                       builder.enableOppoPush(appKey,appSecret);
+                      break;
+                 case "huawei":
+                     builder.enableHWPush();
+                     break;
+                 default:
+                     return;
+             }
+             options.setPushConfig(builder.build());
+         }
+
+          private String getPushPar(String metaKey){
+                 if (metadata == null) {
+                     try {
+                         ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(), PackageManager.GET_META_DATA);
+                         metadata = applicationInfo.metaData;
+                     } catch (PackageManager.NameNotFoundException e) {
+                         e.printStackTrace();
+                         metadata = new Bundle();
+                     }
+                 }
+                 Object metaDataObj = metadata.get(metaKey);
+                 if(metaDataObj == null){
+                     metaDataObj = "";
+                 }
+                 return (String) metaDataObj;
+          }
 }
