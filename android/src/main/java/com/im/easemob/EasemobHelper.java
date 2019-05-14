@@ -252,10 +252,10 @@ class EasemobHelper {
                          metadata = new Bundle();
                      }
                  }
-                 Object metaDataObj = metadata.get(metaKey);
-                 if(metaDataObj == null){
-                     metaDataObj = "";
+                 String metaData = metadata.getString(metaKey);
+                 if(metaData == null){
+                     metaData = "";
                  }
-                 return (String) metaDataObj;
+                 return  metaData;
           }
 }
