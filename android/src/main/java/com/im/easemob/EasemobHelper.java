@@ -201,7 +201,16 @@ class EasemobHelper {
 
 
       private void configOfflinePushPar(EMOptions options){
-             String brand= Build.BRAND.toLowerCase();
+            String brand ="";
+                    if(RomUtil.isMiui()){
+                        brand = "xiaomi";
+                    }else if(RomUtil.isEmui()){
+                        brand = "huawei";
+                    }else if(RomUtil.isFlyme()){
+                        brand = "meizu";
+                    }else if(RomUtil.isOppo()){
+                        brand = "oppo";
+                    }
              EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
              if(mContext == null) return;
              String appId,appKey,appSecret;
@@ -243,10 +252,10 @@ class EasemobHelper {
                          metadata = new Bundle();
                      }
                  }
-                 Object metaDataObj = metadata.get(metaKey);
-                 if(metaDataObj == null){
-                     metaDataObj = "";
+                 String metaData = metadata.getString(metaKey);
+                 if(metaData == null){
+                     metaData = "";
                  }
-                 return (String) metaDataObj;
+                 return  metaData;
           }
 }
