@@ -38,6 +38,7 @@ class EasemobHelper {
     private ReactContext mReactContext;
     private List<WritableMap> cache;
     private EaseMobHookDelegate mHookDelegate;
+    private static Bundle metadata;
     private static final String XIAOMI_PUSH_APP_ID = "IM_EASEMOB_XIAOMI_PUSH_APP_ID";
     private static final String XIAOMI_PUSH_APP_KEY = "IM_EASEMOB_XIAOMI_PUSH_APP_KEY";
     private static final String OPPO_PUSH_APP_KEY = "IM_EASEMOB_OPPO_PUSH_APP_KEY";
