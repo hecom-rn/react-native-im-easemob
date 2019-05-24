@@ -82,3 +82,31 @@ protected List<ReactPackage> getPackages() {
     );
 }
 ```
+
+Android离线推送接收消息，需要配置appId和appKey或者appId和AappSecret
+(不同的手机需要配置的不一样，具体参考环信文档：http://docs-im.easemob.com/im/android/push/thirdpartypush)
+在主工程中的AndroidManifest.xml中配置appId和appKey或者appId和AappSecret
+```
+ <!-- start  离线推送配置appId和appSecret(小米，oppo,meizu)-->
+        <meta-data
+            android:name="IM_EASEMOB_XIAOMI_PUSH_APP_ID"
+            android:value="替换成你自己申请的小米APP_ID" />
+        <meta-data
+            android:name="IM_EASEMOB_XIAOMI_PUSH_APP_KEY"
+            android:value="替换成你自己申请的小米APP_KEY" />
+
+        <meta-data
+            android:name="IM_EASEMOB_OPPO_PUSH_APP_KEY"
+            android:value="替换成你自己申请的OPPO的APP_KEY" />
+        <meta-data
+            android:name="IM_EASEMOB_OPPO_PUSH_APP_SECRET"
+            android:value="替换成你自己申请的OPPO的APP_SECRET" />
+
+        <meta-data
+            android:name="IM_EASEMOB_MEIZU_PUSH_APP_ID"
+            android:value="替换成你自己申请的魅族的APP_ID" />
+        <meta-data
+            android:name="IM_EASEMOB_MEIZU_PUSH_APP_KEY"
+            android:value="替换成你自己申请的魅族的APP_KEY" />
+        <!--end      离线推送配置appId和appSecret(小米，oppo,meizu)-->
+```

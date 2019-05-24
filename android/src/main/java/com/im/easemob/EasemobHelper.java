@@ -2,6 +2,10 @@ package com.im.easemob;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
 
@@ -16,6 +20,10 @@ import com.hyphenate.chat.EMOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyphenate.push.EMPushConfig;
+import com.hyphenate.push.EMPushHelper;
+import com.hyphenate.push.EMPushType;
+import com.hyphenate.push.PushListener;
 import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
@@ -30,7 +38,13 @@ class EasemobHelper {
     private ReactContext mReactContext;
     private List<WritableMap> cache;
     private EaseMobHookDelegate mHookDelegate;
-
+    private static Bundle metadata;
+    private static final String XIAOMI_PUSH_APP_ID = "IM_EASEMOB_XIAOMI_PUSH_APP_ID";
+    private static final String XIAOMI_PUSH_APP_KEY = "IM_EASEMOB_XIAOMI_PUSH_APP_KEY";
+    private static final String OPPO_PUSH_APP_KEY = "IM_EASEMOB_OPPO_PUSH_APP_KEY";
+    private static final String OPPO_PUSH_APP_SECRET = "IM_EASEMOB_OPPO_PUSH_APP_SECRET";
+    private static final String MEIZU_PUSH_APP_ID = "IM_EASEMOB_MEIZU_PUSH_APP_ID";
+    private static final String MEIZU_PUSH_APP_KEY = "IM_EASEMOB_MEIZU_PUSH_APP_KEY";
     public Context context() {
         return mContext;
     }
@@ -59,7 +73,10 @@ class EasemobHelper {
         if (processAppName == null || !processAppName.equalsIgnoreCase(context.getPackageName())) {
             Log.e(TAG, "enter the service process!");
         }
-        EMClient.getInstance().init(context, initOptions(options));
+
+        EMOptions emOptions = initOptions(options);
+        configOfflinePushPar(emOptions);
+        EMClient.getInstance().init(context, emOptions);
 
         registerListener();
 
@@ -181,4 +198,64 @@ class EasemobHelper {
         }
         return null;
     }
+
+
+      private void configOfflinePushPar(EMOptions options){
+            String brand ="";
+                    if(RomUtil.isMiui()){
+                        brand = "xiaomi";
+                    }else if(RomUtil.isEmui()){
+                        brand = "huawei";
+                    }else if(RomUtil.isFlyme()){
+                        brand = "meizu";
+                    }else if(RomUtil.isOppo()){
+                        brand = "oppo";
+                    }
+             EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
+             if(mContext == null) return;
+             String appId,appKey,appSecret;
+             switch (brand){
+                 case "meizu":
+                        appId = getPushPar(MEIZU_PUSH_APP_ID);
+                        appKey = getPushPar(MEIZU_PUSH_APP_KEY);
+                        if("".equals(appId) || "".equals(appKey)) return;
+                        builder.enableMeiZuPush(appId,appKey);
+                       break;
+                 case "xiaomi":
+                      appId = getPushPar(XIAOMI_PUSH_APP_ID);
+                      appKey = getPushPar(XIAOMI_PUSH_APP_KEY);
+                     if("".equals(appId) || "".equals(appKey)) return;
+                     builder.enableMiPush(appId,appKey);
+                     break;
+                 case "oppo":
+                        appKey = getPushPar(OPPO_PUSH_APP_KEY);
+                        appSecret = getPushPar(OPPO_PUSH_APP_SECRET);
+                       if("".equals(appSecret) || "".equals(appKey)) return;
+                       builder.enableOppoPush(appKey,appSecret);
+                      break;
+                 case "huawei":
+                     builder.enableHWPush();
+                     break;
+                 default:
+                     return;
+             }
+             options.setPushConfig(builder.build());
+         }
+
+          private String getPushPar(String metaKey){
+                 if (metadata == null) {
+                     try {
+                         ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(), PackageManager.GET_META_DATA);
+                         metadata = applicationInfo.metaData;
+                     } catch (PackageManager.NameNotFoundException e) {
+                         e.printStackTrace();
+                         metadata = new Bundle();
+                     }
+                 }
+                 String metaData = metadata.getString(metaKey);
+                 if(metaData == null){
+                     metaData = "";
+                 }
+                 return  metaData;
+          }
 }
