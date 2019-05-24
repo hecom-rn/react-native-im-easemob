@@ -1,22 +1,25 @@
 {
-    "name": "react-native-im-easemob",
-    "version": "1.0.22",
-    "private": false,
-    "description": "Easemob for React Native.",
-    "main": "src/index.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/RNCommon/react-native-im-easemob.git"
-    },
-    "keywords": [
-        "React-Native",
-        "Easemob"
-    ],
-    "author": "Xiaosong Gao",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/RNCommon/react-native-im-easemob/issues",
-        "email": "gaoxiaosong06@gmail.com"
-    },
-    "homepage": "https://github.com/RNCommon/react-native-im-easemob#readme"
+  "name": "react-native-im-easemob",
+  "version": "1.0.22",
+  "private": false,
+  "description": "Easemob for React Native.",
+  "main": "src/index.js",
+  "script":{
+    "patch":"npm version patch 'Bump version %s';git push origin master --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RNCommon/react-native-im-easemob.git"
+  },
+  "keywords": [
+    "React-Native",
+    "Easemob"
+  ],
+  "author": "Xiaosong Gao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RNCommon/react-native-im-easemob/issues",
+    "email": "gaoxiaosong06@gmail.com"
+  },
+  "homepage": "https://github.com/RNCommon/react-native-im-easemob#readme"
 }
