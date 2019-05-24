@@ -4,7 +4,7 @@
   "private": false,
   "description": "Easemob for React Native.",
   "main": "src/index.js",
-  "script":{
+  "scripts":{
     "patch":"npm version patch 'Bump version %s';git push origin master --tags"
   },
   "repository": {
