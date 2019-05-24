@@ -5,7 +5,9 @@ os:
  - linux
 
 stages:
+ - test
  - name: deploy
+   if: tag =~ ^v
 
 jobs:
  include:
@@ -16,7 +18,6 @@ jobs:
    - stage: deploy
      deploy:
        provider: npm
-       email: gaoxiaosong06@gmail.com
        api_key: "$NPM_TOKEN"
        on:
          tags: true
