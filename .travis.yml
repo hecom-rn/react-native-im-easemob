@@ -18,6 +18,7 @@ jobs:
    - stage: deploy
      deploy:
        provider: npm
+       email: summer88123@163.com
        api_key: "$NPM_TOKEN"
        on:
          tags: true
