@@ -34,8 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 将环信的数据结构转换为ImEasemob的数据结构
- * Created by kevin.bai on 2018/6/13.
+ * 将环信的数据结构转换为ImEasemob的数据结构 Created by kevin.bai on 2018/6/13.
  */
 
 public class EasemobConverter {
@@ -314,9 +313,14 @@ public class EasemobConverter {
         } else if (body instanceof EMImageMessageBody) {
             EMImageMessageBody image = (EMImageMessageBody) body;
             result.putString("remotePath", image.getRemoteUrl());
+            result.putString("thumbnailRemotePath", image.getThumbnailUrl());
             Uri local = UriPathUtil.getUri(EasemobHelper.getInstance().context(), image.getLocalUrl());
             if (local != null) {
                 result.putString("localPath", local.toString());
+            }
+            Uri thumbLocal = UriPathUtil.getUri(EasemobHelper.getInstance().context(), image.thumbnailLocalPath());
+            if (thumbLocal != null) {
+                result.putString("thumbnailLocalPath", thumbLocal.toString());
             }
             WritableMap size = Arguments.createMap();
             size.putInt("height", image.getHeight());

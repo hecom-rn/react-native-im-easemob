@@ -2,7 +2,6 @@ package com.im.easemob;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -36,13 +35,7 @@ public class UriPathUtil {
             Uri baseUri = Uri.parse("content://media/external/images/media");
             return Uri.withAppendedPath(baseUri, "" + id);
         } else {
-            if (file.exists()) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.DATA, filePath);
-                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            } else {
-                return null;
-            }
+            return Uri.fromFile(file);
         }
     }
 
