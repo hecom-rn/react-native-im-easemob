@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RNCommon/react-native-im-easemob.git"
+    "url": "git+https://github.com/hecom-rn/react-native-im-easemob.git"
   },
   "keywords": [
     "React-Native",
     "Easemob"
   ],
-  "author": "Xiaosong Gao",
+  "author": "Hecom",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RNCommon/react-native-im-easemob/issues",
-    "email": "gaoxiaosong06@gmail.com"
+    "url": "https://github.com/hecom-rn/react-native-im-easemob/issues",
+    "email": "summer88123@163.com"
   },
-  "homepage": "https://github.com/RNCommon/react-native-im-easemob#readme"
+  "homepage": "https://github.com/hecom-rn/react-native-im-easemob#readme"
 }
