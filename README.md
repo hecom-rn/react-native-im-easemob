@@ -19,10 +19,6 @@ yarn add react-native-im-easemob
 npm install --save react-native-im-easemob
 ```
 
-## example工程设置
-
-下载后，在example目录中执行npm install或者yarn，而不要在根目录下安装node_modules。
-
 ## iOS环境设置
 
 添加Podfile，类似如下格式：
