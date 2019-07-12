@@ -1,3 +1,10 @@
 .travis.yml
 .idea
+.gradle
 .eslintrc.js
+local.properties
+gradlew
+gradlew.bat
+android/gradle/*
+build
+*.iml
