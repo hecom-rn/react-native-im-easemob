@@ -28,6 +28,8 @@ import static com.im.easemob.IMConstant.GROUP_OWNER_DID_UPDATE;
 import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
 import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE;
 import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_REMOVE_FROM_SERVER;
+import static com.im.easemob.IMConstant.USER_DID_JOIN_GROUP;
+import static com.im.easemob.IMConstant.USER_DID_LEAVE_GROUP;
 
 /**
  * 处理环信的监听事件
@@ -157,7 +159,7 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
         WritableMap map = Arguments.createMap();
         map.putString("groupId", groupId);
         map.putString("username", member);
-        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, GROUP_OWNER_DID_UPDATE, map);
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, USER_DID_JOIN_GROUP, map);
     }
 
     @Override
@@ -165,7 +167,7 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
         WritableMap map = Arguments.createMap();
         map.putString("groupId", groupId);
         map.putString("username", member);
-        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, GROUP_OWNER_DID_UPDATE, map);
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, USER_DID_LEAVE_GROUP, map);
     }
 
     @Override
