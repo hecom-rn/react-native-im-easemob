@@ -261,6 +261,12 @@ RCT_EXPORT_METHOD(deleteMessage:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(updateMessage:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    // TODO
+}
+
 RCT_EXPORT_METHOD(markAllMessagesAsRead:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {

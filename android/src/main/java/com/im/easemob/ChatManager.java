@@ -237,6 +237,26 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void updateMessage(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{MESSAGE_ID, "messageExt"}, promise)) {
+            return;
+        }
+        EMChatManager chatManager = EMClient.getInstance().chatManager();
+        EMMessage message = chatManager.getMessage(params.getString(MESSAGE_ID));
+        if (message == null) {
+            promise.reject("-1", "未找到消息");
+            return;
+        }
+        try {
+            setExt(message, params.getMap("messageExt"));
+            chatManager.updateMessage(message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
     public void markAllMessagesAsRead(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, CHAT_TYPE}, promise)) {
             return;

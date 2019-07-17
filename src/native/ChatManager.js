@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 import NativeUtil from './native';
-import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
+import { ChatType, MessageDirection, MessageType } from '../constant/IMConstant';
 
 const ChatManager = NativeModules.ChatManager;
 
@@ -82,6 +82,16 @@ export const sendMessage = (conversationId, chatType, messageType, body, message
     NativeUtil(
         ChatManager.sendMessage,
         {conversationId, chatType, messageType, to: conversationId, body, messageExt}
+    );
+
+/**
+ * 更新消息Ext字段
+ * @param message 消息对象
+ */
+export const updateMessageExt = (message) =>
+    NativeUtil(
+        ChatManager.updateMessage,
+        message
     );
 
 /**
