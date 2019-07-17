@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.homepage     = package['homepage']
   s.license      = package['license']
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/RNCommon/react-native-im-easemob.git" }
+  s.source       = { :git => "https://github.com/hecom-rn/react-native-im-easemob.git" }
   s.source_files = 'ios/**/*.{h,m}'
   s.dependency 'React'
   s.dependency 'MJExtension'
