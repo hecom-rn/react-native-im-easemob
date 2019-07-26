@@ -414,11 +414,7 @@ public class EasemobConverter {
                     result.put(key, map.getBoolean(key));
                     break;
                 case Number:
-                    try {
-                        result.put(key, map.getInt(key));
-                    } catch (Exception e) {
-                        result.put(key, map.getDouble(key));
-                    }
+                    result.put(key, map.getDouble(key));
                     break;
                 case String:
                     result.put(key, map.getString(key));
