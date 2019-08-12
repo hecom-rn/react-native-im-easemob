@@ -355,6 +355,12 @@ public class ChatManager extends ReactContextBaseJavaModule {
             throw new RuntimeException("body 缺少字段");
         }
         message.addBody(body);
+        if (params.hasKey(MESSAGE_ID)) {
+            message.setMsgId(params.getString(MESSAGE_ID));
+        }
+        if (params.hasKey("isRead")) {
+            message.setUnread(!params.getBoolean("isRead"));
+        }
         if (params.hasKey("localTime")) {
             message.setLocalTime((long) params.getDouble("localTime"));
         }
