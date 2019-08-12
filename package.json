@@ -1,6 +1,6 @@
 {
   "name": "react-native-im-easemob",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "private": false,
   "description": "Easemob for React Native.",
   "main": "src/index.js",
