@@ -201,45 +201,13 @@ class EasemobHelper {
 
 
       private void configOfflinePushPar(EMOptions options){
-            String brand ="";
-                    if(RomUtil.isMiui()){
-                        brand = "xiaomi";
-                    }else if(RomUtil.isEmui()){
-                        brand = "huawei";
-                    }else if(RomUtil.isFlyme()){
-                        brand = "meizu";
-                    }else if(RomUtil.isOppo()){
-                        brand = "oppo";
-                    }
-             EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
-             if(mContext == null) return;
-             String appId,appKey,appSecret;
-             switch (brand){
-                 case "meizu":
-                        appId = getPushPar(MEIZU_PUSH_APP_ID);
-                        appKey = getPushPar(MEIZU_PUSH_APP_KEY);
-                        if("".equals(appId) || "".equals(appKey)) return;
-                        builder.enableMeiZuPush(appId,appKey);
-                       break;
-                 case "xiaomi":
-                      appId = getPushPar(XIAOMI_PUSH_APP_ID);
-                      appKey = getPushPar(XIAOMI_PUSH_APP_KEY);
-                     if("".equals(appId) || "".equals(appKey)) return;
-                     builder.enableMiPush(appId,appKey);
-                     break;
-                 case "oppo":
-                        appKey = getPushPar(OPPO_PUSH_APP_KEY);
-                        appSecret = getPushPar(OPPO_PUSH_APP_SECRET);
-                       if("".equals(appSecret) || "".equals(appKey)) return;
-                       builder.enableOppoPush(appKey,appSecret);
-                      break;
-                 case "huawei":
-                     builder.enableHWPush();
-                     break;
-                 default:
-                     return;
-             }
-             options.setPushConfig(builder.build());
+          EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
+          builder.enableVivoPush()
+                  .enableMeiZuPush(getPushPar(MEIZU_PUSH_APP_ID), MEIZU_PUSH_APP_KEY)
+                  .enableMiPush(getPushPar(XIAOMI_PUSH_APP_ID), getPushPar(XIAOMI_PUSH_APP_KEY))
+                  .enableOppoPush(OPPO_PUSH_APP_KEY, OPPO_PUSH_APP_SECRET)
+                  .enableHWPush();
+          options.setPushConfig(builder.build());
          }
 
           private String getPushPar(String metaKey){
