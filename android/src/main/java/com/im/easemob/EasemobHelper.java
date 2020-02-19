@@ -203,9 +203,9 @@ class EasemobHelper {
       private void configOfflinePushPar(EMOptions options){
           EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
           builder.enableVivoPush()
-                  .enableMeiZuPush(getPushPar(MEIZU_PUSH_APP_ID), MEIZU_PUSH_APP_KEY)
+                  .enableMeiZuPush(getPushPar(MEIZU_PUSH_APP_ID), getPushPar(MEIZU_PUSH_APP_KEY))
                   .enableMiPush(getPushPar(XIAOMI_PUSH_APP_ID), getPushPar(XIAOMI_PUSH_APP_KEY))
-                  .enableOppoPush(OPPO_PUSH_APP_KEY, OPPO_PUSH_APP_SECRET)
+                  .enableOppoPush(getPushPar(OPPO_PUSH_APP_KEY), getPushPar(OPPO_PUSH_APP_SECRET))
                   .enableHWPush();
           options.setPushConfig(builder.build());
          }
