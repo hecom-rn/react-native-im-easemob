@@ -34,14 +34,14 @@ end
 
 target "MainTarget" do
     common_target
-    pod 'react-native-im-easemob', :podspec => '../node_modules/react-native-im-easemob/react-native-im-easemob.podspec'
-    pod 'Hyphenate', '= 3.5.1'
+    pod 'Hyphenate', '= 3.6.2'
+    pod 'react-native-im-easemob/Dev', :path => '../node_modules/react-native-im-easemob'
 end
 
 target "DeployTarget" do
     common_target
-    pod 'react-native-im-easemob/Deploy', :podspec => '../node_modules/react-native-im-easemob/react-native-im-easemob-deploy.podspec'
-    pod 'HyphenateDeploy', '= 3.5.1'
+    pod 'HySDKDeploy', '= 3.6.2'
+    pod 'react-native-im-easemob/Deploy', :path => '../node_modules/react-native-im-easemob'
 end
 ```
 
