@@ -11,8 +11,19 @@ Pod::Spec.new do |s|
   s.license      = package['license']
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/hecom-rn/react-native-im-easemob.git" }
-  s.source_files = 'ios/**/*.{h,m}'
-  s.dependency 'React'
-  s.dependency 'MJExtension'
-  s.dependency 'Hyphenate'
+  
+  s.subspec "Dev" do |ss|
+    ss.source_files = 'ios/**/*.{h,m}'
+    ss.dependency 'React'
+    ss.dependency 'MJExtension'
+    ss.dependency 'Hyphenate'
+  end
+
+  s.subspec "Deploy" do |ss|
+    ss.source_files = 'ios/**/*.{h,m}'
+    ss.dependency 'React'
+    ss.dependency 'MJExtension'
+    ss.dependency 'HySDKDeploy'
+  end
+  
 end
