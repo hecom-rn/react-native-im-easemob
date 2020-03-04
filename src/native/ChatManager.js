@@ -225,3 +225,11 @@ export const sendCmd = (conversationId, chatType, action, ext = {}) =>
  */
 export const markAllMessagesAsRead = (conversationId, chatType) =>
     NativeUtil(ChatManager.markAllMessagesAsRead, {conversationId, chatType});
+
+/**
+ * 删除会话所有消息，同时清除内存和数据库中的消息
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ */
+export const deleteAllMessages = (conversationId, chatType) =>
+NativeUtil(ChatManager.deleteAllMessages, {conversationId, chatType});
