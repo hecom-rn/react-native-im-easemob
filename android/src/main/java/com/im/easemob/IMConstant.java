@@ -1,6 +1,6 @@
 package com.im.easemob;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 
 /**
  * 定义所有发送到JS的Event

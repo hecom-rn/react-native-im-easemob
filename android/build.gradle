@@ -48,5 +48,5 @@ dependencies {
     def supportLibVersion = rootProject.hasProperty('supportLibVersion') ? rootProject.supportLibVersion : DEFAULT_SUPPORT_LIBRARY_VERSION
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.facebook.react:react-native:+'
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "androidx.annotation:annotation:1.0.0"
 }
