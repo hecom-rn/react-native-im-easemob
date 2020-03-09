@@ -34,6 +34,11 @@ export const setMessageDidReceive = setCallback(ChatManager, 'messageDidReceive'
 export const setCmdMessageDidReceive = setCallback(ChatManager, 'cmdMessageDidReceive');
 
 /**
+ * 设置离开群组事件回调。
+ */
+export const setDidLeaveGroup = setCallback(GroupManager, 'didLeaveGroup');
+
+/**
  * 设置会话列表更新事件回调。
  */
 export const setConversationListDidUpdate = setCallback(ChatManager, 'conversationListDidUpdate');

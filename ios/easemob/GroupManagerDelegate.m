@@ -8,6 +8,7 @@
 
 #import "GroupManagerDelegate.h"
 #import "Client.h"
+#import "NSObject+Util.h"
 
 static NSString *eventType = @"GroupManagerDelegate";
 
@@ -34,6 +35,13 @@ RCT_EXPORT_MODULE();
                    oldOwner:(NSString *)aOldOwner {
     NSDictionary *dic = @{@"newOwner":aNewOwner,@"oldOwner":aOldOwner};
     [Client sendEventByType:eventType subType:@"groupOwnerDidUpdate" data:dic];
+}
+
+- (void)didLeaveGroup:(EMGroup *)aGroup
+               reason:(EMGroupLeaveReason)aReason {
+    NSDictionary *groupDic = [aGroup objectToDictionary];
+    NSDictionary *dic = @{@"group": groupDic, @"reason": @(aReason)};
+    [Client sendEventByType:eventType subType:@"didLeaveGroup" data:dic];
 }
 
 @end
