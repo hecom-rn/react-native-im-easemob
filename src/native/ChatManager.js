@@ -233,3 +233,11 @@ export const markAllMessagesAsRead = (conversationId, chatType) =>
  */
 export const deleteAllMessages = (conversationId, chatType) =>
 NativeUtil(ChatManager.deleteAllMessages, {conversationId, chatType});
+
+/**
+ * 更新消息中的消息扩展(深度一层，有则替换)
+ * @param messageId 消息ID
+ * @param ext 
+ */
+export const updateMessageExt = (messageId, ext) =>
+NativeUtil(ChatManager.updateMessageExt, {messageId, ext});

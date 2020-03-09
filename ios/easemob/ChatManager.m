@@ -293,4 +293,23 @@ RCT_EXPORT_METHOD(deleteAllMessages:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(updateMessageExt:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *messageId = [allParams objectForKey:@"messageId"];
+    NSDictionary *ext = [allParams objectForKey:@"ext"];
+    EMMessage *message = [[EMClient sharedClient].chatManager getMessageWithMessageId:messageId];
+    NSMutableDictionary *extM = message.ext.mutableCopy;
+    [extM addEntriesFromDictionary:ext];
+    message.ext = extM.copy;
+    [[EMClient sharedClient].chatManager updateMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
+        if (!aError) {
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
+}
+
 @end
