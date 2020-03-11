@@ -72,10 +72,11 @@ public class IMConstant {
     public static final String USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE = "userAccountDidLoginFromOtherDevice";
     public static final String CONNECTION_STATE_DID_CHANGE = "connectionStateDidChange";
     public static final String AUTO_LOGIN_DID_COMPLETE = "autoLoginDidComplete";
+    public static final String DID_LEAVE_GROUP = "didLeaveGroup";
 
     @StringDef({MESSAGE_DID_RECEIVE, CMD_MESSAGE_DID_RECEIVE, CONVERSATION_LIST_DID_UPDATE, USER_DID_LEAVE_GROUP,
             USER_DID_JOIN_GROUP, GROUP_OWNER_DID_UPDATE, USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE,
-            USER_ACCOUNT_DID_REMOVE_FROM_SERVER, CONNECTION_STATE_DID_CHANGE, AUTO_LOGIN_DID_COMPLETE})
+            USER_ACCOUNT_DID_REMOVE_FROM_SERVER, CONNECTION_STATE_DID_CHANGE, AUTO_LOGIN_DID_COMPLETE, DID_LEAVE_GROUP})
     public @interface SubType {
 
     }

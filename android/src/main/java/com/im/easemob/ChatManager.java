@@ -2,6 +2,7 @@ package com.im.easemob;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -36,6 +37,8 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.Map;
 
+import static com.im.easemob.EasemobConverter.toJsonArray;
+import static com.im.easemob.EasemobConverter.toJsonObject;
 import static com.im.easemob.IMConstant.MessageKey.CHAT_TYPE;
 import static com.im.easemob.IMConstant.MessageKey.CONVERSATION_ID;
 import static com.im.easemob.IMConstant.MessageKey.FROM_ID;
@@ -114,6 +117,22 @@ public class ChatManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void deleteAllMessages(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID, CHAT_TYPE}, promise)) {
+            return;
+        }
+        try {
+            String conversationId = params.getString(CONVERSATION_ID);
+            EMConversation.EMConversationType chatType = EasemobConverter
+                    .toConversationType(params.getInt(CHAT_TYPE));
+            EMClient.getInstance().chatManager().getConversation(conversationId, chatType).clearAllMessages();
+            promise.resolve(true);
+        } catch (Exception e) {
+            promise.reject("-1", e.getMessage());
+        }
+    }
+
+    @ReactMethod
     public void loadMessages(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, new String[]{CONVERSATION_ID}, promise)) {
             return;
@@ -165,6 +184,26 @@ public class ChatManager extends ReactContextBaseJavaModule {
             EMClient.getInstance().chatManager().recallMessage(message);
             promise.resolve(null);
         } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void updateMessageExt(ReadableMap params, Promise promise) {
+        if (CheckUtil
+                .checkParamKey(params, new String[]{MESSAGE_ID, "ext"}, promise)) {
+            return;
+        }
+        try {
+            String messageId = params.getString(MESSAGE_ID);
+            EMMessage message = EMClient.getInstance().chatManager().getMessage(messageId);
+            ReadableMap extMap = params.getMap("ext");
+
+            setExt(message, extMap);
+
+            promise.resolve(true);
+        } catch (Exception e) {
             e.printStackTrace();
             promise.reject(e);
         }
@@ -435,10 +474,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
                     message.setAttribute(key, map.getString(key));
                     break;
                 case Map:
-                    message.setAttribute(key, EasemobConverter.toJsonObject(map.getMap(key)));
+                    message.setAttribute(key, toJsonObject(map.getMap(key)));
                     break;
                 case Array:
-                    message.setAttribute(key, EasemobConverter.toJsonArray(map.getArray(key)));
+                    message.setAttribute(key, toJsonArray(map.getArray(key)));
                     break;
             }
         }

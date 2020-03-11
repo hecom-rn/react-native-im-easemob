@@ -1,6 +1,7 @@
 package com.im.easemob;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -13,8 +14,10 @@ import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMucSharedFile;
+import com.hyphenate.chat.adapter.EMAGroup;
 
 import java.util.List;
 
@@ -23,6 +26,7 @@ import static com.im.easemob.IMConstant.CLIENT_DELEGATE;
 import static com.im.easemob.IMConstant.CMD_MESSAGE_DID_RECEIVE;
 import static com.im.easemob.IMConstant.CONNECTION_STATE_DID_CHANGE;
 import static com.im.easemob.IMConstant.CONVERSATION_LIST_DID_UPDATE;
+import static com.im.easemob.IMConstant.DID_LEAVE_GROUP;
 import static com.im.easemob.IMConstant.GROUP_MANAGER_DELEGATE;
 import static com.im.easemob.IMConstant.GROUP_OWNER_DID_UPDATE;
 import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
@@ -112,12 +116,23 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onUserRemoved(String s, String s1) {
+        sendLeaveGroupEvent(s, s1);
+    }
+
+    private void sendLeaveGroupEvent(String groupId, String groupSubject) {
+        Log.i("sendLeaveGroupEvent", "groupId = " + groupId + ", groupSubject = " + groupSubject);
+        WritableMap map = Arguments.createMap();
+        WritableMap group = Arguments.createMap();
+        group.putString("groupId", groupId);
+        map.putMap("group", group);
+        map.putInt("reason", EMAGroup.EMGroupLeaveReason.BE_KICKED.ordinal());
+        EasemobHelper.getInstance().sendEvent(GROUP_MANAGER_DELEGATE, DID_LEAVE_GROUP, map);
 
     }
 
     @Override
     public void onGroupDestroyed(String s, String s1) {
-
+        sendLeaveGroupEvent(s, s1);
     }
 
     @Override
