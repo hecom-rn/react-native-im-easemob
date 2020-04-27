@@ -34,9 +34,29 @@ export const register = (username, password) => NativeUtil(Client.registerUser, 
  * @param {string} password 密码
  * @param {boolean} autoLogin 是否自动登陆，iOS only，Android在init方法中传入options
  */
-export const login = (username, password, autoLogin = false) => NativeUtil(Client.login, {username, password, autoLogin});
+export const login = (username, password, autoLogin = false) => NativeUtil(Client.login, {
+    username,
+    password,
+    autoLogin
+});
 
 /**
  * 聊天用户登出。
  */
 export const logout = () => NativeUtil(Client.logout, undefined);
+
+/**
+ * 检查是否连接到聊天服务器
+ */
+export const isConnected = () => {
+    const {result = false} = NativeUtil(Client.isConnected) || {};
+    return result;
+};
+
+/**
+ * 返回是否登录过 登录成功过没调logout方法，这个方法的返回值一直是true 如果需要判断当前是否连接到服务器，请使用{@link Client.isConnected()}方法
+ */
+export const isLoggedIn = () => {
+    const {result = false} = NativeUtil(Client.isLoggedIn) || {};
+    return result;
+};

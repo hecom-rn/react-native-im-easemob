@@ -90,6 +90,18 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
     }
 }
 
+RCT_EXPORT_METHOD(isConnect:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    BOOL result = [EMClient sharedClient].isConnected;
+    resolve([@{@"result": @(result)} objectToJSONString]);
+}
+
+RCT_EXPORT_METHOD(isLoggedIn:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    BOOL result = [EMClient sharedClient].isLoggedIn;
+    resolve([@{@"result": @(result)} objectToJSONString]);
+}
+
 #pragma mark - RCTEventEmitter
 
 - (NSArray<NSString *> *)supportedEvents {

@@ -1,10 +1,12 @@
 package com.im.easemob;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 import com.hyphenate.chat.EMClient;
 
 /**
@@ -66,5 +68,19 @@ public class ClientModule extends ReactContextBaseJavaModule {
                 promise.reject(i + "", s);
             }
         });
+    }
+
+    @ReactMethod
+    public void isConnected(Promise promise) {
+        WritableMap result = Arguments.createMap();
+        result.putBoolean("result", EMClient.getInstance().isConnected());
+        promise.resolve(result);
+    }
+
+    @ReactMethod
+    public void isLoggedIn(Promise promise) {
+        WritableMap result = Arguments.createMap();
+        result.putBoolean("result", EMClient.getInstance().isLoggedInBefore());
+        promise.resolve(result);
     }
 }
