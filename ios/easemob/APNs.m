@@ -21,7 +21,14 @@ RCT_EXPORT_METHOD(getPushOptionsFromServer:(RCTPromiseResolveBlock)resolve
     EMError *error = nil;
     EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
     if (!error) {
-        resolve([options objectToJSONString]);
+        NSMutableDictionary *optionsDic = [options objectToDictionary].mutableCopy;
+        if (options.noDisturbStatus == EMPushNoDisturbStatusClose) {
+            optionsDic[@"noDisturbStatus"] = @(0);
+        } else {
+            optionsDic[@"noDisturbStatus"] = @(1);
+        }
+        NSString *optionsStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:optionsDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+        resolve(optionsStr);
     } else {
         reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
     }
