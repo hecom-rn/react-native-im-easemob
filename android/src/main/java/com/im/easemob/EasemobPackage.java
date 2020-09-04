@@ -27,7 +27,8 @@ public class EasemobPackage implements ReactPackage {
         return Arrays.<NativeModule>asList(
                 new ChatManager(reactContext),
                 new ClientModule(reactContext),
-                new GroupManager(reactContext)
+                new GroupManager(reactContext),
+                new PushManager(reactContext)
         );
     }
 
