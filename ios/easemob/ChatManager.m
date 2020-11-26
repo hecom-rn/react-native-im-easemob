@@ -138,7 +138,7 @@ RCT_EXPORT_METHOD(insertMessage:(NSString *)params
     BOOL needDownload = NO;
     switch (messageType) {
         case EMMessageBodyTypeText: {
-            body = [[EMTextMessageBody alloc] initWithText:bodyDic[@"text"] ];
+            body = [[EMTextMessageBody alloc] initWithText:[((NSObject *)bodyDic[@"text"]) description]];
         }
             break;
         case EMMessageBodyTypeImage: {
