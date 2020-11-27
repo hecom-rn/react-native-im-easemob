@@ -90,7 +90,7 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
     }
 }
 
-RCT_EXPORT_METHOD(isConnect:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(isConnected:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     BOOL result = [EMClient sharedClient].isConnected;
     resolve([@{@"result": @(result)} objectToJSONString]);
