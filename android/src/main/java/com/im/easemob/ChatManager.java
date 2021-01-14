@@ -125,7 +125,10 @@ public class ChatManager extends ReactContextBaseJavaModule {
             String conversationId = params.getString(CONVERSATION_ID);
             EMConversation.EMConversationType chatType = EasemobConverter
                     .toConversationType(params.getInt(CHAT_TYPE));
-            EMClient.getInstance().chatManager().getConversation(conversationId, chatType).clearAllMessages();
+            EMConversation mEMConversation = EMClient.getInstance().chatManager().getConversation(conversationId, chatType);
+            if(null != mEMConversation){
+                mEMConversation.clearAllMessages();
+            }
             promise.resolve(true);
         } catch (Exception e) {
             promise.reject("-1", e.getMessage());
