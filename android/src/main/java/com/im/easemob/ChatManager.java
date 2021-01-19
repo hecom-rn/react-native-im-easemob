@@ -204,6 +204,7 @@ public class ChatManager extends ReactContextBaseJavaModule {
             ReadableMap extMap = params.getMap("ext");
 
             setExt(message, extMap);
+            EMClient.getInstance().chatManager().updateMessage(message);
 
             promise.resolve(true);
         } catch (Exception e) {
