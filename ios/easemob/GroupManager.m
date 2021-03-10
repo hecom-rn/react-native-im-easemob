@@ -127,6 +127,19 @@ RCT_EXPORT_METHOD(changeGroupSubject:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(leaveGroup:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    EMError *error  = [[EMClient sharedClient].groupManager leaveGroup:groupId];
+    if (!error) {
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
 RCT_EXPORT_METHOD(destroyGroup:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {

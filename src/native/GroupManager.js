@@ -58,6 +58,13 @@ export const changeGroupSubject = (groupId, subject) =>
     NativeUtil(GroupManager.changeGroupSubject, {groupId, subject});
 
 /**
+ * 退出群组
+ * @param groupId 群组ID
+ */
+export const leaveGroup = (groupId) =>
+    NativeUtil(GroupManager.leaveGroup, {groupId});
+
+/**
  * 解散群。
  * @param groupId 群组ID
  */

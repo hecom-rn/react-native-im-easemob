@@ -58,6 +58,19 @@ public class GroupManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void leaveGroup(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, "groupId", promise)) {
+            return;
+        }
+        try {
+            EMClient.getInstance().groupManager().leaveGroup(params.getString("groupId"));
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "删除群失败", e);
+        }
+    }
+
+    @ReactMethod
     public void destroyGroup(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, "groupId", promise)) {
             return;
