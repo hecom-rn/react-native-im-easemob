@@ -1,6 +1,7 @@
 package com.im.easemob;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -64,9 +65,10 @@ public class GroupManager extends ReactContextBaseJavaModule {
         }
         try {
             EMClient.getInstance().groupManager().leaveGroup(params.getString("groupId"));
+            promise.resolve(null);
         } catch (HyphenateException e) {
             e.printStackTrace();
-            promise.reject("-1", "删除群失败", e);
+            promise.reject("-1", "退出群失败", e);
         }
     }
 
@@ -77,6 +79,7 @@ public class GroupManager extends ReactContextBaseJavaModule {
         }
         try {
             EMClient.getInstance().groupManager().destroyGroup(params.getString("groupId"));
+            promise.resolve(null);
         } catch (HyphenateException e) {
             e.printStackTrace();
             promise.reject("-1", "删除群失败", e);
