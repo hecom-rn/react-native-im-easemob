@@ -58,6 +58,13 @@ export const changeGroupSubject = (groupId, subject) =>
     NativeUtil(GroupManager.changeGroupSubject, {groupId, subject});
 
 /**
+ * 退出群组
+ * @param groupId 群组ID
+ */
+export const leaveGroup = (groupId) =>
+    NativeUtil(GroupManager.leaveGroup, {groupId});
+
+/**
  * 解散群。
  * @param groupId 群组ID
  */
@@ -71,6 +78,14 @@ export const destroyGroup = (groupId) =>
  */
 export const updateGroupExt = (groupId, ext) =>
     NativeUtil(GroupManager.updateGroupExt,  isAndroid ? {groupId, ext: JSON.stringify(ext)} : {groupId, ext});
+
+/**
+ * 修改群描述
+ * @param groupId 群组ID
+ * @param description 群描述
+ */
+export const changeGroupDescription = (groupId, description) =>
+    NativeUtil(GroupManager.changeGroupDescription, {groupId, description});
 
 /**
  * 转移群主。

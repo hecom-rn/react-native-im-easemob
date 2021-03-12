@@ -127,6 +127,21 @@ RCT_EXPORT_METHOD(changeGroupSubject:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(leaveGroup:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+     [[EMClient sharedClient].groupManager leaveGroup:groupId completion:^(EMError *aError) {
+        if (!aError) {
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+     }];
+    
+}
+
 RCT_EXPORT_METHOD(destroyGroup:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
@@ -164,6 +179,21 @@ RCT_EXPORT_METHOD(updateGroupExt:(NSString *)params
     NSDictionary *ext = [allParams objectForKey:@"ext"];
     NSString *extString = JSONSTRING(ext);
     EMGroup *group = [[EMClient sharedClient].groupManager updateGroupExtWithId:groupId ext:extString error:&error];
+    if (!error) {
+        resolve([group objectToJSONString]);
+    } else {
+        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+    }
+}
+
+RCT_EXPORT_METHOD(changeGroupDescription:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    EMError *error = nil;
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    NSString *description = [allParams objectForKey:@"description"];
+    EMGroup *group = [[EMClient sharedClient].groupManager changeDescription:description forGroup:groupId error:&error];
     if (!error) {
         resolve([group objectToJSONString]);
     } else {

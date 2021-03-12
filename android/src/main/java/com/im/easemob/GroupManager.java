@@ -1,6 +1,7 @@
 package com.im.easemob;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -58,12 +59,27 @@ public class GroupManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void leaveGroup(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, "groupId", promise)) {
+            return;
+        }
+        try {
+            EMClient.getInstance().groupManager().leaveGroup(params.getString("groupId"));
+            promise.resolve(null);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "退出群失败", e);
+        }
+    }
+
+    @ReactMethod
     public void destroyGroup(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, "groupId", promise)) {
             return;
         }
         try {
             EMClient.getInstance().groupManager().destroyGroup(params.getString("groupId"));
+            promise.resolve(null);
         } catch (HyphenateException e) {
             e.printStackTrace();
             promise.reject("-1", "删除群失败", e);
@@ -189,6 +205,22 @@ public class GroupManager extends ReactContextBaseJavaModule {
         } catch (HyphenateException e) {
             e.printStackTrace();
             promise.reject("-1", "修改群名称失败", e);
+        }
+    }
+
+    @ReactMethod
+    public void changeGroupDescription(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"groupId", "description"}, promise)) {
+            return;
+        }
+        String groupId = params.getString("groupId");
+        String description = params.getString("description");
+        try {
+            EMClient.getInstance().groupManager().changeGroupDescription(groupId, description);
+            promise.resolve(null);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "修改群公告失败", e);
         }
     }
 
