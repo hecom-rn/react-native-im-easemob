@@ -209,6 +209,22 @@ public class GroupManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void changeGroupDescription(ReadableMap params, Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"groupId", "description"}, promise)) {
+            return;
+        }
+        String groupId = params.getString("groupId");
+        String description = params.getString("description");
+        try {
+            EMClient.getInstance().groupManager().changeGroupDescription(groupId, description);
+            promise.resolve(null);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+            promise.reject("-1", "修改群公告失败", e);
+        }
+    }
+
+    @ReactMethod
     public void updateGroupExt(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, new String[]{"groupId", "ext"}, promise)) {
             return;

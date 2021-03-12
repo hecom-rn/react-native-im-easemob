@@ -80,6 +80,14 @@ export const updateGroupExt = (groupId, ext) =>
     NativeUtil(GroupManager.updateGroupExt,  isAndroid ? {groupId, ext: JSON.stringify(ext)} : {groupId, ext});
 
 /**
+ * 修改群描述
+ * @param groupId 群组ID
+ * @param description 群描述
+ */
+export const changeGroupDescription = (groupId, description) =>
+    NativeUtil(GroupManager.changeGroupDescription, {groupId, description});
+
+/**
  * 转移群主。
  * @param groupId 群主ID
  * @param newOwner 新群主ImID
