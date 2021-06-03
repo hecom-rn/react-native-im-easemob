@@ -56,6 +56,22 @@ public class ClientModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void kickAllDevices(ReadableMap params, final Promise promise) {
+        if (CheckUtil.checkParamKey(params, new String[]{"username", "password"}, promise)) return;
+        EMClient.getInstance().kickAllDevices(params.getString("username"), params.getString("password"), new EasemobCallback() {
+            @Override
+            public void onSuccess() {
+                promise.resolve(null);
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                promise.reject(i + "", s);
+            }
+        });
+    }
+
+    @ReactMethod
     public void logout(final Promise promise) {
         EMClient.getInstance().logout(true, new EasemobCallback() {
             @Override

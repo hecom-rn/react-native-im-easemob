@@ -41,6 +41,13 @@ export const login = (username, password, autoLogin = false) => NativeUtil(Clien
 });
 
 /**
+ * 强制退出所有登录过的设备
+ * @param {string} username 用户名称
+ * @param {string} password 密码
+ */
+export const kickAllDevices = (username, password) => NativeUtil(Client.kickAllDevices, {username, password});
+
+/**
  * 聊天用户登出。
  */
 export const logout = () => NativeUtil(Client.logout, undefined);

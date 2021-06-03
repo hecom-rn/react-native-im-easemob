@@ -90,6 +90,20 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve
     }
 }
 
+RCT_EXPORT_METHOD(kickAllDevices:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *username = [allParams objectForKey:@"username"];
+    NSString *password = [allParams objectForKey:@"password"];
+    EMError *error = [[EMClient sharedClient] kickAllDevicesWithUsername:username password:password];
+    if (!error) {
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld",(long)error.code], error.errorDescription, nil);
+    }
+}
+
 RCT_EXPORT_METHOD(isConnected:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     BOOL result = [EMClient sharedClient].isConnected;
