@@ -277,6 +277,22 @@ RCT_EXPORT_METHOD(markAllMessagesAsRead:(NSString *)params
     }
 }
 
+RCT_EXPORT_METHOD(markMessageAsRead:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *from = [allParams objectForKey:@"from"];
+    NSString *messageId = [allParams objectForKey:@"messageId"];
+
+    [[EMClient sharedClient].chatManager sendMessageReadAck:messageId toUser:from completion:^(EMError *aError){
+        if(!aError){
+            resolve(@"{}");
+        }else{
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(deleteAllMessages:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
