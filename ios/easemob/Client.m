@@ -102,6 +102,21 @@ RCT_EXPORT_METHOD(isLoggedIn:(RCTPromiseResolveBlock)resolve
     resolve([@{@"result": @(result)} objectToJSONString]);
 }
 
+RCT_EXPORT_METHOD(fetchToken:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *username = [allParams objectForKey:@"username"];
+    NSString *password = [allParams objectForKey:@"password"];
+    [[EMClient sharedClient] fetchTokenWithUsername:username password:password completion:^(NSString *aToken, EMError *aError) {
+        if (aError || aToken.length == 0) {
+            reject([NSString stringWithFormat:@"%ld",(long)aError.code], aError.errorDescription, nil);
+        } else {
+            resolve([@{@"result": aToken} objectToJSONString]);
+        }
+    }];
+}
+
 #pragma mark - RCTEventEmitter
 
 - (NSArray<NSString *> *)supportedEvents {
