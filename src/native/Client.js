@@ -67,3 +67,13 @@ export const isLoggedIn = () => {
     const {result = false} = NativeUtil(Client.isLoggedIn) || {};
     return result;
 };
+
+/**
+ * 聊天用户登陆后获取token。
+ * @param {string} username 用户名称
+ * @param {string} password 密码
+ */
+export const fetchToken = (username, password) => NativeUtil(Client.fetchToken, {
+    username,
+    password
+});
