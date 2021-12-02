@@ -213,16 +213,18 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
     NSString *fromId = [allParams objectForKey:@"fromId"];
     int count = [[allParams objectForKey:@"count"] intValue];
     EMMessageSearchDirection searchDirection = [[allParams objectForKey:@"searchDirection"] intValue];
-    [conversation loadMessagesStartFromId:fromId count:count searchDirection:searchDirection completion:^(NSArray *aMessages, EMError *error) {
-        NSMutableArray *dicArray = [NSMutableArray array];
-        [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [dicArray addObject:[obj objectToDictionary]];
+    [[EMClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:conversation.conversationId conversationType:type startMessageId:fromId pageSize:count completion:^(EMCursorResult *aResult, EMError *aError) {
+        [conversation loadMessagesStartFromId:fromId count:count searchDirection:searchDirection completion:^(NSArray *aMessages, EMError *error) {
+            NSMutableArray *dicArray = [NSMutableArray array];
+            [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [dicArray addObject:[obj objectToDictionary]];
+            }];
+            if (!error) {
+                resolve([dicArray objectToJSONString]);
+            } else {
+                reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
+            }
         }];
-        if (!error) {
-            resolve([dicArray objectToJSONString]);
-        } else {
-            reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-        }
     }];
 }
 
