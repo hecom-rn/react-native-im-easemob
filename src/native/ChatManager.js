@@ -53,6 +53,17 @@ export const loadMessages = (conversationId, chatType, fromId, count, searchDire
     NativeUtil(ChatManager.loadMessages, {conversationId, chatType, fromId, count, searchDirection});
 
 /**
+ * 获取会话的消息列表。
+ * @param conversationId 会话ID
+ * @param chatType 聊天类型
+ * @param fromId 指定开始的消息ID
+ * @param count 加载数量
+ * @param searchDirection 向上/向下加载
+ */
+export const fetchHistoryMessagesFromServer = (conversationId, chatType, fromId, count) =>
+    NativeUtil(ChatManager.fetchHistoryMessagesFromServer, {conversationId, chatType, fromId, count});
+
+/**
  * 删除消息。
  * @param conversationId 会话ID
  * @param chatType 聊天类型
@@ -237,7 +248,7 @@ NativeUtil(ChatManager.deleteAllMessages, {conversationId, chatType});
 /**
  * 更新消息中的消息扩展(深度一层，有则替换)
  * @param messageId 消息ID
- * @param ext 
+ * @param ext
  */
 export const updateMessageExt = (messageId, ext) =>
 NativeUtil(ChatManager.updateMessageExt, {messageId, ext});

@@ -228,6 +228,24 @@ RCT_EXPORT_METHOD(loadMessages:(NSString *)params
     }];
 }
 
+RCT_EXPORT_METHOD(fetchHistoryMessagesFromServer:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    NSString *conversationId = [allParams objectForKey:@"conversationId"];
+    EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:YES];
+    NSString *fromId = [allParams objectForKey:@"fromId"];
+    int count = [[allParams objectForKey:@"count"] intValue];
+    [[EMClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:conversation.conversationId conversationType:type startMessageId:fromId pageSize:count completion:^(EMCursorResult *aResult, EMError *aError) {
+        if (!aError) {
+            resolve([@{} objectToJSONString]);
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(recallMessage:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
