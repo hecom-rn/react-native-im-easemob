@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.hyphenate.EMClientListener;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.EMConversationListener;
@@ -14,7 +13,6 @@ import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chat.adapter.EMAGroup;
@@ -40,7 +38,7 @@ import static com.im.easemob.IMConstant.USER_DID_LEAVE_GROUP;
  * Created by kevin.bai on 2018/7/30.
  */
 public class EasemobListener implements EMGroupChangeListener, EMMessageListener, EMConversationListener,
-        EMConnectionListener, EMMultiDeviceListener, EMClientListener, EMContactListener {
+        EMConnectionListener, EMMultiDeviceListener, EMContactListener {
     private final Context mContext;
 
     EasemobListener(Context context) {
@@ -80,6 +78,11 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
     @Override
     public void onCoversationUpdate() {
         EasemobHelper.getInstance().sendEvent(CHAT_MANAGER_DELEGATE, CONVERSATION_LIST_DID_UPDATE);
+    }
+
+    @Override
+    public void onConversationRead(String s, String s1) {
+
     }
 
     /******************** GroupListener ********************/
@@ -147,6 +150,21 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onMuteListRemoved(String s, List<String> list) {
+
+    }
+
+    @Override
+    public void onWhiteListAdded(String s, List<String> list) {
+
+    }
+
+    @Override
+    public void onWhiteListRemoved(String s, List<String> list) {
+
+    }
+
+    @Override
+    public void onAllMemberMuteStateChanged(String s, boolean b) {
 
     }
 
@@ -231,11 +249,6 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onMessageChanged(EMMessage emMessage, Object o) {
-
-    }
-
-    @Override
-    public void onMigrate2x(boolean b) {
 
     }
 
