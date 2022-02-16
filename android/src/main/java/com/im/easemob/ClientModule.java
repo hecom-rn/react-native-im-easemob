@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 
 /**
@@ -50,7 +51,13 @@ public class ClientModule extends ReactContextBaseJavaModule {
 
             @Override
             public void onError(int i, String s) {
-                promise.reject(i + "", s);
+                if(i == EMError.USER_ALREADY_LOGIN){
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    promise.resolve(null);
+                }else {
+                    promise.reject(i + "", s);
+                }
             }
         });
     }

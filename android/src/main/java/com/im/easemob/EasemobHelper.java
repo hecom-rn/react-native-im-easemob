@@ -1,10 +1,11 @@
 package com.im.easemob;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
@@ -16,15 +17,10 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.push.EMPushConfig;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.hyphenate.push.EMPushConfig;
-import com.hyphenate.push.EMPushHelper;
-import com.hyphenate.push.EMPushType;
-import com.hyphenate.push.PushListener;
-import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
  * 环信接口辅助类
@@ -105,12 +101,11 @@ class EasemobHelper {
         EasemobListener listener = new EasemobListener(mContext);
         EMClient instance = EMClient.getInstance();
         instance.addConnectionListener(listener);
-        instance.chatManager().addConversationListener(listener);
-        instance.groupManager().addGroupChangeListener(listener);
-        instance.chatManager().addMessageListener(listener);
-        instance.addClientListener(listener);
         instance.addMultiDeviceListener(listener);
+        instance.groupManager().addGroupChangeListener(listener);
         instance.contactManager().setContactListener(listener);
+        instance.chatManager().addConversationListener(listener);
+        instance.chatManager().addMessageListener(listener);
     }
 
     /**

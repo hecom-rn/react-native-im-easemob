@@ -20,8 +20,8 @@ android {
     compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
     buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
 
-    //use legacy for android 6.0
-    useLibrary 'org.apache.http.legacy'
+    //use legacy for android 6.0S
+    //useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         minSdkVersion 16
@@ -32,6 +32,17 @@ android {
     lintOptions {
         abortOnError false
         warning 'InvalidPackage'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 

@@ -15,9 +15,13 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 捕获屏幕所需权限，Q后新增权限(多人音视频屏幕分享使用) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
-    <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+    <application
+        android:usesCleartextTraffic="true"
+        >
+<!--        <uses-library android:name="org.apache.http.legacy" android:required="false"/>-->
         <!-- 声明SDK所需的service SDK核心功能-->
         <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
         <service android:name="com.hyphenate.chat.EMJobService"
