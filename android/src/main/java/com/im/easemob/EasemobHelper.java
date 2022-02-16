@@ -15,9 +15,14 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.heytap.msp.push.HeytapPushManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.push.EMPushConfig;
+import com.hyphenate.push.EMPushHelper;
+import com.hyphenate.push.EMPushType;
+import com.hyphenate.push.PushListener;
+import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +88,48 @@ class EasemobHelper {
         }
 
         sdkInited = true;
+
+        initPush(context);
+    }
+
+    /**
+     * 判断是否在主进程
+     * @param context
+     * @return
+     */
+    public boolean isMainProcess(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return context.getApplicationInfo().packageName.equals(appProcess.processName);
+            }
+        }
+        return false;
+    }
+
+    public void initPush(Context context) {
+        if(isMainProcess(context)) {
+            //OPPO SDK升级到2.1.0后需要进行初始化
+            HeytapPushManager.init(context, true);
+            //HMSPushHelper.getInstance().initHMSAgent(DemoApplication.getInstance());
+            EMPushHelper.getInstance().setPushListener(new PushListener() {
+                @Override
+                public void onError(EMPushType pushType, long errorCode) {
+                    // TODO: 返回的errorCode仅9xx为环信内部错误，可从EMError中查询，其他错误请根据pushType去相应第三方推送网站查询。
+                    EMLog.e("PushClient", "Push client occur a error: " + pushType + " - " + errorCode);
+                }
+
+                @Override
+                public boolean isSupportPush(EMPushType pushType, EMPushConfig pushConfig) {
+                    // 由外部实现代码判断设备是否支持FCM推送
+                    if(pushType == EMPushType.FCM){
+                        return false;
+                    }
+                    return super.isSupportPush(pushType, pushConfig);
+                }
+            });
+        }
     }
 
     void notifyJSDidLoad(ReactContext reactContext) {
