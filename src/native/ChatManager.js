@@ -1,6 +1,7 @@
 import { NativeModules } from 'react-native';
 import NativeUtil from './native';
 import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
+import { ObjectUtil } from 'react-native-hecom-common';
 
 const ChatManager = NativeModules.ChatManager;
 
@@ -87,13 +88,26 @@ export const recallMessage = (conversationId, chatType, messageId) =>
  * @param chatType 聊天类型
  * @param messageType 消息类型
  * @param body 消息体
- * @param messageExt 附件内容
+ * @param oriMessageExt 附件内容
  */
-export const sendMessage = (conversationId, chatType, messageType, body, messageExt) =>
-    NativeUtil(
+export const sendMessage = (conversationId, chatType, messageType, body, oriMessageExt) => {
+    let messageExt = oriMessageExt;
+    const  extObject = {
+        em_huawei_push_badge_class: "com.hecom.hqpaas.rn.PaasReactIndexActivity",
+    };
+    if(ObjectUtil.isEmpty(oriMessageExt)){
+        messageExt = {em_apns_ext: extObject,}
+    } else {
+        messageExt={
+            em_apns_ext: extObject,
+            ...oriMessageExt,
+        }
+    }
+    return NativeUtil(
         ChatManager.sendMessage,
         {conversationId, chatType, messageType, to: conversationId, body, messageExt}
     );
+};
 
 /**
  * 插入历史消息。
