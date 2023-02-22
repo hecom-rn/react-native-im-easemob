@@ -91,6 +91,7 @@ export const recallMessage = (conversationId, chatType, messageId) =>
  * @param oriMessageExt 附件内容
  */
 export const sendMessage = (conversationId, chatType, messageType, body, oriMessageExt) => {
+    // FIXME: 此段对于ext的处理，不应该放在im-easemob库里，需要将代码重构到业务工程中
     let messageExt = oriMessageExt;
     const  extObject = {
         em_huawei_push_badge_class: "com.hecom.hqpaas.rn.PaasReactIndexActivity",
@@ -100,6 +101,7 @@ export const sendMessage = (conversationId, chatType, messageType, body, oriMess
     } else {
         messageExt={
             em_apns_ext: extObject,
+            em_push_category: 'WORK',
             ...oriMessageExt,
         }
     }
