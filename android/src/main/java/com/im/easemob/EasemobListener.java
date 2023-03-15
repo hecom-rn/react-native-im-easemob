@@ -13,7 +13,10 @@ import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMGroupReadAck;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMessageReactionChange;
 import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chat.adapter.EMAGroup;
 
@@ -74,10 +77,27 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
         }
     }
 
-    /******************** ConversationListener ********************/
     @Override
-    public void onCoversationUpdate() {
+    public void onTokenExpired() {
+        EMConnectionListener.super.onTokenExpired();
+    }
+
+    @Override
+    public void onTokenWillExpire() {
+        EMConnectionListener.super.onTokenWillExpire();
+    }
+
+    @Override
+    public void onLogout(int errorCode) {
+        EMConnectionListener.super.onLogout(errorCode);
+    }
+
+    /******************** ConversationListener ********************/
+
+    @Override
+    public void onConversationUpdate() {
         EasemobHelper.getInstance().sendEvent(CHAT_MANAGER_DELEGATE, CONVERSATION_LIST_DID_UPDATE);
+
     }
 
     @Override
@@ -218,6 +238,16 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     }
 
+    @Override
+    public void onSpecificationChanged(EMGroup group) {
+        EMGroupChangeListener.super.onSpecificationChanged(group);
+    }
+
+    @Override
+    public void onStateChanged(EMGroup group, boolean isDisabled) {
+        EMGroupChangeListener.super.onStateChanged(group, isDisabled);
+    }
+
     /******************** MessageListener ********************/
 
     @Override
@@ -239,6 +269,16 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
     }
 
     @Override
+    public void onGroupMessageRead(List<EMGroupReadAck> groupReadAcks) {
+        EMMessageListener.super.onGroupMessageRead(groupReadAcks);
+    }
+
+    @Override
+    public void onReadAckForGroupMessageUpdated() {
+        EMMessageListener.super.onReadAckForGroupMessageUpdated();
+    }
+
+    @Override
     public void onMessageDelivered(List<EMMessage> list) {
     }
 
@@ -250,6 +290,11 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
     @Override
     public void onMessageChanged(EMMessage emMessage, Object o) {
 
+    }
+
+    @Override
+    public void onReactionChanged(List<EMMessageReactionChange> messageReactionChangeList) {
+        EMMessageListener.super.onReactionChanged(messageReactionChangeList);
     }
 
     @Override
@@ -285,5 +330,20 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
     @Override
     public void onGroupEvent(int i, String s, List<String> list) {
 
+    }
+
+    @Override
+    public void onChatThreadEvent(int event, String target, List<String> usernames) {
+        EMMultiDeviceListener.super.onChatThreadEvent(event, target, usernames);
+    }
+
+    @Override
+    public void onCircleChannelEvent(int event, String channelId, List<String> usernames) {
+        EMMultiDeviceListener.super.onCircleChannelEvent(event, channelId, usernames);
+    }
+
+    @Override
+    public void onMessageRemoved(String conversationId, String deviceId) {
+        EMMultiDeviceListener.super.onMessageRemoved(conversationId, deviceId);
     }
 }

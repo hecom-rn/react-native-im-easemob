@@ -119,9 +119,9 @@ public class EasemobConverter {
         if (params.hasKey("appKey")) {
             options.setAppKey(params.getString("appKey"));
         }
-        if (params.hasKey("miAppKey") && params.hasKey("miAppSecret")) {
-            options.setMipushConfig(params.getString("miAppKey"), params.getString("miAppKey"));
-        }
+//        if (params.hasKey("miAppKey") && params.hasKey("miAppSecret")) {
+//            options.setMipushConfig(params.getString("miAppKey"), params.getString("miAppKey"));
+//        }
         if (params.hasKey("isAutoLogin")) {
             options.setAutoLogin(params.getBoolean("isAutoLogin"));
         }
@@ -358,9 +358,9 @@ public class EasemobConverter {
             EMCmdMessageBody cmd = (EMCmdMessageBody) body;
             result.putString("action", cmd.action());
             WritableMap params = Arguments.createMap();
-            for (String key : cmd.getParams().keySet()) {
-                result.putString(key, cmd.getParams().get(key));
-            }
+//            for (String key : cmd.getParams().keySet()) {
+//                result.putString(key, cmd.getParams().get(key));
+//            }
             result.putMap("params", params);
             type = IMConstant.MessageType.CMD;
         }
