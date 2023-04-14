@@ -60,4 +60,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     api 'com.facebook.react:react-native:+'
     implementation "androidx.annotation:annotation:1.0.0"
+    //oppo push需添加以下依赖
+    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
