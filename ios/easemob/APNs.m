@@ -10,7 +10,8 @@
 #import "Constant.h"
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
-#import <Hyphenate/Hyphenate.h>
+#import <HyphenateChat/HyphenateChat.h>
+#import <HyphenateChat/EMPushOptions.h>
 
 @implementation APNs
 
@@ -18,20 +19,15 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(getPushOptionsFromServer:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    EMError *error = nil;
-    EMPushOptions *options = [[EMClient sharedClient] getPushOptionsFromServerWithError:&error];
-    if (!error) {
-        NSMutableDictionary *optionsDic = [options objectToDictionary].mutableCopy;
-        if (options.noDisturbStatus == EMPushNoDisturbStatusClose) {
-            optionsDic[@"noDisturbStatus"] = @(0);
-        } else {
-            optionsDic[@"noDisturbStatus"] = @(1);
+    [[EMClient sharedClient].pushManager getSilentModeForAllWithCompletion:^(EMSilentModeResult *aResult, EMError *aError) {
+        if (!aError) {
+            NSMutableDictionary *optionsDic = [aResult objectToDictionary].mutableCopy;
+            NSString *optionsStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:optionsDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            resolve(optionsStr);
+        } else{
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
         }
-        NSString *optionsStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:optionsDic options:0 error:nil] encoding:NSUTF8StringEncoding];
-        resolve(optionsStr);
-    } else {
-        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-    }
+    }];
 }
 
 RCT_EXPORT_METHOD(setApnsNickname:(NSString *)params
@@ -39,7 +35,7 @@ RCT_EXPORT_METHOD(setApnsNickname:(NSString *)params
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *name = [allParams objectForKey:@"name"];
-    EMError *error = [[EMClient sharedClient] setApnsNickname:name];
+    EMError *error = [[EMClient sharedClient].pushManager updatePushDisplayName:name];
     if (!error) {
         resolve(@"{}");
     } else {
@@ -52,9 +48,9 @@ RCT_EXPORT_METHOD(setApnsDisplayStyle:(NSString *)params
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
     BOOL showDetail = [[allParams objectForKey:@"showDetail"] boolValue];
-    EMPushOptions *options = [[EMClient sharedClient] pushOptions];
-    options.displayStyle = showDetail ? EMPushDisplayStyleMessageSummary : EMPushDisplayStyleSimpleBanner;
-    EMError *error = [[EMClient sharedClient] updatePushOptionsToServer];
+    EMPushOptions *options = [[EMClient sharedClient].pushManager pushOptions];
+    EMPushDisplayStyle displayStyle = showDetail ? EMPushDisplayStyleMessageSummary : EMPushDisplayStyleSimpleBanner;
+    EMError *error = [[EMClient sharedClient].pushManager updatePushDisplayStyle: displayStyle];
     if (!error) {
         resolve(@"{}");
     } else {
@@ -91,24 +87,22 @@ RCT_EXPORT_METHOD(setNoDisturbStatus:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
-    BOOL status = [[allParams objectForKey:@"status"] boolValue];
-    EMPushOptions *options = [[EMClient sharedClient] pushOptions];
-    if (status) {
-        NSInteger startH = [[allParams objectForKey:@"startH"] integerValue];
-        NSInteger endH = [[allParams objectForKey:@"endH"] integerValue];
-        options.noDisturbingStartH = startH;
-        options.noDisturbingEndH = endH;
-        BOOL isWholeDay = startH == 0 && endH == 24;
-        options.noDisturbStatus = isWholeDay ? EMPushNoDisturbStatusDay : EMPushNoDisturbStatusCustom;
-    } else {
-        options.noDisturbStatus = EMPushNoDisturbStatusClose;
-    }
-    EMError *error = [[EMClient sharedClient] updatePushOptionsToServer];
-    if (!error) {
-        resolve(@"{}");
-    } else {
-        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-    }
+    EMSilentModeParam *param;
+    // 当开始时间和结束时间的hours和minutes都为0时候表示关闭免打扰时间段
+    NSInteger startH = [[allParams objectForKey:@"startH"] integerValue];
+    NSInteger startM = [[allParams objectForKey:@"startM"] integerValue];
+    NSInteger endH = [[allParams objectForKey:@"endH"] integerValue];
+    NSInteger endM = [[allParams objectForKey:@"endM"] integerValue];
+    param = [[EMSilentModeParam alloc]initWithParamType:EMSilentModeParamTypeInterval];
+    param.silentModeStartTime = [[EMSilentModeTime alloc]initWithHours:startH minutes:startM];
+    param.silentModeEndTime = [[EMSilentModeTime alloc]initWithHours:endH minutes:endM];
+    [[EMClient sharedClient].pushManager setSilentModeForAll:param completion:^(EMSilentModeResult *aResult, EMError *aError) {
+        if (!aError) {
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
 }
 
 @end

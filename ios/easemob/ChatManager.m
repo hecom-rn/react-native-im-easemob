@@ -7,7 +7,8 @@
 //
 
 #import "ChatManager.h"
-#import <Hyphenate/Hyphenate.h>
+#import <HyphenateChat/HyphenateChat.h>
+#import <HyphenateChat/EMChatMessage.h>
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
 #import "Constant.h"
@@ -108,9 +109,9 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)params
         default:
             break;
     }
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
+    EMChatMessage *message = [[EMChatMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
-    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMChatMessage * _Nullable message, EMError * _Nullable error) {
         resolve([message objectToJSONString]);
     }];
 }
@@ -184,14 +185,14 @@ RCT_EXPORT_METHOD(insertMessage:(NSString *)params
         default:
             break;
     }
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
+    EMChatMessage *message = [[EMChatMessage alloc] initWithConversationID:conversationId from:from to:to body:body ext:messageExt];
     message.chatType = chatType;
     message.timestamp = timestamp;
     message.localTime = localTime;
     message.status = EMMessageStatusSucceed;
     message.direction = [[allParams objectForKey:@"direction"] intValue];
     if (needDownload) {
-        [[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMMessage *result, EMError *error) {
+        [[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMChatMessage * _Nullable result, EMError * _Nullable error) {
             EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:chatType createIfNotExist:YES];
             [conversation insertMessage:result error:nil];
             resolve([result objectToJSONString]);
@@ -252,10 +253,10 @@ RCT_EXPORT_METHOD(recallMessage:(NSString *)params
     EMConversationType type = [[allParams objectForKey:@"chatType"] intValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:conversationId type:type createIfNotExist:NO];
     NSString *messageId = [allParams objectForKey:@"messageId"];
-    EMMessage *message = [conversation loadMessageWithId:messageId error:nil];
-    [[EMClient sharedClient].chatManager recallMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
+    EMChatMessage *message = [conversation loadMessageWithId:messageId error:nil];
+    [[EMClient sharedClient].chatManager recallMessageWithMessageId: messageId completion:^(EMError * _Nullable aError) {
         if (!aError) {
-            resolve([aMessage objectToJSONString]);
+            resolve([message objectToJSONString]);
         } else {
             reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
         }
@@ -317,11 +318,11 @@ RCT_EXPORT_METHOD(updateMessageExt:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *messageId = [allParams objectForKey:@"messageId"];
     NSDictionary *ext = [allParams objectForKey:@"ext"];
-    EMMessage *message = [[EMClient sharedClient].chatManager getMessageWithMessageId:messageId];
+    EMChatMessage *message = [[EMClient sharedClient].chatManager getMessageWithMessageId:messageId];
     NSMutableDictionary *extM = message.ext.mutableCopy;
     [extM addEntriesFromDictionary:ext];
     message.ext = extM.copy;
-    [[EMClient sharedClient].chatManager updateMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
+    [[EMClient sharedClient].chatManager updateMessage:message completion:^(EMChatMessage * _Nullable aMessage, EMError * _Nullable aError) {
         if (!aError) {
             resolve(@"{}");
         } else {

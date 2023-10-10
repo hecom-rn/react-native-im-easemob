@@ -7,7 +7,7 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import <Hyphenate/Hyphenate.h>
+#import <HyphenateChat/HyphenateChat.h>
 #import "Singleton.h"
 
 @interface MultiDevicesDelegate : NSObject <RCTBridgeModule, EMMultiDevicesDelegate>

@@ -6,7 +6,7 @@ const isIos = Platform.OS === 'ios';
 
 /**
  * 从服务端获取全局APNs配置。
- * @result {displayName:string, displayStyle:number, noDisturbingEndH:number, noDisturbingStartH:number, noDisturbStatus:0|1}
+ * @result silentModeStartTime: { hours, minutes}, silentModeEndTime: { hours, minutes },
  * Android平台没有displayStyle字段
  * iOS平台的nickname已废弃
  */
@@ -48,12 +48,13 @@ export const getIgnoredGroupIds = () => NativeUtil(APNs.getIgnoredGroupIds);
 
 /**
  * 设置推送免打扰设置的状态。
- * @param {boolean} status true表示打开免打扰设置，false表示关闭免打扰设置
- * @param {number} startH 开始的小时数，0-24，默认为0
- * @param {number} endH 结束的小时数，0-24，默认为24
+ * 当开始时间和结束时间的hours和minutes都为0时候表示关闭免打扰时间段
+ * @param {*} { status, startH = 0, startM = 0, endH = 24, endM = 0 }
  */
-export const setNoDisturbStatus = (status, startH = 0, endH = 24) => NativeUtil(APNs.setNoDisturbStatus, {
-    status,
-    startH,
-    endH
-});
+export const setNoDisturbStatus = ({ startH = 0, startM = 0, endH = 24, endM = 0 }) =>
+    NativeUtil(APNs.setNoDisturbStatus, {
+        startH,
+        startM,
+        endH,
+        endM,
+    });

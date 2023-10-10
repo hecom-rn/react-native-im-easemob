@@ -7,7 +7,7 @@
 //
 
 #import "GroupManager.h"
-#import <Hyphenate/Hyphenate.h>
+#import <HyphenateChat/HyphenateChat.h>
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
 #import "Constant.h"

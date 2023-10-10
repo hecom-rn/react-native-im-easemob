@@ -10,7 +10,7 @@
 #import "Constant.h"
 #import "NSString+Util.h"
 #import "NSObject+Util.h"
-#import <Hyphenate/Hyphenate.h>
+#import <HyphenateChat/HyphenateChat.h>
 #import "ClientDelegate.h"
 #import "MultiDevicesDelegate.h"
 #import "GroupManagerDelegate.h"
@@ -77,6 +77,8 @@ RCT_EXPORT_METHOD(login:(NSString *)params
         } else {
             reject([NSString stringWithFormat:@"%ld",(long)error.code], error.errorDescription, nil);
         }
+    } else {
+        resolve(@"{}");
     }
 }
 
