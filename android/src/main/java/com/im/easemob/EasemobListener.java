@@ -31,6 +31,7 @@ import static com.im.easemob.IMConstant.DID_LEAVE_GROUP;
 import static com.im.easemob.IMConstant.GROUP_MANAGER_DELEGATE;
 import static com.im.easemob.IMConstant.GROUP_OWNER_DID_UPDATE;
 import static com.im.easemob.IMConstant.MESSAGE_DID_RECEIVE;
+import static com.im.easemob.IMConstant.MESSAGE_DID_READ;
 import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_LOGIN_FROM_OTHER_DEVICE;
 import static com.im.easemob.IMConstant.USER_ACCOUNT_DID_REMOVE_FROM_SERVER;
 import static com.im.easemob.IMConstant.USER_DID_JOIN_GROUP;
@@ -265,7 +266,8 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
 
     @Override
     public void onMessageRead(List<EMMessage> list) {
-
+        EasemobHelper.getInstance().sendEvent(CHAT_MANAGER_DELEGATE, MESSAGE_DID_READ, EasemobConverter
+                .convertList(list));
     }
 
     @Override
