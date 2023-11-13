@@ -26,16 +26,20 @@ public class UriPathUtil {
 
     public static Uri getUri(final Context context, final File file) {
         String filePath = file.getAbsolutePath();
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
-                new String[]{filePath}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID));
-            cursor.close();
-            Uri baseUri = Uri.parse("content://media/external/images/media");
-            return Uri.withAppendedPath(baseUri, "" + id);
-        } else {
-            return Uri.fromFile(file);
+        try {
+            Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
+                    new String[]{filePath}, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID));
+                cursor.close();
+                Uri baseUri = Uri.parse("content://media/external/images/media");
+                return Uri.withAppendedPath(baseUri, "" + id);
+            } else {
+                return Uri.fromFile(file);
+            }
+        } catch(Exception e) {
+            return null;
         }
     }
 
