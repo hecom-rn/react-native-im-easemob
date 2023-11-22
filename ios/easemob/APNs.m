@@ -12,6 +12,8 @@
 #import "NSObject+Util.h"
 #import <HyphenateChat/HyphenateChat.h>
 #import <HyphenateChat/EMPushOptions.h>
+#import <HyphenateChat/IEMPushManager.h>
+#import <HyphenateChat/EMConversation.h>
 
 @implementation APNs
 
@@ -58,29 +60,38 @@ RCT_EXPORT_METHOD(setApnsDisplayStyle:(NSString *)params
     }
 }
 
-RCT_EXPORT_METHOD(ignoreGroupsPush:(NSString *)params
+RCT_EXPORT_METHOD(ignoreGroupPush:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
-    NSArray *groupIds = [allParams objectForKey:@"groupIds"];
-    BOOL ignore = [[allParams objectForKey:@"ignore"] boolValue];
-    EMError *error = [[EMClient sharedClient].groupManager ignoreGroupsPush:groupIds ignore:ignore];
-    if (!error) {
-        resolve(@"{}");
-    } else {
-        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-    }
+    NSString *groupId = [allParams objectForKey:@"groupId"];
+    EMSilentModeParam *param = [[EMSilentModeParam alloc]initWithParamType:EMSilentModeParamTypeRemindType];
+    param.remindType = EMPushRemindTypeNone;
+    EMConversationType conversationType = EMConversationTypeChat;
+    
+    [[EMClient sharedClient].pushManager setSilentModeForConversation:groupId conversationType:conversationType params:param completion:^(EMSilentModeResult * _Nullable aResult, EMError * _Nullable aError) {
+        if (!aError) {
+            resolve(@"{}");
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
+
 }
 
-RCT_EXPORT_METHOD(getIgnoredGroupIds:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(getIgnoredGroupIds:(NSString *)params
+                  resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    EMError *error = nil;
-    NSArray *ignoredGroupIds = [[EMClient sharedClient].groupManager getGroupsWithoutPushNotification:&error];
-    if (!error) {
-        resolve(JSONSTRING(ignoredGroupIds));
-    } else {
-        reject([NSString stringWithFormat:@"%ld", (NSInteger)error.code], error.errorDescription, nil);
-    }
+    NSDictionary *allParams = [params jsonStringToDictionary];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:[allParams objectForKey:@"groupId"] type:[allParams objectForKey:@"groupType"] createIfNotExist:NO];
+    [[EMClient sharedClient].pushManager getSilentModeForConversations:@[conversation] completion:^(NSDictionary<NSString *,EMSilentModeResult *> * _Nullable aResult, EMError * _Nullable aError) {
+        if (!aError) {
+            // 返回类型
+            resolve(JSONSTRING(aResult));
+        } else {
+            reject([NSString stringWithFormat:@"%ld", (NSInteger)aError.code], aError.errorDescription, nil);
+        }
+    }];
 }
 
 RCT_EXPORT_METHOD(setNoDisturbStatus:(NSString *)params
