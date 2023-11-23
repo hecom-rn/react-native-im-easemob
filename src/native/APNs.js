@@ -27,10 +27,12 @@ export const setApnsDisplayStyle = (showDetail) => isIos ? NativeUtil(APNs.setAp
 /**
  * 指定群组是否接收APNs。
  * @param {string} groupId 群ID
+ * @param {string} groupType 会话类型：singleChat（单聊）、groupChat（群聊）和 chatRoom（聊天室）。
  * @param {boolean} ignore 是否忽略通知
  */
-export const ignoreGroupPush = (groupId, ignore) => NativeUtil(APNs.ignoreGroupPush, {
+export const setIgnoreGroupPush = (groupId, groupType, ignore) => NativeUtil(APNs.ignoreGroupPush, {
     groupId,
+    groupType,
     ignore
 });
 
@@ -38,15 +40,16 @@ export const ignoreGroupPush = (groupId, ignore) => NativeUtil(APNs.ignoreGroupP
  * 判断是否开启勿扰   
  * @param {string} groupId 会话 ID
  * @param {string} groupType 会话类型：singleChat（单聊）、groupChat（群聊）和 chatRoom（聊天室）。
+ * @returns {boolean} isIgnored 
  */
-export const getIgnoredGroupIds = (groupId, groupType) => NativeUtil(APNs.getIgnoredGroupIds, { groupId, groupType });
+export const getIgnoreGroupPush = (groupId) => NativeUtil(APNs.getIgnoredGroupIds, { groupId, groupType });
 
 /**
  * 设置推送免打扰设置的状态。
  * 当开始时间和结束时间的hours和minutes都为0时候表示关闭免打扰时间段
- * @param {*} { status, startH = 0, startM = 0, endH = 24, endM = 0 }
+ * @param {*} { status, startH = 0, startM = 0, endH = 0, endM = 0 }
  */
-export const setNoDisturbStatus = ({ startH = 0, startM = 0, endH = 24, endM = 0 }) =>
+export const setNoDisturbStatus = ({ startH = 0, startM = 0, endH = 0, endM = 0 }) =>
     NativeUtil(APNs.setNoDisturbStatus, {
         startH,
         startM,
