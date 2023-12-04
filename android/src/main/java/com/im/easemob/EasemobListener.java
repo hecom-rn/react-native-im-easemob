@@ -337,10 +337,6 @@ public class EasemobListener implements EMGroupChangeListener, EMMessageListener
         EMMultiDeviceListener.super.onChatThreadEvent(event, target, usernames);
     }
 
-    @Override
-    public void onCircleChannelEvent(int event, String channelId, List<String> usernames) {
-        EMMultiDeviceListener.super.onCircleChannelEvent(event, channelId, usernames);
-    }
 
     @Override
     public void onMessageRemoved(String conversationId, String deviceId) {

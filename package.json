@@ -22,5 +22,8 @@
     "url": "https://github.com/hecom-rn/react-native-im-easemob/issues",
     "email": "summer88123@163.com"
   },
-  "homepage": "https://github.com/hecom-rn/react-native-im-easemob#readme"
+  "homepage": "https://github.com/hecom-rn/react-native-im-easemob#readme",
+  "devDependencies": {
+    "react-native": "^0.72.7"
+  }
 }
