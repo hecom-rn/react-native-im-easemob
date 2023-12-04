@@ -36,13 +36,20 @@ RCT_EXPORT_METHOD(init:(NSString *)params
         [allParams removeObjectForKey:@"appKey"];
         [options updateWithDictionary:allParams];
     }
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    EMError *error = [[EMClient sharedClient] initializeSDKWithOptions:options];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"react-native-im-easemob-Client-init"
+                                                        object:self
+                                                      userInfo:nil];
     [[EMClient sharedClient] addDelegate:[ClientDelegate sharedClientDelegate] delegateQueue:nil];
     [[EMClient sharedClient] addMultiDevicesDelegate:[MultiDevicesDelegate sharedMultiDevicesDelegate] delegateQueue:nil];
     [[EMClient sharedClient].groupManager addDelegate:[GroupManagerDelegate sharedGroupManagerDelegate] delegateQueue:nil];
     [[EMClient sharedClient].contactManager addDelegate:[ContactManagerDelegate sharedContactManagerDelegate] delegateQueue:nil];
     [[EMClient sharedClient].chatManager addDelegate:[ChatManagerDelegate sharedChatManagerDelegate] delegateQueue:nil];
-    resolve(@"{}");
+    if (!error) {
+        resolve(@"{}");
+    } else {
+        reject([NSString stringWithFormat:@"%ld",(long)error.code], error.errorDescription, nil);
+    }
 }
 
 RCT_EXPORT_METHOD(registerUser:(NSString *)params

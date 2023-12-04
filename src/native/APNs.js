@@ -30,7 +30,7 @@ export const setApnsDisplayStyle = (showDetail) => isIos ? NativeUtil(APNs.setAp
  * @param {string} groupType 会话类型：singleChat（单聊）、groupChat（群聊）和 chatRoom（聊天室）。
  * @param {boolean} ignore 是否忽略通知
  */
-export const setIgnoreGroupPush = (groupId, groupType, ignore) => NativeUtil(APNs.ignoreGroupPush, {
+export const setIgnoreGroupPush = (groupId, groupType, ignore) => NativeUtil(APNs.setIgnoreGroupPush, {
     groupId,
     groupType,
     ignore
@@ -42,7 +42,7 @@ export const setIgnoreGroupPush = (groupId, groupType, ignore) => NativeUtil(APN
  * @param {string} groupType 会话类型：singleChat（单聊）、groupChat（群聊）和 chatRoom（聊天室）。
  * @returns {boolean} isIgnored 
  */
-export const getIgnoreGroupPush = (groupId) => NativeUtil(APNs.getIgnoredGroupIds, { groupId, groupType });
+export const getIgnoreGroupPush = (groupId) => NativeUtil(APNs.getIgnoreGroupPush, { groupId, groupType });
 
 /**
  * 设置推送免打扰设置的状态。
