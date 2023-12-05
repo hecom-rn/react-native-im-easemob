@@ -76,7 +76,7 @@ public class PushManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void ignoreGroupPush(ReadableMap params, Promise promise) {
+    public void setIgnoreGroupPush(ReadableMap params, Promise promise) {
         if (CheckUtil.checkParamKey(params, new String[]{"groupId", "ignore", "groupType"}, promise)) {
             return;
         }
@@ -113,7 +113,7 @@ public class PushManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getIgnoredGroupIds(Promise promise) {
+    public void getIgnoreGroupPush(Promise promise) {
         WritableArray result = Arguments.createArray();
         List<String> list = EMClient.getInstance().pushManager().getNoPushGroups();
         for (String id : list) {
