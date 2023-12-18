@@ -65,7 +65,7 @@ RCT_EXPORT_METHOD(setIgnoreGroupPush:(NSString *)params
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSDictionary *allParams = [params jsonStringToDictionary];
     NSString *groupId = [allParams objectForKey:@"groupId"];
-    NSInteger groupType = [allParams objectForKey:@"groupType"];
+    NSInteger groupType = [[allParams objectForKey:@"groupType"] integerValue];
     BOOL ignore = [[allParams objectForKey:@"ignore"] boolValue];
     if (ignore) {
         EMSilentModeParam *param = [[EMSilentModeParam alloc]initWithParamType:EMSilentModeParamTypeRemindType];
