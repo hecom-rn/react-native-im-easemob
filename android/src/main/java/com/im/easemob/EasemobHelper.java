@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.heytap.msp.push.HeytapPushManager;
+import com.hihonor.push.sdk.HonorPushClient;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.push.EMPushConfig;
@@ -113,6 +114,9 @@ class EasemobHelper {
             //OPPO SDK升级到2.1.0后需要进行初始化
             HeytapPushManager.init(context, true);
             //HMSPushHelper.getInstance().initHMSAgent(DemoApplication.getInstance());
+
+            boolean isSupport = HonorPushClient.getInstance().checkSupportHonorPush(context);
+
             EMPushHelper.getInstance().setPushListener(new PushListener() {
                 @Override
                 public void onError(EMPushType pushType, long errorCode) {
@@ -125,6 +129,8 @@ class EasemobHelper {
                     // 由外部实现代码判断设备是否支持FCM推送
                     if(pushType == EMPushType.FCM){
                         return false;
+                    }else if (pushType == EMPushType.HONORPUSH){
+                        return isSupport;
                     }
                     return super.isSupportPush(pushType, pushConfig);
                 }
@@ -248,7 +254,8 @@ class EasemobHelper {
                   .enableMeiZuPush(getPushPar(MEIZU_PUSH_APP_ID), getPushPar(MEIZU_PUSH_APP_KEY))
                   .enableMiPush(getPushPar(XIAOMI_PUSH_APP_ID), getPushPar(XIAOMI_PUSH_APP_KEY))
                   .enableOppoPush(getPushPar(OPPO_PUSH_APP_KEY), getPushPar(OPPO_PUSH_APP_SECRET))
-                  .enableHWPush();
+                  .enableHWPush()
+                  .enableHonorPush();
           options.setPushConfig(builder.build());
          }
 
