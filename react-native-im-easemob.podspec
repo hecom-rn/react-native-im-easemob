@@ -16,14 +16,14 @@ Pod::Spec.new do |s|
     ss.source_files = 'ios/**/*.{h,m}'
     ss.dependency 'React'
     ss.dependency 'MJExtension'
-    ss.dependency 'HySDKDeploy'
+    ss.dependency 'HyphenateChat'
   end
 
   s.subspec "Deploy" do |ss|
     ss.source_files = 'ios/**/*.{h,m}'
     ss.dependency 'React'
     ss.dependency 'MJExtension'
-    ss.dependency 'HySDKDeploy'
+    ss.dependency 'HyphenateChat'
   end
   
 end
