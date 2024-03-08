@@ -67,6 +67,8 @@ dependencies {
     //oppo push需添加以下依赖
     implementation 'commons-codec:commons-codec:1.6'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.hihonor.mcs:push:7.0.61.303'
+
 
     api 'io.hyphenate:hyphenate-chat:4.1.3'
 }
