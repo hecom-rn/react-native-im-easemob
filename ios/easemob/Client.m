@@ -27,9 +27,6 @@ RCT_EXPORT_METHOD(init:(NSString *)params
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSMutableDictionary *allParams = [[params jsonStringToDictionary] mutableCopy];
-    if ([allParams objectForKey:@"isAutoLogin"]) {
-        [allParams removeObjectForKey:@"isAutoLogin"];
-    }
     NSString *appKey = [allParams objectForKey:@"appKey"];
     EMOptions *options = [EMOptions optionsWithAppkey:appKey];
     if ([[allParams allKeys] count] > 1) {
