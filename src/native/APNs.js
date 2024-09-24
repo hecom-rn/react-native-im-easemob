@@ -1,7 +1,18 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
 
-const APNs = NativeModules.APNs;
+const APNs = Platform.select({
+    ios: NativeModules.APNs,
+    android: NativeModules.APNs,
+    harmony: {
+        getPushOptionsFromServer() {},
+        setApnsNickname() {},
+        setApnsDisplayStyle() {},
+        setIgnoreGroupPush() {},
+        getIgnoreGroupPush() {},
+        setNoDisturbStatus() {},
+    }
+});
 const isIos = Platform.OS === 'ios';
 
 /**
@@ -37,10 +48,10 @@ export const setIgnoreGroupPush = (groupId, groupType, ignore) => NativeUtil(APN
 });
 
 /**
- * 判断是否开启勿扰   
+ * 判断是否开启勿扰
  * @param {string} groupId 会话 ID
  * @param {string} groupType 会话类型：singleChat（单聊）、groupChat（群聊）和 chatRoom（聊天室）。
- * @returns {boolean} isIgnored 
+ * @returns {boolean} isIgnored
  */
 export const getIgnoreGroupPush = (groupId) => NativeUtil(APNs.getIgnoreGroupPush, { groupId, groupType });
 

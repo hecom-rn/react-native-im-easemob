@@ -1,7 +1,24 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
 
-const GroupManager = NativeModules.GroupManager;
+const GroupManager = Platform.select({
+    ios: NativeModules.GroupManager,
+    android: NativeModules.GroupManager,
+    harmony: {
+        createGroup() {},
+        getJoinedGroups() {},
+        getGroupMemberList() {},
+        getGroupSpecification() {},
+        addOccupants() {},
+        removeOccupants() {},
+        changeGroupSubject() {},
+        leaveGroup() {},
+        destroyGroup() {},
+        updateGroupExt() {},
+        changeGroupDescription() {},
+        updateGroupOwner() {}
+    }
+});
 const isAndroid = Platform.OS === 'android';
 
 /**

@@ -1,7 +1,23 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
 
-const Client = NativeModules.Client;
+const Client = Platform.select({
+    ios: NativeModules.Client,
+    android: NativeModules.Client,
+    harmony: {
+        init(){
+            return Promise.resolve();
+        },
+        notifyJSDidLoad(){},
+        registerUser(){},
+        login(){},
+        kickAllDevices(){},
+        logout(){},
+        isConnected(){},
+        isLoggedIn(){},
+        fetchToken(){}
+    }
+});
 const isIos = Platform.OS === 'ios';
 
 /**

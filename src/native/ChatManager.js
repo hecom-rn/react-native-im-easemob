@@ -3,7 +3,24 @@ import NativeUtil from './native';
 import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
 import { ObjectUtil } from 'react-native-hecom-common';
 
-const ChatManager = NativeModules.ChatManager;
+const ChatManager = Platform.select({
+    ios: NativeModules.ChatManager,
+    android: NativeModules.ChatManager,
+    harmony: {
+        getConversation() {},
+        getAllConversations() {},
+        deleteConversation() {},
+        loadMessages() {},
+        fetchHistoryMessagesFromServer() {},
+        deleteMessage() {},
+        recallMessage() {},
+        sendMessage() {},
+        insertMessage() {},
+        markAllMessagesAsRead() {},
+        deleteAllMessages() {},
+        updateMessageExt() {},
+    }
+});
 
 /**
  * 获取单个会话。
