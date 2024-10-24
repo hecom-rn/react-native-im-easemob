@@ -8,13 +8,23 @@ const Client = Platform.select({
         init(){
             return Promise.resolve();
         },
-        notifyJSDidLoad(){},
+        notifyJSDidLoad(){
+            return Promise.resolve();
+        },
         registerUser(){},
-        login(){},
+        login(){
+            return Promise.resolve();
+        },
         kickAllDevices(){},
-        logout(){},
-        isConnected(){},
-        isLoggedIn(){},
+        logout(){
+            return Promise.resolve();
+        },
+        isConnected(){
+            return Promise.resolve();
+        },
+        isLoggedIn(){
+            return Promise.resolve();
+        },
         fetchToken(){}
     }
 });
