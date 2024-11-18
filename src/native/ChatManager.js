@@ -8,7 +8,7 @@ const ChatManager = Platform.select({
     android: NativeModules.ChatManager,
     harmony: {
         getConversation() {},
-        getAllConversations() {},
+        async getAllConversations() {return []},
         deleteConversation() {},
         loadMessages() {},
         fetchHistoryMessagesFromServer() {},
