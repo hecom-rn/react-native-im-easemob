@@ -61,6 +61,7 @@ public class IMConstant {
     }
 
     public static final String MESSAGE_DID_RECEIVE = "messageDidReceive";
+    public static final String MESSAGE_DID_READ = "messageDidRead";
     public static final String CMD_MESSAGE_DID_RECEIVE = "cmdMessageDidReceive";
     public static final String CONVERSATION_LIST_DID_UPDATE = "conversationListDidUpdate";
 
