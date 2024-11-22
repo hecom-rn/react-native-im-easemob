@@ -18,6 +18,17 @@
   ],
   "author": "Hecom",
   "license": "MIT",
+  "harmony": {
+    "alias": "rtn-chat",
+    "codegenConfig": [
+      {
+        "version": 2,
+        "specPaths": [
+          "./harmony/src/specs/v2"
+        ]
+      }
+    ]
+  },
   "bugs": {
     "url": "https://github.com/hecom-rn/react-native-im-easemob/issues",
     "email": "summer88123@163.com"
