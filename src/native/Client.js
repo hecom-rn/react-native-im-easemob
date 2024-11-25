@@ -1,12 +1,13 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
+import { RTNChat } from "../../harmony";
 
 const Client = Platform.select({
     ios: NativeModules.Client,
     android: NativeModules.Client,
     harmony: {
-        init(){
-            return Promise.resolve();
+        init(props){
+            return RTNChat.init(props);
         },
         notifyJSDidLoad(){
             return Promise.resolve();
