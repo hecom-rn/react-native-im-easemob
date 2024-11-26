@@ -10,11 +10,14 @@ const Client = Platform.select({
             return RTNChat.init(props);
         },
         notifyJSDidLoad(){
+            /**TODO: 待确认是否需要返回promise*/
             return Promise.resolve();
         },
-        registerUser(){},
-        login(){
-            return Promise.resolve();
+        registerUser(){
+            return Promise.reject(new Error('请联系管理员进行用户注册！'));
+        },
+        login(props){
+            return RTNChat.login(props);
         },
         kickAllDevices(){},
         logout(){
