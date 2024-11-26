@@ -14,22 +14,29 @@ const Client = Platform.select({
             return Promise.resolve();
         },
         registerUser(){
-            return Promise.reject(new Error('请联系管理员进行用户注册！'));
+            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员进行用户注册！'));
         },
         login(props){
             return RTNChat.login(props);
         },
-        kickAllDevices(){},
+        kickAllDevices(){
+            /**TODO: 待确认是否需要返回promise，环信的鸿蒙SDK目前不支持*/
+            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员！'));
+        },
         logout(){
-            return Promise.resolve();
+            return RTNChat.logout();
         },
         isConnected(){
-            return Promise.resolve();
+            // 鸿蒙的SDK没有实现isConnected，直接调用isLoggedIn
+            return RTNChat.isLoggedIn();
         },
         isLoggedIn(){
-            return Promise.resolve();
+            return RTNChat.isLoggedIn();
         },
-        fetchToken(){}
+        fetchToken(props){{
+            /**TODO: 待确认是否需要返回promise，环信的鸿蒙SDK目前不支持*/
+            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员！'));
+        }
     }
 });
 const isIos = Platform.OS === 'ios';
