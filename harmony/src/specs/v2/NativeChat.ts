@@ -10,7 +10,7 @@ export interface Spec extends TurboModule {
     autoLogin: boolean;
   }): Promise<void>;
   logout(): Promise<void>;
-  isLoggedIn(): Promise<void>;
+  isLoggedIn(): Promise<boolean>;
 }
 
 export default TurboModuleRegistry.get<Spec>(

@@ -33,7 +33,7 @@ const Client = Platform.select({
         isLoggedIn(){
             return RTNChat.isLoggedIn();
         },
-        fetchToken(props){{
+        fetchToken(props){
             /**TODO: 待确认是否需要返回promise，环信的鸿蒙SDK目前不支持*/
             return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员！'));
         }
