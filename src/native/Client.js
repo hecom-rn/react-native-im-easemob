@@ -5,38 +5,9 @@ import { RTNChat } from "../../harmony";
 const Client = Platform.select({
     ios: NativeModules.Client,
     android: NativeModules.Client,
-    harmony: {
-        init(props){
-            return RTNChat.init(props);
-        },
-        notifyJSDidLoad(){
-            /**TODO: 待确认是否需要返回promise*/
-            return Promise.resolve();
-        },
-        registerUser(){
-            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员进行用户注册！'));
-        },
-        login(props){
-            return RTNChat.login(props);
-        },
-        kickAllDevices(){
-            /**TODO: 待确认是否需要返回promise，环信的鸿蒙SDK目前不支持*/
-            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员！'));
-        },
-        logout(){
-            return RTNChat.logout();
-        },
-        isConnected(){
-            // 鸿蒙的SDK没有实现isConnected，直接调用isLoggedIn
-            return RTNChat.isLoggedIn();
-        },
-        isLoggedIn(){
-            return RTNChat.isLoggedIn();
-        },
-        fetchToken(props){
-            /**TODO: 待确认是否需要返回promise，环信的鸿蒙SDK目前不支持*/
-            return Promise.reject(new Error('鸿蒙目前不支持，请联系管理员！'));
-        }
+    harmony: RTNChat,
+    aaa: {
+        
     }
 });
 const isIos = Platform.OS === 'ios';

@@ -12,6 +12,11 @@ export interface Spec extends TurboModule {
   }): Promise<void>;
   logout(): Promise<void>;
   isLoggedIn(): Promise<boolean>;
+  notifyJSDidLoad(): Promise<void>;
+  registerUser(props: { username: string; password: string; }): Promise<never>;
+  kickAllDevices(): Promise<never>;
+  isConnected(): Promise<boolean>;
+  fetchToken(props: { username: string; password: string; }): Promise<never>;
 
   // ChatManagerSpec
   getConversation(props: {
