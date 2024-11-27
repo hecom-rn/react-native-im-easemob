@@ -1,23 +1,11 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
+import { RTNChat } from "../../harmony";
 
 const GroupManager = Platform.select({
     ios: NativeModules.GroupManager,
     android: NativeModules.GroupManager,
-    harmony: {
-        createGroup() {},
-        getJoinedGroups() {},
-        getGroupMemberList() {},
-        getGroupSpecification() {},
-        addOccupants() {},
-        removeOccupants() {},
-        changeGroupSubject() {},
-        leaveGroup() {},
-        destroyGroup() {},
-        updateGroupExt() {},
-        changeGroupDescription() {},
-        updateGroupOwner() {}
-    }
+    harmony: RTNChat
 });
 const isAndroid = Platform.OS === 'android';
 

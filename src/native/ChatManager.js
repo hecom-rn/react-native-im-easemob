@@ -2,24 +2,12 @@ import { NativeModules } from 'react-native';
 import NativeUtil from './native';
 import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
 import { ObjectUtil } from 'react-native-hecom-common';
+import { RTNChat } from "../../harmony";
 
 const ChatManager = Platform.select({
     ios: NativeModules.ChatManager,
     android: NativeModules.ChatManager,
-    harmony: {
-        getConversation() {},
-        async getAllConversations() {return []},
-        deleteConversation() {},
-        loadMessages() {},
-        fetchHistoryMessagesFromServer() {},
-        deleteMessage() {},
-        recallMessage() {},
-        sendMessage() {},
-        insertMessage() {},
-        markAllMessagesAsRead() {},
-        deleteAllMessages() {},
-        updateMessageExt() {},
-    }
+    harmony: RTNChat
 });
 
 /**

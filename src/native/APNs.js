@@ -1,17 +1,11 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
+import { RTNChat } from "../../harmony";
 
 const APNs = Platform.select({
     ios: NativeModules.APNs,
     android: NativeModules.APNs,
-    harmony: {
-        getPushOptionsFromServer() {},
-        setApnsNickname() {},
-        setApnsDisplayStyle() {},
-        setIgnoreGroupPush() {},
-        getIgnoreGroupPush() {},
-        setNoDisturbStatus() {},
-    }
+    harmony: RTNChat
 });
 const isIos = Platform.OS === 'ios';
 
