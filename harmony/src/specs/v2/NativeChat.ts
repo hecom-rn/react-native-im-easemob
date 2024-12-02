@@ -23,18 +23,18 @@ export interface Spec extends TurboModule {
     conversationId: string;
     type: number;
     ifCreate: boolean;
-  }): Promise<Object>;
-  getAllConversations(): Promise<Array<Object>>;
+  }): Promise<Object | undefined>;
+  getAllConversations(): Promise<Array<Object> | undefined>;
   deleteConversation(props: { conversationId: string; ifClearAllMessage: boolean }): Promise<void>;
   loadMessages(props: { conversationId: string; chatType: number; fromId: string; count: number; searchDirection: number}): Promise<Array<Object>>;
-  fetchHistoryMessagesFromServer(props: { conversationId: string; chatType: number; fromId: string; count: number }): Promise<void>;
+  fetchHistoryMessagesFromServer(props: { conversationId: string; chatType: number; fromId: string; count: number }): Promise<Object>;
   deleteMessage(props: { conversationId: string; chatType: number; messageId: string }): Promise<void>;
   recallMessage(props: { conversationId: string; chatType: number; messageId: string }): Promise<Object>;
   sendMessage(props: { conversationId: string; chatType: number; messageType: number; to: string; body: Object; messageExt: Object }): Promise<Object>;
   insertMessage(props: { conversationId: string; chatType: number; messageType: number; from: string; to: string; timestamp: number; localTime: number; direction: number; body: Object; messageExt: Object; messageId: string; isRead: boolean }): Promise<Object>;
   markAllMessagesAsRead(props: { conversationId: string; chatType: number }): Promise<void>;
   deleteAllMessages(props: { conversationId: string; chatType: number }): Promise<void>;
-  updateMessageExt(props: { messageId: string; ext: Object }): Promise<void>;
+  updateMessageExt(props: { messageId: string; ext?: Object }): Promise<void>;
 
   // GroupManagerSpec
   createGroup(props: { subject: string; description: string; invitees: Array<string>; message: string; setting: Object }): Promise<Object>;

@@ -8,6 +8,7 @@ const GroupManager = Platform.select({
     harmony: RTNChat
 });
 const isAndroid = Platform.OS === 'android';
+const isIos = Platform.OS === 'ios';
 
 /**
  * 创建群组。
@@ -82,7 +83,7 @@ export const destroyGroup = (groupId) =>
  * @param ext 附加内容
  */
 export const updateGroupExt = (groupId, ext) =>
-    NativeUtil(GroupManager.updateGroupExt,  isAndroid ? {groupId, ext: JSON.stringify(ext)} : {groupId, ext});
+    NativeUtil(GroupManager.updateGroupExt,  isIos ? {groupId, ext} : {groupId, ext: JSON.stringify(ext)});
 
 /**
  * 修改群描述
