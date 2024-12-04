@@ -5,7 +5,7 @@ export const ChatType = {
 };
 
 // 消息类型
-export const MessageType = {
+const _MessageType = {
     text: 1, // 文本消息
     image: 2, // 图片消息
     video: 3, // 视频消息
@@ -14,6 +14,23 @@ export const MessageType = {
     file: 6, // 文件消息
     cmd: 7, // CMD控制消息
 };
+
+// 鸿蒙消息类型
+const _MessageType_OH = {
+    text: 0, // 文本消息
+    image: 1, // 图片消息
+    video: 2, // 视频消息
+    location: 3, // 位置消息
+    voice: 4, // 语音消息
+    file: 5, // 文件消息
+    cmd: 6, // CMD控制消息
+};
+
+export const MessageType = Platform.select({
+    ios: _MessageType,
+    android: _MessageType,
+    harmony: _MessageType_OH
+});
 
 // 消息状态
 export const MessageStatus = {
