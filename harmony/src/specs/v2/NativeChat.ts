@@ -46,7 +46,7 @@ export interface Spec extends TurboModule {
   changeGroupSubject(props: { groupId: string; subject: string }): Promise<Object>;
   leaveGroup(props: { groupId: string }): Promise<void>;
   destroyGroup(props: { groupId: string }): Promise<void>;
-  updateGroupExt(props: { groupId: string; ext: Object }): Promise<Object>;
+  updateGroupExt(props: { groupId: string; ext: string }): Promise<Object>;
   changeGroupDescription(props: { groupId: string; description: string }): Promise<Object>;
   updateGroupOwner(props: { groupId: string; newOwner: string }): Promise<Object>;
 
