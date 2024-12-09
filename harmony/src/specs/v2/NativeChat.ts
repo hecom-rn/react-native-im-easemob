@@ -39,7 +39,7 @@ export interface Spec extends TurboModule {
   // GroupManagerSpec
   createGroup(props: { subject: string; description: string; invitees: Array<string>; message: string; setting: Object }): Promise<Object>;
   getJoinedGroups(): Promise<Array<Object>>;
-  getGroupMemberList(props: { groupId: string; cursor: string; pageSize: number }): Promise<Array<Object>>;
+  getGroupMemberList(props: { groupId: string; cursor: string; pageSize: number }): Promise<Object>;
   getGroupSpecification(props: { groupId: string }): Promise<Object>;
   addOccupants(props: { groupId: string; members: Array<string> }): Promise<Object>;
   removeOccupants(props: { groupId: string; members: Array<string> }): Promise<Object>;
