@@ -2,8 +2,13 @@ import { NativeModules } from 'react-native';
 import NativeUtil from './native';
 import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
 import { ObjectUtil } from 'react-native-hecom-common';
+import { RTNChat } from "../../harmony";
 
-const ChatManager = NativeModules.ChatManager;
+const ChatManager = Platform.select({
+    ios: NativeModules.ChatManager,
+    android: NativeModules.ChatManager,
+    harmony: RTNChat
+});
 
 /**
  * 获取单个会话。

@@ -1,7 +1,15 @@
 import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
+import { RTNChat } from "../../harmony";
 
-const Client = NativeModules.Client;
+const Client = Platform.select({
+    ios: NativeModules.Client,
+    android: NativeModules.Client,
+    harmony: RTNChat,
+    aaa: {
+        
+    }
+});
 const isIos = Platform.OS === 'ios';
 
 /**
