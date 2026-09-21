@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import NativeUtil from './native';
 import { ChatType, MessageType, MessageDirection } from '../constant/IMConstant';
 import { ObjectUtil } from 'react-native-hecom-common';
