@@ -22,7 +22,7 @@ RCT_EXPORT_METHOD(createGroup:(NSString *)params
     NSDictionary *allParams = [params jsonStringToDictionary];
     EMError *error = nil;
     EMGroupOptions *setting = [[EMGroupOptions alloc] init];
-    setting.maxUsersCount = 500;
+    setting.maxUsers = 500;
     setting.IsInviteNeedConfirm = NO;
     setting.style = EMGroupStylePublicOpenJoin;
     NSDictionary *options = [allParams objectForKey:@"setting"];
