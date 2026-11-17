@@ -114,14 +114,10 @@ public class PushManager extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getIgnoreGroupPush(Promise promise) {
-        WritableArray result = Arguments.createArray();
-        List<String> list = EMClient.getInstance().pushManager().getNoPushGroups();
-        for (String id : list) {
-            result.pushString(id);
-        }
-        // 该 API 未使用，暂不更新实现
+        // P1-3：环信 4.x 后期已移除 getNoPushGroups()（免打扰改为会话级 SilentMode，
+        // 见 setIgnoreGroupPush）。此桥接接口在 JS 侧无调用方（fork src 与主仓均未引用），
+        // 保持接口存在但恒返回空。
         promise.resolve(Arguments.createMap());
-
     }
 
     @ReactMethod

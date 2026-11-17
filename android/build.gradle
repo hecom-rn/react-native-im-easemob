@@ -21,6 +21,10 @@ def DEFAULT_TARGET_SDK_VERSION = 27
 def DEFAULT_SUPPORT_LIBRARY_VERSION = "27.1.1"
 
 android {
+    // AGP 8：library 必须显式声明 namespace（manifest package 已废弃），
+    // 缺失时 BuildConfig 会生成到 rootProject.name（红圈）包下，clean build 即编译失败。
+    // 此前靠增量编译遗留的旧产物掩盖（P1-3 升级触发重生成时暴露）。
+    namespace 'com.im.easemob'
     compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
     buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
 
@@ -70,5 +74,5 @@ dependencies {
     implementation 'com.hihonor.mcs:push:7.0.61.303'
 
 
-    api 'io.hyphenate:hyphenate-chat:4.1.3'
+    api 'io.hyphenate:hyphenate-chat:4.26.0' // P1-3 升级（原 4.1.3，2022-02 引入）
 }

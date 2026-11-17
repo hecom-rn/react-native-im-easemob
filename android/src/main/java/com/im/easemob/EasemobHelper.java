@@ -118,6 +118,12 @@ class EasemobHelper {
             boolean isSupport = HonorPushClient.getInstance().checkSupportHonorPush(context);
 
             EMPushHelper.getInstance().setPushListener(new PushListener() {
+                // P1-3：环信 4.5.0 起 PushListener 新增抽象方法，必须实现（token 绑定成功回调）。
+                @Override
+                public void onBindTokenSuccess(EMPushType pushType, String token) {
+                    EMLog.d("PushClient", "onBindTokenSuccess: " + pushType);
+                }
+
                 @Override
                 public void onError(EMPushType pushType, long errorCode) {
                     // TODO: 返回的errorCode仅9xx为环信内部错误，可从EMError中查询，其他错误请根据pushType去相应第三方推送网站查询。
@@ -250,7 +256,10 @@ class EasemobHelper {
 
       private void configOfflinePushPar(EMOptions options){
           EMPushConfig.Builder builder = new EMPushConfig.Builder(mContext);
-          builder.enableVivoPush()
+          // P1-3：环信 4.5.0 起 enableVivoPush 强制传隐私同意标志（vivo SDK 要求）。
+          // 传 true 保持升级前等价语义（原生推送初始化早于 JS 隐私弹窗是既有时序，
+          // 隐私前置改造另行立项，见主仓专项文档 §八）。
+          builder.enableVivoPush(true)
                   .enableMeiZuPush(getPushPar(MEIZU_PUSH_APP_ID), getPushPar(MEIZU_PUSH_APP_KEY))
                   .enableMiPush(getPushPar(XIAOMI_PUSH_APP_ID), getPushPar(XIAOMI_PUSH_APP_KEY))
                   .enableOppoPush(getPushPar(OPPO_PUSH_APP_KEY), getPushPar(OPPO_PUSH_APP_SECRET))
