@@ -36,6 +36,14 @@ RCT_EXPORT_MODULE();
     [Client sendEventByType:eventType subType:@"cmdMessageDidReceive" data:dicArray];
 }
 
+- (void) messagesDidRead:(NSArray *)aMessages {
+    NSMutableArray *dicArray = [NSMutableArray array];
+    [aMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [dicArray addObject:[obj objectToDictionary]];
+    }];
+    [Client sendEventByType:eventType subType:@"messageDidRead" data:dicArray];
+}
+
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
     NSMutableArray *dicArray = [NSMutableArray array];
     [aConversationList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
